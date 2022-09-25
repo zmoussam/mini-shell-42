@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 15:26:54 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/25 17:12:33 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/25 19:08:27 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void    cd(char *str)
 {
+    if(!str)
+        chdir("/H");
     if (chdir(str) == -1)
       printf("error : \n"); 
 }
