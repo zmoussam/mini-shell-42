@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 13:41:07 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/25 17:12:19 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/27 19:24:33 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/types.h>
 # include <dirent.h>
 
-void    cd(char *str);
+void    cd(char *path);
+void    env(char *env[]);
 
 #endif

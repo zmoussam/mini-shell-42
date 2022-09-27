@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/24 18:42:14 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/27 19:24:13 by zmoussam         ###   ########.fr       */
+/*   Created: 2022/09/27 19:03:15 by zmoussam          #+#    #+#             */
+/*   Updated: 2022/09/27 19:25:32 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishel.h"
+#include "../include/minishell.h" 
 
-void    env(char *env[])
+int main(int arc, char **arv, char **env)
 {
-    int i ;
-
-    i = 0;
-    while(env[i])
+    char *cmd;
+    
+    while(1337)
     {
-        printf("%s\n", env[i]);
-        i++;   
+        cmd = readline();      
     }
 }
