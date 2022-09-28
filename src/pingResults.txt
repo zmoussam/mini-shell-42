@@ -1,0 +1,7 @@
+The dublicated fd : 1
+PING google.com (142.251.37.174): 56 data bytes
+64 bytes from 142.251.37.174: icmp_seq=0 ttl=110 time=33.106 ms
+
+--- google.com ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 33.106/33.106/33.106/0.000 ms
