@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   token_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/27 19:03:15 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/30 00:29:27 by zmoussam         ###   ########.fr       */
+/*   Created: 2022/05/13 17:03:28 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/06/08 03:36:28 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h" 
+#include "lexer.h"
 
-int main(int arc, char **arv, char **env)
+t_token	token_init(const char *s, size_t len, t_token_type type)
 {
-    char *cmd;
-    
-    while(1337)
-    {
-        cmd = readline();      
-    }
+	t_token	token;
+
+	token.s = s;
+	token.len = len;
+	token.type = type;
+	return (token);
 }

@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/27 19:03:15 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/30 00:29:27 by zmoussam         ###   ########.fr       */
+/*   Created: 2021/12/26 11:41:53 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/30 01:56:46 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h" 
+#include "libft.h"
+#include <stdlib.h>
 
-int main(int arc, char **arv, char **env)
+void	ft_lstdelone(t_list *lst, t_lft_delfn del)
 {
-    char *cmd;
-    
-    while(1337)
-    {
-        cmd = readline();      
-    }
+	if (lst && del)
+		del(lst->content);
+	free(lst);
 }

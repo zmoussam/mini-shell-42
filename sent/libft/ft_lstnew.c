@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/27 19:03:15 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/30 00:29:27 by zmoussam         ###   ########.fr       */
+/*   Created: 2021/12/26 11:41:53 by syakoubi          #+#    #+#             */
+/*   Updated: 2021/12/26 11:42:03 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h" 
+#include "libft.h"
+#include <stdlib.h>
+#include <stddef.h>
 
-int main(int arc, char **arv, char **env)
+t_list	*ft_lstnew(void *content)
 {
-    char *cmd;
-    
-    while(1337)
-    {
-        cmd = readline();      
-    }
+	t_list	*lst;
+
+	lst = malloc(sizeof(t_list));
+	if (lst)
+	{
+		lst->content = content;
+		lst->next = NULL;
+	}
+	return (lst);
 }

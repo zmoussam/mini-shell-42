@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lexer_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/27 19:03:15 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/30 00:29:27 by zmoussam         ###   ########.fr       */
+/*   Created: 2022/05/15 17:32:43 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/30 14:47:57 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h" 
+#include "lexer.h"
 
-int main(int arc, char **arv, char **env)
+t_lexer	lexer_init(const char *input)
 {
-    char *cmd;
-    
-    while(1337)
-    {
-        cmd = readline();      
-    }
+	t_lexer	lexer;
+
+	lexer.full_input = input;
+	lexer.input = input;
+	lexer.pos = 0;
+	lexer.errno = 0;
+	return (lexer);
 }

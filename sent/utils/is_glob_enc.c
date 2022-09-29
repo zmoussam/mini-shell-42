@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   is_glob_enc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/27 19:03:15 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/30 00:29:27 by zmoussam         ###   ########.fr       */
+/*   Created: 2022/05/26 13:29:36 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/28 04:23:52 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h" 
+#include "utils.h"
+#include <stdbool.h>
 
-int main(int arc, char **arv, char **env)
+bool	is_glob_enc(char *s)
 {
-    char *cmd;
-    
-    while(1337)
-    {
-        cmd = readline();      
-    }
+	t_quote_mode	mode;
+
+	mode = UNQUOTED;
+	while (*s)
+	{
+		if (mode == UNQUOTED && *s == '*')
+			return (true);
+		mode = switch_quote_mode_enc(mode, *s);
+		s++;
+	}
+	return (false);
 }

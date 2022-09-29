@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   node_destroy.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/27 19:03:15 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/30 00:29:27 by zmoussam         ###   ########.fr       */
+/*   Created: 2022/05/31 00:35:40 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/31 23:50:29 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h" 
+#include "_internal.h"
+#include "libft.h"
+#include "parser.h"
+#include <stdlib.h>
 
-int main(int arc, char **arv, char **env)
+void	node_destroy(t_node *node)
 {
-    char *cmd;
-    
-    while(1337)
-    {
-        cmd = readline();      
-    }
+	if (node)
+	{
+		ft_free_strarr(node->argv);
+		ft_lstclear(&node->rdrlst, (t_lft_delfn)rdr_destroy);
+		free(node);
+	}
 }

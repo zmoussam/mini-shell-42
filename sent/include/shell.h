@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/27 19:03:15 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/30 00:29:27 by zmoussam         ###   ########.fr       */
+/*   Created: 2022/05/17 00:35:08 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/09/29 19:05:33 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h" 
+#ifndef SHELL_H
+# define SHELL_H
 
-int main(int arc, char **arv, char **env)
+# include "libft.h"
+# include "parser.h"
+
+# define SH_NAME	"minishell"
+# define SH_PS1		"minishel v0.1 >"
+# define SH_PS2		"> "
+
+typedef struct s_sh_state
 {
-    char *cmd;
-    
-    while(1337)
-    {
-        cmd = readline();      
-    }
-}
+	t_list			*envlst;
+	unsigned char	exit_status;
+}	t_sh_state;
+
+typedef int			(*t_builtin)(int, char **);
+
+extern t_sh_state	g_sh_state;
+
+#endif /* SHELL_H */
