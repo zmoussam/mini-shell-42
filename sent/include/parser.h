@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 18:21:39 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/09/29 23:56:24 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/01 18:31:08 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ typedef enum e_rdr_type
 typedef enum e_node_type
 {
 	SIMPLE_CMD,
-	SUBSHELL,
 	PIPE,
-	OR,
-	AND,
 }	t_node_type;
 
 typedef struct s_rdr

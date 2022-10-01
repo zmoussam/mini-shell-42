@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 01:23:22 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/09/30 00:24:17 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/01 18:44:17 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,36 +20,31 @@
 #include <signal.h>
 #include <sys/signal.h>
 
+void    echo(char **cmd)
+{
+    if (cmd[1])              
+}
 void    execution_cmd(char **cmd, int nbr_of_option)
 {
     if (cmd[0] == "echo")
         echo();
-    if (cmd[0] == "cd")
-        cd();
-    if (cmd[0] == "pwd")
-        pwd();
-    if (cmd[0] == "export")
-        export();
-    if (cmd[0] == "unset")
-        unset();
-    if (cmd[0] == "env")
-        env();
-    if (cmd[0] == "exit")
-        exit();
 }
-void    execution(t_node    *node)
-{
-    if (root == NULL)
-        return;
-    if (node->type == SIMPLE_CMD)
-    {
-        execution_cmd(node->argv, node->argc);
-        return ;
-    }
-    if (node->type == PIPE)
-        execution(node->left);
-    execution(node->right);
-}
+// void    execution(t_node    *node)
+// {
+//     if (root == NULL)
+//         return;
+//     if (node->type == SIMPLE_CMD)
+//     {
+//         execution_cmd(node->argv, node->argc);
+//         return ;
+//     }
+//     if (node->type == PIPE)
+//     {
+//         execution(node->left);
+//         execution(node->right);
+//         return ;
+//     }
+// }
 void printtabs(int numtabs){
     for (int i = 0; i < numtabs; i++){
         printf("\t");
@@ -57,28 +52,47 @@ void printtabs(int numtabs){
 }
 void    printtree_rec(t_node *root, int level){
     if (root == NULL){
-        printtabs(level);
-        printf("----<empty>----\n");
+       // printtabs(level);
+        printf("\t----<empty>----\n");
         return;
     }
     printtabs(level);
-    printf("-----> type = %d\n", root->type);
-    printf("-----> argc = %d\n", root->argc);
-	int i = 0;
-	while(root->argv[i])
-	{
-		printf("----> argv[%d] == %s\t", i, root->argv[i]);
-		i++;
-	}
-	printf("\n");
-    printtabs(level);
-    printf("  : left\n");
-    printtree_rec(root->left, level + 1);
-    printtabs(level);
-    printf("  : right\n ");
-    printtree_rec(root->right, level + 1);
-    printtabs(level);
-    printf("done\n");   
+    if (root->type == PIPE)
+    {
+        
+        printf("-----> type = %d\n", root->type);
+        printf("\n");
+        //printtabs(level);
+        //if (root->left->type != PIPE)
+            
+        //printf("  : left\n");
+        printtree_rec(root->left, level + 1);
+       // printtabs(level);
+        //printf("  : right\n ");
+        printtree_rec(root->right, level + 1);
+       // printtabs(level);
+        printf("done\n");   
+    }
+    else
+    {
+        printf("-----> type = %d\n", root->type);
+          printf("-----> argc = %d\n", root->argc);
+        int i = 0;
+        while(root->argv[i])
+        {
+            printf("----> argv[%d] == %s\t", i, root->argv[i]);
+            i++;
+        }
+        printf("\n");
+        printtabs(level);
+        printf("  : left\n");
+        printtree_rec(root->left, level + 1);
+        printtabs(level);
+        printf("  : right\n ");
+        printtree_rec(root->right, level + 1);
+        printtabs(level);
+        printf("done\n");   
+    }
 }
 void printtree(t_node * root){
     printtree_rec(root, 0);
