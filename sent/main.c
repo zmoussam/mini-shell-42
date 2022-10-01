@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 01:23:22 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/10/01 18:44:17 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/01 20:03:08 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@
 #include <signal.h>
 #include <sys/signal.h>
 
-void    echo(char **cmd)
+void    echo(t_node *root)
 {
-    if (cmd[1])              
+    printf("%s\n ", root->argv[1]);     
+    //printf("%s\n", root->argv[2]);     
 }
-void    execution_cmd(char **cmd, int nbr_of_option)
+void    execution_cmd(t_node *root)
 {
-    if (cmd[0] == "echo")
-        echo();
+    if (!ft_strcmp(root->argv[0], "echo"))
+        echo(root);
 }
 // void    execution(t_node    *node)
 // {
@@ -59,39 +60,13 @@ void    printtree_rec(t_node *root, int level){
     printtabs(level);
     if (root->type == PIPE)
     {
-        
-        printf("-----> type = %d\n", root->type);
-        printf("\n");
-        //printtabs(level);
-        //if (root->left->type != PIPE)
-            
-        //printf("  : left\n");
         printtree_rec(root->left, level + 1);
-       // printtabs(level);
-        //printf("  : right\n ");
         printtree_rec(root->right, level + 1);
-       // printtabs(level);
         printf("done\n");   
     }
     else
     {
-        printf("-----> type = %d\n", root->type);
-          printf("-----> argc = %d\n", root->argc);
-        int i = 0;
-        while(root->argv[i])
-        {
-            printf("----> argv[%d] == %s\t", i, root->argv[i]);
-            i++;
-        }
-        printf("\n");
-        printtabs(level);
-        printf("  : left\n");
-        printtree_rec(root->left, level + 1);
-        printtabs(level);
-        printf("  : right\n ");
-        printtree_rec(root->right, level + 1);
-        printtabs(level);
-        printf("done\n");   
+        execution_cmd(root);  
     }
 }
 void printtree(t_node * root){
