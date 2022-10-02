@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 01:23:22 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/10/01 20:03:08 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/02 01:53:32 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,39 @@
 
 void    echo(t_node *root)
 {
-    printf("%s\n ", root->argv[1]);     
-    //printf("%s\n", root->argv[2]);     
+    int i;
+    int j;
+    int k;
+
+    i = 1;
+    k = 0;
+    j = 2;
+    if (root->argv[i][0] == '-' && root->argv[0][1] == '\0')
+        i++;
+    else if (root->argv[i] && root->argv[i][0] == '-' && root->argv[i][1] == 'n')
+    {
+        while (root->argv[i][j] && root->argv[i][j] == 'n')
+            j++;
+        if (root->argv[i][j] == '\0')
+        {
+            i++;
+            k = 1;
+        }
+    }
+    while (root->argv[i])
+    {
+        printf("%s", root->argv[i]);
+        i++;
+        if (i != root->argc)
+            printf(" ");
+    }
+    if (k == 0 || root->argv[1] == NULL)
+        printf("\n");
+    
 }
 void    execution_cmd(t_node *root)
 {
-    if (!ft_strcmp(root->argv[0], "echo"))
+    if (ft_strcmp(root->argv[0], "echo") == 0)
         echo(root);
 }
 // void    execution(t_node    *node)
@@ -54,7 +81,7 @@ void printtabs(int numtabs){
 void    printtree_rec(t_node *root, int level){
     if (root == NULL){
        // printtabs(level);
-        printf("\t----<empty>----\n");
+        //printf("\t----<empty>----\n");
         return;
     }
     printtabs(level);
