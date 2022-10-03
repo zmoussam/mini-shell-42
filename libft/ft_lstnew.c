@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/12/26 11:41:53 by syakoubi          #+#    #+#             */
+/*   Updated: 2021/12/26 11:42:03 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include <stdlib.h>
 #include <stddef.h>
 
-size_t	ft_strlen(const char *s)
+t_list	*ft_lstnew(void *content)
 {
-	size_t	i;
+	t_list	*lst;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	lst = malloc(sizeof(t_list));
+	if (lst)
+	{
+		lst->content = content;
+		lst->next = NULL;
+	}
+	return (lst);
 }

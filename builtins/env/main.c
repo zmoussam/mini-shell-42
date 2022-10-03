@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/10/02 18:59:00 by zmoussam          #+#    #+#             */
+/*   Updated: 2022/10/02 19:05:00 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "env.h"
 
-size_t	ft_strlen(const char *s)
+int main(int ac, char *av[], char *env[])
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+    t_env_node  *list;
+    list = create_env(env);
+    if (env_find(list,"VSN", -1))
+	    printf("%s\n",  env_find(list,"VSCODE_GIT_ASKPASS_MAIN", -1)->content);
+	return (0);
 }

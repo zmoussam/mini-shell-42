@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,14 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include <stdlib.h>
 #include <stddef.h>
 
-size_t	ft_strlen(const char *s)
+char	*ft_strmapi(char const *s, char (*f)(size_t, char))
 {
+	char	*mapped;
+	size_t	len;
 	size_t	i;
 
+	len = ft_strlen(s);
+	mapped = malloc(len + 1);
+	if (!mapped)
+		return (NULL);
 	i = 0;
 	while (s[i])
+	{
+		mapped[i] = f(i, s[i]);
 		i++;
-	return (i);
+	}
+	mapped[i] = '\0';
+	return (mapped);
 }

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   rdr_destroy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/05/31 00:31:29 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/06/05 22:55:24 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "parser.h"
+#include <stdlib.h>
+#include <unistd.h>
 
-size_t	ft_strlen(const char *s)
+void	rdr_destroy(t_rdr *rdr)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (rdr->type == RDR_HEREDOC)
+		unlink(rdr->f);
+	free(rdr->f);
+	free(rdr);
 }

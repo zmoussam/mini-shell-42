@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/12/26 11:41:53 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/30 01:56:46 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_lstclear(t_list **lst, t_lft_delfn del)
 {
-	size_t	i;
+	t_list	*to_clear;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	while (*lst)
+	{
+		to_clear = *lst;
+		*lst = (*lst)->next;
+		ft_lstdelone(to_clear, del);
+	}
 }

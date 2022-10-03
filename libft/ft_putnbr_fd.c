@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/12/26 11:41:55 by syakoubi          #+#    #+#             */
+/*   Updated: 2021/12/26 11:42:16 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
+#include <stdlib.h>
+#include <sys/types.h>
 
-size_t	ft_strlen(const char *s)
+ssize_t	ft_putnbr_fd(int n, int fd)
 {
-	size_t	i;
+	char	*str;
+	ssize_t	count;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	str = ft_itoa(n);
+	if (!str)
+		return (-1);
+	count = ft_putstr_fd(str, fd);
+	free(str);
+	return (count);
 }

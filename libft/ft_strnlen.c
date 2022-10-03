@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_strnlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/25 13:37:51 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/25 13:39:05 by zmoussam         ###   ########.fr       */
+/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
+/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-#define LIBFT_H
-#include<stdio.h>
+#include <stddef.h>
 
-size_t  ft_strlen(char *str);
+size_t	ft_strnlen(const char *s, size_t n)
+{
+	size_t	i;
 
-#endif
+	i = 0;
+	while (i < n && s[i])
+		i++;
+	return (i);
+}

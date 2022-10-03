@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
+/*   Created: 2021/12/26 11:41:58 by syakoubi          #+#    #+#             */
 /*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stddef.h>
 
-size_t	ft_strlen(const char *s)
+char	*ft_strtrim(char const *s, char const *set)
 {
 	size_t	i;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	while (*s && ft_strchr(set, *s))
+		s++;
+	i = ft_strlen(s);
+	while (i && ft_strchr(set, s[i]))
+		i--;
+	return (ft_substr(s, 0, i + 1));
 }

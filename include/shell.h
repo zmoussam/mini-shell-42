@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/05/17 00:35:08 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/06/25 18:53:24 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#ifndef SHELL_H
+# define SHELL_H
 
-size_t	ft_strlen(const char *s)
+# include "libft.h"
+# include "parser.h"
+
+# define SH_NAME	"minishell"
+# define SH_PS1		"$ "
+# define SH_PS2		"> "
+
+typedef struct s_sh_state
 {
-	size_t	i;
+	t_list			*envlst;
+	unsigned char	exit_status;
+}	t_sh_state;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
+typedef int			(*t_builtin)(int, char **);
+
+extern t_sh_state	g_sh_state;
+
+#endif /* SHELL_H */

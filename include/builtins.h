@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/10/02 17:01:21 by zmoussam          #+#    #+#             */
+/*   Updated: 2022/10/02 19:08:56 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#ifndef BUILTINS_H
+# define BUILTINS_H
+#include "parser.h"
+#include "../builtins/env/env.h"
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
+void    echo(t_node *root);
+void    env_cmd(t_env_node *top, int argc);
+void    cd(t_node *root, t_env_node *env);
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
+#endif

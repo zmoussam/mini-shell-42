@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   sh_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/05/19 00:39:46 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/06/24 15:53:53 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "env.h"
+#include "shell.h"
+#include "libft.h"
+#include <errno.h>
 
-size_t	ft_strlen(const char *s)
+char	*sh_getenv(const char *name)
 {
-	size_t	i;
+	t_list	*lst;
+	t_env	*env;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (!name || !*name || ft_strchr(name, '='))
+	{
+		errno = EINVAL;
+		return (NULL);
+	}
+	lst = g_sh_state.envlst;
+	while (lst)
+	{
+		env = lst->content;
+		if (!ft_strcmp(env->name, name))
+			return (env->value);
+		lst = lst->next;
+	}
+	return (NULL);
 }

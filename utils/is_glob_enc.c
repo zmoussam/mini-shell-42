@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   is_glob_enc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/05/26 13:29:36 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/28 04:23:52 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "utils.h"
+#include <stdbool.h>
 
-size_t	ft_strlen(const char *s)
+bool	is_glob_enc(char *s)
 {
-	size_t	i;
+	t_quote_mode	mode;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	mode = UNQUOTED;
+	while (*s)
+	{
+		if (mode == UNQUOTED && *s == '*')
+			return (true);
+		mode = switch_quote_mode_enc(mode, *s);
+		s++;
+	}
+	return (false);
 }

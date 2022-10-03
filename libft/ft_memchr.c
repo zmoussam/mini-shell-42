@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/12/26 11:41:54 by syakoubi          #+#    #+#             */
+/*   Updated: 2021/12/26 11:42:03 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 
-size_t	ft_strlen(const char *s)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t	i;
+	const unsigned char	*_s;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	_s = s;
+	while (n--)
+	{
+		if (*_s == (unsigned char)c)
+			return ((void *)_s);
+		_s++;
+	}
+	return (NULL);
 }

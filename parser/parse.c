@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/06/25 18:14:54 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/06/25 18:22:08 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "_internal.h"
+#include "lexer.h"
+#include "parser.h"
+#include "shell.h"
+#include "utils.h"
+#include <stdlib.h>
 
-size_t	ft_strlen(const char *s)
+t_node	*parse(char *line)
 {
-	size_t	i;
+	t_lexer	lexer;
+	t_node	*tree;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	line = expand_params(encode_quotes(line));
+	lexer = lexer_init(line);
+	tree = parse_line(&lexer);
+	free(line);
+	if (!tree || tree == RULE_MISMATCH)
+		return (NULL);
+	return (tree);
 }

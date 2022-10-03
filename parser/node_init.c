@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   node_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/05/30 17:04:29 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/31 23:49:41 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "parser.h"
+#include "shell.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-size_t	ft_strlen(const char *s)
+t_node	*node_init(t_node_type type, t_node *left, t_node *right)
 {
-	size_t	i;
+	t_node	*node;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	node = malloc(sizeof(t_node));
+	if (node)
+	{
+		node->type = type;
+		node->left = left;
+		node->right = right;
+		node->argv = NULL;
+		node->rdrlst = NULL;
+	}
+	return (node);
 }

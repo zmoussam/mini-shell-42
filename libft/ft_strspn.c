@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strspn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,14 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stddef.h>
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strspn(const char *s, const char *accept)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] && ft_strchr(accept, s[i]))
 		i++;
 	return (i);
 }

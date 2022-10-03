@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstinsert_sorted.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/05/24 16:08:48 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/30 01:50:48 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_lstinsert_sorted(t_list **lst, t_list *new, t_lft_cmpfn cmp)
 {
-	size_t	i;
+	t_list	*curr;
+	t_list	*prev;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	curr = *lst;
+	if (!curr || cmp(curr->content, new->content) > 0)
+		ft_lstadd_front(lst, new);
+	else
+	{
+		prev = curr;
+		curr = curr->next;
+		while (curr && cmp(curr->content, new->content) <= 0)
+		{
+			prev = curr;
+			curr = curr->next;
+		}
+		new->next = curr;
+		prev->next = new;
+	}
 }

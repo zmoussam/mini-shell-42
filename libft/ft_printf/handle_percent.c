@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   handle_percent.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/12/26 11:38:44 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/12 21:03:12 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
+#include <stdarg.h>
 
-size_t	ft_strlen(const char *s)
+int	ft_printf_handle_percent(
+		int spec,
+		int min_width,
+		int precision,
+		va_list *ap
+		)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	(void)spec;
+	(void)min_width;
+	(void)precision;
+	(void)ap;
+	return (ft_putchar_fd('%', 1));
 }

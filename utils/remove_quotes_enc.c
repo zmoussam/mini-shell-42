@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   remove_quotes_enc.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/05/20 15:47:17 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/30 18:52:58 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
+#include "lexer.h"
+#include "utils.h"
 
-size_t	ft_strlen(const char *s)
+char	*remove_quotes_enc(char *start)
 {
-	size_t	i;
+	char	*s;
+	size_t	n;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	s = start;
+	n = ft_strlen(s) + 1;
+	while (*s)
+	{
+		if (*s == ENCODED_SINGLEQ || *s == ENCODED_DOUBLEQ)
+			ft_memcpy(s, s + 1, n - 1);
+		else
+			s++;
+		n--;
+	}
+	return (start);
 }

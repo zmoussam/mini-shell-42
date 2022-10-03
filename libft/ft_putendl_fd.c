@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/12/26 11:41:55 by syakoubi          #+#    #+#             */
+/*   Updated: 2021/12/26 11:42:16 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
+#include <sys/types.h>
 
-size_t	ft_strlen(const char *s)
+ssize_t	ft_putendl_fd(const char *s, int fd)
 {
-	size_t	i;
+	ssize_t	count;
+	ssize_t	tmp;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	count = ft_putstr_fd(s, fd);
+	if (count == -1)
+		return (-1);
+	tmp = ft_putchar_fd('\n', fd);
+	if (tmp == -1)
+		return (-1);
+	return (count + tmp);
 }

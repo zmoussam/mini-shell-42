@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   node_destroy.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/05/31 00:35:40 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/31 23:50:29 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "_internal.h"
+#include "libft.h"
+#include "parser.h"
+#include <stdlib.h>
 
-size_t	ft_strlen(const char *s)
+void	node_destroy(t_node *node)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (node)
+	{
+		ft_free_strarr(node->argv);
+		ft_lstclear(&node->rdrlst, (t_lft_delfn)rdr_destroy);
+		free(node);
+	}
 }

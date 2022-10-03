@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/12/26 11:41:54 by syakoubi          #+#    #+#             */
+/*   Updated: 2021/12/26 11:42:03 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 
-size_t	ft_strlen(const char *s)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t	i;
+	char		*_dst;
+	const char	*_src;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	_dst = dst;
+	_src = src;
+	while (n--)
+		*(_dst++) = *(_src++);
+	return (dst);
 }

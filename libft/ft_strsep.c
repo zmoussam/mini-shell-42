@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strsep.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/02/11 04:00:14 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/02/11 04:10:24 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stddef.h>
 
-size_t	ft_strlen(const char *s)
+char	*ft_strsep(char **str, const char *sep)
 {
-	size_t	i;
+	char	*s;
+	char	*end;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	s = *str;
+	if (!s)
+		return (NULL);
+	end = s + ft_strcspn(s, sep);
+	if (*end)
+		*end++ = '\0';
+	else
+		end = NULL;
+	*str = end;
+	return (s);
 }

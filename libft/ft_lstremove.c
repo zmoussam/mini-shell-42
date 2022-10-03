@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstremove.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/01/03 20:32:37 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/01/04 20:12:23 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stddef.h>
 
-size_t	ft_strlen(const char *s)
+void	ft_lstremove(t_list **lst, t_list *to_remove)
 {
-	size_t	i;
+	t_list	*current;
+	t_list	*previous;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	current = *lst;
+	previous = NULL;
+	while (current)
+	{
+		if (current == to_remove)
+		{
+			if (previous)
+				previous->next = current->next;
+			else
+				*lst = current->next;
+			return ;
+		}
+		previous = current;
+		current = current->next;
+	}
 }

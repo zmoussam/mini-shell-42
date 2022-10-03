@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   env_update.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/06/20 07:20:04 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/06/20 07:57:59 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "env.h"
+#include "libft.h"
+#include <stdlib.h>
 
-size_t	ft_strlen(const char *s)
+int	env_update(t_env *env, const char *value)
 {
-	size_t	i;
+	char	*value_dup;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (env->value && !value)
+		return (0);
+	value_dup = NULL;
+	if (value)
+	{
+		value_dup = ft_strdup(value);
+		if (!value_dup)
+			return (-1);
+	}
+	free(env->value);
+	env->value = value_dup;
+	return (0);
 }

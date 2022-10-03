@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   parse_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2022/05/31 14:41:45 by syakoubi          #+#    #+#             */
+/*   Updated: 2022/05/31 16:58:03 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "_internal.h"
+#include "lexer.h"
+#include "parser.h"
 
-size_t	ft_strlen(const char *s)
+t_node	*parse_pipeline(t_lexer *lexer)
 {
-	size_t	i;
+	t_node	*cmd;
+	t_node	*pipe;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	cmd = parse_cmd(lexer);
+	if (cmd && cmd != RULE_MISMATCH)
+	{
+		pipe = parse_pipe(lexer);
+		if (pipe == RULE_MISMATCH)
+			return (cmd);
+		if (pipe)
+			pipe->left = cmd;
+		else
+			node_tree_clear(&cmd);
+		return (pipe);
+	}
+	return (cmd);
 }
