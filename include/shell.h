@@ -30,4 +30,7 @@ typedef int			(*t_builtin)(int, char **);
 
 extern t_sh_state	g_sh_state;
 
+int			sh_state_init(int argc, char **argv, char **envp);
+void		sh_state_destroy(void);
+
 #endif /* SHELL_H */

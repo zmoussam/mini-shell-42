@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 17:01:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/02 19:08:56 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/07 19:32:46 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,10 @@
 void    echo(t_node *root);
 void    env_cmd(t_env_node *top, int argc);
 void    cd(t_node *root, t_env_node *env);
+void	pwd(t_node *root);
+void	unset(t_node *root, t_env_node **env);
+void    exit_cmd();
+void	export(t_node *root, t_env_node **env);
+void	print_sort_list(t_env_node *env);
 
 #endif

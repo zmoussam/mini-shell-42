@@ -82,7 +82,8 @@ ft_printf/handle_string.c\
 ft_printf/handle_unsigned.c\
 gnl/gnl.c\
 gnl/file.c\
-gnl/file_list.c
+gnl/file_list.c\
+
 
 OBJS := $(SRCS:.c=.o)
 DEPS := $(SRCS:.c=.d)

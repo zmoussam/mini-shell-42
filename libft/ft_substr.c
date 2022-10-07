@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 11:41:58 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/10/02 17:24:42 by zmoussam         ###   ########.fr       */
+/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "libft.h"
 #include <stddef.h>
 #include <stdlib.h>
 

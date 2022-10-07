@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 12:13:22 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/10/02 21:44:04 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/06/04 22:00:29 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,4 @@ bool			glob_match_enc(const char *p, const char *s);
 char			**lst_to_strarr(t_list *lst);
 void			close_pipe(int fd[2]);
 
-#endif 
+#endif /* UTILS_H */

@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_strarr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 20:54:40 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/10/02 17:25:57 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/06/01 00:13:55 by syakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <stdlib.h>
 #include <stddef.h>
