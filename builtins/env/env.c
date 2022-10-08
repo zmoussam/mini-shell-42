@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:42:14 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/05 17:56:28 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/08 08:51:39 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_list(t_env_node *export)
 	t_env_node *head;
 
 	head = export;
-	while(head)
+	while (head)
 	{
 		printf("%s=%s\n", head->name, head->content);
 		head = head->next;

@@ -88,66 +88,6 @@ char	*get_wd(char *path)
 	}	
 }
 
-void	print_node_argv(t_node *node)
-{
-	char	**argv = node->argv;
-
-	while (argv && *argv)
-		printf("%s\n", *argv++);
-}
-
-t_env_node	get_max_variable(t_env_node *env)
-{
-	t_env_node *head;
-	t_env_node max;
-
-	max.name = "";
-	max.content = "";
-	max.len = 0;
-	head = env;
-	while (head)
-	{
-		if (ft_strcmp(head->name, max.name) >= 0)
-		{
-			max.name = head->name;
-			max.content = head->content;
-		}
-		head = head->next;
-	}
-	return (max);
-
-}
-void	print_sort_list(t_env_node *env)
-{
-	t_env_node *head;
-	t_env_node min;
-	int *tmp;
-	int k;
-
-	min = get_max_variable(env);
-	k = 0;
-	if (env)
-	{
-			head = env;
-			while (head)
-			{
-				// printf("len = %d\n",head->len);
-				if (ft_strcmp(head->name, min.name) <= 0 && head->len != -1)
-				{
-					min.name = head->name;
-					min.content = head->content;
-					tmp = &head->len;
-					k = 1;
-				}
-				head = head->next;
-			}
-			if (k == 1)
-				printf("%s=%s\n", min.name, min.content);
-			*tmp = -1;
-	}
-	if (k == 1)
-		print_sort_list(env);
-}
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
@@ -161,12 +101,15 @@ int	main(int argc, char **argv, char **env)
 	prompt = get_wd(getcwd(NULL, 0));
 	// set the env in linked list 
 	env_list = create_env(env);
-	// print_sort_list(env_list);
+	// add_back(&env_list, new_node("zack","name", 3));
+	// print_list(env_list);
+	// print_sort_list(env_list);/
 	if (sh_state_init(argc, argv, env))
+		return (1);	
 	// remove the OLDPWD
 	ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
 	// get CMDS
-	printf("\033[0;33m➜  \033[0;36m");
+	printf("\033[0;33m➜  \033[0;36m");	
 	line = readline(prompt);
 	free(prompt);
 	while (line)
@@ -183,3 +126,10 @@ int	main(int argc, char **argv, char **env)
 		free(prompt);
 	}
 }
+// void	print_node_argv(t_node *node)
+// {
+// 	char	**argv = node->argv;
+
+// 	while (argv && *argv)
+// 		printf("%s\n", *argv++);
+// }

@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:42:24 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/10/03 05:49:09 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/08 08:23:04 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_env_node	*lstlast(t_env_node *lst)
 }
 
 
-void	add_back(t_env_node **lst, t_env_node *new)
+void    add_back(t_env_node **lst, t_env_node *new)
 {
 	t_env_node	*p;
 
@@ -59,7 +59,7 @@ void    *manu(t_env_node   *var, char *s)
     while (s[j])
     {
         if (s[j] == '=')
-            add_back(&var, new_node(ft_substr(s, j + 1, -1), ft_substr(s, 0, j), j));
+            add_back(&var, new_node(ft_strdup(ft_substr(s, j + 1, -1)), ft_strdup(ft_substr(s, 0, j)), j));
         j++;
     }
     return(var);
