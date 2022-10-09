@@ -23,9 +23,10 @@
 #include <signal.h>
 #include <sys/signal.h>
 
+t_sh_state	g_sh_state = {0};
+t_env_node *env_list;
 
-
-void    execution_cmd(t_node *root, t_env_node **env)
+void    execution_cmd(t_node *root)
 {
 	int i;
 	
@@ -36,35 +37,34 @@ void    execution_cmd(t_node *root, t_env_node **env)
     if (ft_strcmp(root->argv[0], "echo") == 0)
         echo(root);
     if (ft_strcmp(root->argv[0], "env") == 0)
-        env_cmd(*env, root->argc);
+        env_cmd(root->argc);
 	if (ft_strcmp(root->argv[0], "cd") == 0)
-		cd(root, *env);
+		cd(root);
 	if (ft_strcmp(root->argv[0], "pwd") == 0)
 		pwd(root);
 	if (ft_strcmp(root->argv[0], "unset") == 0)
-		unset(root, env);
+		unset(root);
 	if (ft_strcmp(root->argv[0], "exit") == 0)
 		exit_cmd();
 	if (ft_strcmp(root->argv[0], "export") == 0)
-		export(root, env);
+		export(root);
 	// printf("env->name = %s\n", (*export_list)->name);
 }
 
-void    execution(t_node *root, t_env_node **env){
+void    execution(t_node *root){
     if (root == NULL){
         return;
     }
     if (root->type == PIPE)
     {
-        execution(root->left, env);
-        execution(root->right, env);   
+        execution(root->left);
+        execution(root->right);   
     }
     else
-        execution_cmd(root, env);
+        execution_cmd(root);
 	
 }
 
-t_sh_state	g_sh_state = {0};
 
 char	*get_wd(char *path)
 {
@@ -93,7 +93,7 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 	t_node	*tree;
 
-	t_env_node  *env_list;
+	// t_env_node  *env_list;
 	char		*prompt;
 	(void)argc;
 	(void)argv;
@@ -117,7 +117,7 @@ int	main(int argc, char **argv, char **env)
 		if (ft_strspn(line, " \n\t") < ft_strlen(line))
 			add_history(line);
 		tree = parse(line);
-		execution(tree, &env_list);
+		execution(tree);
 		node_tree_clear(&tree);
 		free(line);
 		printf("\033[0;33m➜  \033[0;36m");

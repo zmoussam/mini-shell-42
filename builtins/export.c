@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/08 10:13:07 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/09 22:53:31 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ typedef struct t_export_v
     char    *name;
 }t_export_v;
 
-t_env_node	get_max_variable(t_env_node *env)
+t_env_node	get_max_variable()
 {
 	t_env_node *head;
 	t_env_node max;
@@ -26,7 +26,7 @@ t_env_node	get_max_variable(t_env_node *env)
 	max.name = "";
 	max.content = "";
 	max.len = 0;
-	head = env;
+	head = env_list;
 	while (head)
 	{
 		if (ft_strcmp(head->name, max.name) >= 0)
@@ -39,18 +39,18 @@ t_env_node	get_max_variable(t_env_node *env)
 	return (max);
 
 }
-void	print_sort_list(t_env_node *env)
+void	print_sort_list()
 {
 	t_env_node *head;
 	t_env_node min;
 	int *tmp;
 	int k;
 
-	min = get_max_variable(env);
+	min = get_max_variable();
 	k = 0;
-	if (env)
+	if (env_list)
 	{
-			head = env;
+			head = env_list;
 			while (head)
 			{
 				// printf("len = %d\n",head->len);
@@ -68,7 +68,7 @@ void	print_sort_list(t_env_node *env)
 			*tmp = -1;
 	}
 	if (k == 1)
-		print_sort_list(env);
+		print_sort_list();
 }
 
 t_export_v *get_name_content(char *variable_with_content)
@@ -82,35 +82,36 @@ t_export_v *get_name_content(char *variable_with_content)
     return_value->name = 0;
     len = ft_strlen(variable_with_content);
     i = 0;
-    while(variable_with_content[i] != '=')
+    while (variable_with_content[i] != '=')
         i++;
+	if (variable_with_content[i] == '\0')
+		return (NULL);
     return_value->content = (char *)malloc(sizeof(char) * ft_strlen(&variable_with_content[i] + 1) + 1);
     ft_memcpy(return_value->content, &variable_with_content[i] + 1, ft_strlen(&variable_with_content[i] + 1) );
     len2 = len - ft_strlen(&variable_with_content[i]);
     return_value->name = (char *)malloc(sizeof(char) * len2 + 1);
     ft_memcpy(return_value->name, variable_with_content, len2);
     return_value->name[len2] = '\0';
-        // printf("name = %s\n", return_value->name);
-        // printf("content = %s\n", return_value->content);
-        // printf("lenn = %zu\n", ft_strlen(return_value->name));
-        // printf("lenc = %zu\n", ft_strlen(return_value->content));
     return (return_value);
     
 }
-void	export(t_node *root, t_env_node **env)
+void	export(t_node *root)
 {
 	int i;
     t_export_v *name_content;
     
 	i = 1;
 	if (root->argc == 1)
-		print_list(*env);
+		print_list();
     else 
     {
         while (root->argv[i])
         {
+			printf("dfgv\n");
             name_content = get_name_content(root->argv[i]);
-            add_back(env, new_node(ft_strdup(name_content->content),ft_strdup(name_content->name), ft_strlen(name_content->name)));
+			if (!name_content)
+				return;
+            add_back(&env_list, new_node(ft_strdup(name_content->content),ft_strdup(name_content->name), ft_strlen(name_content->name)));
             free(name_content->name);
             free(name_content->content);
             free(name_content);

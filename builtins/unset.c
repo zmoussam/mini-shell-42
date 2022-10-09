@@ -6,21 +6,17 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:55 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/07 10:04:45 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/09 22:41:27 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/builtins.h"
 
-void	unset(t_node *root, t_env_node **env)
+void	unset(t_node *root)
 {
     int i;
-	int j;
-	int	k;
-	(void)env;
+	
 	i = 1;
-	j = 0;
-	k = 0;
 	if (root->argc == 1)
 		printf("Usage: unset [-nfv] name...\n");
 	else if(root->argv[1][0] == '-')
@@ -32,8 +28,8 @@ void	unset(t_node *root, t_env_node **env)
 			if (root->argv[i][0] == 32)
 				printf("unset:%s: invalid parameter name\n", root->argv[i]);
 			ft_strtoupper(root->argv[i]);
-			if (env_find(*env, root->argv[i], -1))
-				ft_list_remove_if(env, root->argv[i], &ft_strcmp);
+			if (env_find(env_list, root->argv[i], -1))
+				ft_list_remove_if(&env_list, root->argv[i], &ft_strcmp);
 			i++;	
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 17:01:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/08 08:51:30 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/09 22:46:28 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 #include "../builtins/env/env.h"
 
 void    echo(t_node *root);
-void    env_cmd(t_env_node *top, int argc);
-void    cd(t_node *root, t_env_node *env);
+void    env_cmd(int argc);
+void    cd(t_node *root);
 void	pwd(t_node *root);
-void	unset(t_node *root, t_env_node **env);
+void	unset(t_node *root);
 void    exit_cmd();
-void	export(t_node *root, t_env_node **env);
-void	print_sort_list(t_env_node *env);
+void	export(t_node *root);
+void	print_sort_list();
 
 #endif
