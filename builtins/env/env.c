@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:42:14 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/09 22:48:24 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/10 19:03:35 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	print_list()
 	head = env_list;
 	while (head)
 	{
+		
+		if (head->content[0] != '\0' )
 		printf("%s=%s\n", head->name, head->content);
 		head = head->next;
 	}

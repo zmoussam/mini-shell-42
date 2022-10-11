@@ -117,6 +117,7 @@ int	main(int argc, char **argv, char **env)
 		if (ft_strspn(line, " \n\t") < ft_strlen(line))
 			add_history(line);
 		tree = parse(line);
+		// printf("tree->argv[1] = %s\n", tree->rdrlst->content);
 		execution(tree);
 		node_tree_clear(&tree);
 		free(line);

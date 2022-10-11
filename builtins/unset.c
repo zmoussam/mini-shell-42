@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:55 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/09 22:41:27 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:30:21 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	unset(t_node *root)
 		{
 			if (root->argv[i][0] == 32)
 				printf("unset:%s: invalid parameter name\n", root->argv[i]);
-			ft_strtoupper(root->argv[i]);
 			if (env_find(env_list, root->argv[i], -1))
 				ft_list_remove_if(&env_list, root->argv[i], &ft_strcmp);
 			i++;	
