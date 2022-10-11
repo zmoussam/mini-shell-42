@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/11 23:45:53 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/12 00:07:07 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,21 +122,28 @@ void	intialise_len_variable()
 }
 int	parss_variable(t_env_node *node)
 {
-	if ((node->name[0] <= 64 && (node->name[0] != '<' \
-	&& node->name[0] != '>' && node->name[0] != ';')) \
-	|| (node->name[0] == '[' || node->name[0] == ']' \
-	|| node->name[0] == '{' || node->name[0] == '}' \
-	|| node->name[0] == '~'))
+	int i;
+
+	i = 0;
+	while (node->name[i])
 	{
-		if (node->name[0] == '-')
+		if ((node->name[0] <= 64 && (node->name[0] != '<' \
+		&& node->name[0] != '>' && node->name[0] != ';')) \
+		|| (node->name[0] == '[' || node->name[0] == ']' \
+		|| node->name[0] == '{' || node->name[0] == '}' \
+		|| node->name[0] == '~'))
 		{
-			printf("minishell: export: %s: invalid option\n", node->name);
-			printf("export: usage: export [name[=value] ...] or export \n");
+			if (node->name[0] == '-')
+			{
+				printf("minishell: export: %s: invalid option\n", node->name);
+				printf("export: usage: export [name[=value] ...] or export \n");
+			}
+			else
+			printf("minishell: export: `%s=%s': not a valid identifier\n", \
+			node->name, node->content);
+			return (1);
 		}
-		else
-		printf("minishell: export: `%s=%s': not a valid identifier\n", \
-		node->name, node->content);
-		return (1);
+		
 	}
 		
 	// printf("name[0] = %c\n", node->name[0]);
@@ -171,6 +178,8 @@ void	export(t_node *root)
 			}
 			else if (root->argv[i][0] == ';')
 				break;
+			if (env_find(env_list, new_env_node->name, -1))
+				ft_list_remove_if(&env_list, new_env_node->name, &ft_strcmp);
             add_back(&env_list, new_env_node);
             i++;
         }
