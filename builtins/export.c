@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/12 00:07:07 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:11:40 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_env_node	get_max_variable()
 {
 	t_env_node *head;
 	t_env_node max;
-
 	max.name = "";
 	max.content = "";
 	max.len = 0;
@@ -120,39 +119,57 @@ void	intialise_len_variable()
 		head = head->next;	
 	}
 }
-int	parss_variable(t_env_node *node)
+int	parss_variable(t_env_node *new_node)
 {
 	int i;
-
+	char *tmp_content;
+	
 	i = 0;
-	while (node->name[i])
+	if (new_node->name[0] <= '9' && new_node->name[0] >= '0')
 	{
-		if ((node->name[0] <= 64 && (node->name[0] != '<' \
-		&& node->name[0] != '>' && node->name[0] != ';')) \
-		|| (node->name[0] == '[' || node->name[0] == ']' \
-		|| node->name[0] == '{' || node->name[0] == '}' \
-		|| node->name[0] == '~'))
+		printf("minishell: export: `%s=%s': not a valid identifier\n", \
+		new_node->name, new_node->content);
+		return (1);
+	}
+	if (new_node->name[new_node->len - 1] == '+' && new_node->content[0] && new_node->len != 1)
+	{
+		if (env_find(env_list, new_node->name, -1) && new_node->content[0] != '\0')
 		{
-			if (node->name[0] == '-')
+			tmp_content = new_node->content;
+			new_node->content = ft_strjoin(env_find(env_list, new_node->name, -1)->content, new_node->content);
+			free(tmp_content);
+		}
+		return (0);
+	}
+	while (new_node->name[i])
+	{
+		if (((new_node->name[i] <= 64 && (new_node->name[i] != '<' \
+		&& new_node->name[i] != '>' && new_node->name[i] != ';' \
+		&& !(new_node->name[i] <= '9' && new_node->name[i] >= '0'))) \
+		|| (new_node->name[i] == '[' || new_node->name[i] == ']' \
+		|| new_node->name[i] == '{' || new_node->name[i] == '}' \
+		|| new_node->name[i] == '~')) \
+		&& new_node->name[new_node->len - 1] != '+')
+		{
+			if (new_node->name[0] == '-')
 			{
-				printf("minishell: export: %s: invalid option\n", node->name);
+				printf("minishell: export: %s: invalid option\n", new_node->name);
 				printf("export: usage: export [name[=value] ...] or export \n");
 			}
 			else
 			printf("minishell: export: `%s=%s': not a valid identifier\n", \
-			node->name, node->content);
+			new_node->name, new_node->content);
 			return (1);
 		}
-		
+		i++;
 	}
-		
-	// printf("name[0] = %c\n", node->name[0]);
 	return (0);
 }
 void	export(t_node *root)
 {
 	int i;
-    t_env_node *new_env_node;
+    t_env_node *new_node;
+	int x;
     
 	i = 1;
 	if (root->argc == 1 || (root->argc == 2 \
@@ -165,23 +182,25 @@ void	export(t_node *root)
     {
         while (root->argv[i])
         {
-            new_env_node = get_new_node(root->argv[i]);
-			// if (!new_node)
-			// 	return ;
-			if (parss_variable(new_env_node))
+            new_node = get_new_node(root->argv[i]);
+			if (!new_node)
+				return ;
+			x = parss_variable(new_node);
+			if (x == 1)
 			{
 				i++;
-				free(new_env_node->name);
-				free(new_env_node->content);
-				free(new_env_node);
+				free(new_node->name);
+				free(new_node->content);
+				free(new_node);
 				continue;
 			}
 			else if (root->argv[i][0] == ';')
-				break;
-			if (env_find(env_list, new_env_node->name, -1))
-				ft_list_remove_if(&env_list, new_env_node->name, &ft_strcmp);
-            add_back(&env_list, new_env_node);
+				break ;
+			if (env_find(env_list, new_node->name, -1) && new_node->content[0] != '\0')
+				ft_list_remove_if(&env_list, new_node->name, &ft_strcmp);
+            add_back(&env_list, new_node);
             i++;
         }
     }
 }
+
