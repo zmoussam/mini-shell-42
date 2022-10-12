@@ -92,7 +92,7 @@ int	main(int argc, char **argv, char **env)
 {
 	char	*line;
 	t_node	*tree;
-
+	// t_rdr	*tmp;
 	// t_env_node  *env_list;
 	char		*prompt;
 	(void)argc;
@@ -117,8 +117,10 @@ int	main(int argc, char **argv, char **env)
 		if (ft_strspn(line, " \n\t") < ft_strlen(line))
 			add_history(line);
 		tree = parse(line);
-		// printf("tree->argv[1] = %s\n", tree->rdrlst->next->content);
+		// tmp = tree->rdrlst->next->content;
+		// printf("tree->argv[1] = %s\n", tmp->f);
 		execution(tree);
+
 		node_tree_clear(&tree);
 		free(line);
 		printf("\033[0;33m➜  \033[0;36m");

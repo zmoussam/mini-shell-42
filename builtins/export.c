@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/12 16:11:40 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:27:07 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,16 +131,6 @@ int	parss_variable(t_env_node *new_node)
 		new_node->name, new_node->content);
 		return (1);
 	}
-	if (new_node->name[new_node->len - 1] == '+' && new_node->content[0] && new_node->len != 1)
-	{
-		if (env_find(env_list, new_node->name, -1) && new_node->content[0] != '\0')
-		{
-			tmp_content = new_node->content;
-			new_node->content = ft_strjoin(env_find(env_list, new_node->name, -1)->content, new_node->content);
-			free(tmp_content);
-		}
-		return (0);
-	}
 	while (new_node->name[i])
 	{
 		if (((new_node->name[i] <= 64 && (new_node->name[i] != '<' \
@@ -149,7 +139,7 @@ int	parss_variable(t_env_node *new_node)
 		|| (new_node->name[i] == '[' || new_node->name[i] == ']' \
 		|| new_node->name[i] == '{' || new_node->name[i] == '}' \
 		|| new_node->name[i] == '~')) \
-		&& new_node->name[new_node->len - 1] != '+')
+		|| (new_node->name[new_node->len - 1] != '+'))
 		{
 			if (new_node->name[0] == '-')
 			{
@@ -162,6 +152,15 @@ int	parss_variable(t_env_node *new_node)
 			return (1);
 		}
 		i++;
+	}
+		if (new_node->name[new_node->len - 1] == '+' && new_node->content[0] && new_node->len != 1)
+		{
+			if (env_find(env_list, new_node->name, -1) && new_node->content[0] != '\0')
+			{
+				tmp_content = new_node->content;
+				new_node->content = ft_strjoin(env_find(env_list, new_node->name, -1)->content, new_node->content);
+				free(tmp_content);
+			}
 	}
 	return (0);
 }
