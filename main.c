@@ -46,8 +46,8 @@ void    execution_cmd(t_node *root)
 	char **path_content = NULL;
 	char *tmp_path;
 	char *tmp2_path;
-	char *argv[] = {"/bin/ls","-la" ,NULL};
-	// args = NULL;
+	char **args;
+	args = (char **)malloc(sizeof(char *) * root->argc + 1);
 	
 	i = 0;
 	if (ft_strcmp(root->argv[0], "CD") && ft_strcmp(root->argv[0], "UNSET") && 
@@ -94,16 +94,15 @@ void    execution_cmd(t_node *root)
 				pid = fork();
 				if (pid == 0)
 				{
-					// args[0] = tmp_path;
-					// i = 1;
-					// while (root->argv[i])
-					// {
-					// 	args[i] = root->argv[i];
-					// 	i++;
-					// }
-					// args[i] = NULL;
-					// args = {"/bin/ls", "-la", NULL};
-					if (execve(tmp_path, argv ,NULL) == -1)
+					args[0] = tmp_path;
+					i = 1;
+					while (root->argv[i])
+					{
+						args[i] = root->argv[i];
+						i++;
+					}
+					args[i] = NULL;
+					if (execve(tmp_path, args ,NULL) == -1)
 						printf("hi\n");
 				}
 				else
@@ -159,23 +158,17 @@ int	main(int argc, char **argv, char **env)
 {
 	char	*line;
 	t_node	*tree;
-	// t_rdr	*tmp;
-	// t_env_node  *env_list;
+
 	char		*prompt;
 	(void)argc;
 	(void)argv;
-	// get the prompt like name of the workin directory
+	
 	prompt = get_wd(getcwd(NULL, 0));
-	// set the env in linked list 
 	env_list = create_env(env);
-	// add_back(&env_list, new_node("zack","name", 3));
-	// print_list(env_list);
-	// print_sort_list(env_list);/
+
 	if (sh_state_init(argc, argv, env))
 		return (1);	
-	// remove the OLDPWD
 	ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
-	// get CMDS
 	printf("\033[0;33m➜  \033[0;36m");	
 	line = readline(prompt);
 	free(prompt);
@@ -184,8 +177,6 @@ int	main(int argc, char **argv, char **env)
 		if (ft_strspn(line, " \n\t") < ft_strlen(line))
 			add_history(line);
 		tree = parse(line);
-		// tmp = tree->rdrlst->next->content;
-		// printf("tree->argv[1] = %s\n", tmp->f);
 		execution(tree);
 
 		node_tree_clear(&tree);
@@ -196,10 +187,3 @@ int	main(int argc, char **argv, char **env)
 		free(prompt);
 	}
 }
-// void	print_node_argv(t_node *node)
-// {
-// 	char	**argv = node->argv;
-
-// 	while (argv && *argv)
-// 		printf("%s\n", *argv++);
-// }
