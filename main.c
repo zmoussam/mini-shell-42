@@ -26,9 +26,28 @@
 t_sh_state	g_sh_state = {0};
 t_env_node *env_list;
 
+int	check_path(char *path)
+{
+	int	i;
+
+	i = 0;
+	while(path[i])
+	{
+		if (path[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 void    execution_cmd(t_node *root)
 {
 	int i;
+	int	pid;
+	char **path_content = NULL;
+	char *tmp_path;
+	char *tmp2_path;
+	char *argv[] = {"/bin/ls","-la" ,NULL};
+	// args = NULL;
 	
 	i = 0;
 	if (ft_strcmp(root->argv[0], "CD") && ft_strcmp(root->argv[0], "UNSET") && 
@@ -48,7 +67,55 @@ void    execution_cmd(t_node *root)
 		exit_cmd();
 	if (ft_strcmp(root->argv[0], "export") == 0)
 		export(root);
-	// printf("env->name = %s\n", (*export_list)->name);
+	if (check_path(root->argv[0]))
+	{
+		if (!access(root->argv[0], X_OK))
+		{
+			pid = fork();
+			if (pid== 0)
+			execve(root->argv[0],root->argv ,NULL);
+			else 
+				wait(NULL);
+		}
+		else 
+			printf("bash: %s: No such file or directory\n", root->argv[0]);
+	}
+	else if(!check_path(root->argv[0]))
+	{
+		if (env_find(env_list, "PATH", 4))
+			path_content = ft_split(env_find(env_list , "PATH", 4)->content, ":");
+		while (path_content[i])
+		{
+			tmp2_path = ft_strjoin("/", root->argv[0]);
+			tmp_path = ft_strjoin(path_content[i], tmp2_path);
+			free(tmp2_path);
+			if (!access(tmp_path, X_OK))
+			{
+				pid = fork();
+				if (pid == 0)
+				{
+					// args[0] = tmp_path;
+					// i = 1;
+					// while (root->argv[i])
+					// {
+					// 	args[i] = root->argv[i];
+					// 	i++;
+					// }
+					// args[i] = NULL;
+					// args = {"/bin/ls", "-la", NULL};
+					if (execve(tmp_path, argv ,NULL) == -1)
+						printf("hi\n");
+				}
+				else
+				{
+					wait(NULL);
+				}
+			}
+			free(tmp_path);
+			i++;
+		}
+	}
+	
 }
 
 void    execution(t_node *root){

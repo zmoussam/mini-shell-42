@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/17 17:35:54 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:00:27 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	print_sort_list()
 				else if (min.content[0] == '\"')
 					printf("declare -x %s=%s\n", min.name, min.content);
 				else
-					printf("declare -x %s=\"%s\"\n", min.name, min.content);
+					printf("declare a-x %s=\"%s\"\n", min.name, min.content);
 			}
 			*tmp = -1;
 	}
