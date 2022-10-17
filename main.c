@@ -47,33 +47,33 @@ void    execution_cmd(t_node *root)
 	char *tmp_path;
 	char *tmp2_path;
 	char **args;
+	char *copy;
+
 	args = (char **)malloc(sizeof(char *) * root->argc + 1);
-	
+	copy = ft_strdup(root->argv[0]);
+	ft_strtolower(copy);
 	i = 0;
-	if (ft_strcmp(root->argv[0], "CD") && ft_strcmp(root->argv[0], "UNSET") && 
-		ft_strcmp(root->argv[0], "EXPORT"))
-		ft_strtolower(root->argv[0]);
-    if (ft_strcmp(root->argv[0], "echo") == 0)
+    if (ft_strcmp(copy, "echo") == 0)
         echo(root);
-    if (ft_strcmp(root->argv[0], "env") == 0)
+   else if (ft_strcmp(copy, "env") == 0)
         env_cmd(root->argc);
-	if (ft_strcmp(root->argv[0], "cd") == 0)
+	else if (ft_strcmp(root->argv[0], "cd") == 0)
 		cd(root);
-	if (ft_strcmp(root->argv[0], "pwd") == 0)
+	else if (ft_strcmp(copy, "pwd") == 0)
 		pwd(root);
-	if (ft_strcmp(root->argv[0], "unset") == 0)
+	else if (ft_strcmp(root->argv[0], "unset") == 0)
 		unset(root);
-	if (ft_strcmp(root->argv[0], "exit") == 0)
+	else if (ft_strcmp(root->argv[0], "exit") == 0)
 		exit_cmd();
-	if (ft_strcmp(root->argv[0], "export") == 0)
+	else if (ft_strcmp(root->argv[0], "export") == 0)
 		export(root);
-	if (check_path(root->argv[0]))
+	else if (check_path(root->argv[0]))
 	{
 		if (!access(root->argv[0], X_OK))
 		{
 			pid = fork();
 			if (pid== 0)
-			execve(root->argv[0],root->argv ,NULL);
+				execve(root->argv[0],root->argv ,NULL);
 			else 
 				wait(NULL);
 		}
