@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/18 21:18:14 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/18 22:16:54 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,9 @@ void    execution(t_node *root)
             execution(root->right);
             exit(0);  
         }
-        waitpid(pid, NULL, 0);
         close(fd[0]);
         close(fd[1]);
+        waitpid(pid, NULL, 0);
 	}
     else
         execution_cmd(root);
