@@ -6,14 +6,14 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 17:01:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/10 16:40:14 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:49:24 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 #include "parser.h"
-#include "../builtins/env/env.h"
+#include "../execution/builtins/env/env.h"
 
 void    echo(t_node *root);
 void    env_cmd(int argc);

@@ -126,30 +126,30 @@ void    execution_cmd(t_node *root)
 		launch_executabl(root); 
 }
 
-void    execution(t_node *root, int fd)
+void    execution(t_node *root)
 {
-	int	fd1[2];
-	int	pid;
+	// int	fd1[2];
+	// int	pid;
 
-	if (pipe(fd) == -1)
-        return ;
-    if (root == NULL){
-        return;
-    }
-    if (root->type == PIPE)
-    {
-		pid = fork();
-		if (pid == 0)
-		{	
-			dup2(fd1[1], STDOUT_FILENO);
-			execution(root->left, fd1[1]);
-			exit(1);
-		}
-		else
-        execution(root->right, fd1[0]);   
-        // execution(root->left);
-    }
-    else
+	// if (pipe(fd) == -1)
+    //     return ;
+    // if (root == NULL){
+    //     return;
+    // }
+    // if (root->type == PIPE)
+    // {
+	// 	pid = fork();
+	// 	if (pid == 0)
+	// 	{	
+	// 		dup2(fd1[1], STDOUT_FILENO);
+	// 		execution(root->left, fd1[1]);
+	// 		exit(1);
+	// 	}
+	// 	else
+    //     execution(root->right, fd1[0]);   
+    //     // execution(root->left);
+    // }
+    // else
         execution_cmd(root);
 }
 
@@ -201,7 +201,7 @@ int	main(int argc, char **argv, char **env)
 			add_history(line);
 		tree = parse(line);
 		// printf("left = %s\n", tree->right->right->argv[0]);
-		execution(tree, 1);
+		execution(tree);
 
 		node_tree_clear(&tree);
 		free(line);

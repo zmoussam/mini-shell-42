@@ -47,15 +47,15 @@ utils/remove_quotes.c\
 utils/remove_quotes_enc.c\
 utils/switch_quote_mode.c\
 utils/switch_quote_mode_enc.c\
-builtins/echo.c\
-builtins/env/create_env.c\
-builtins/env/env_find.c\
-builtins/env/env.c\
-builtins/cd.c\
-builtins/pwd.c\
-builtins/unset.c\
-builtins/exit.c\
-builtins/export.c\
+execution/builtins/echo.c\
+execution/builtins/env/create_env.c\
+execution/builtins/env/env_find.c\
+execution/builtins/env/env.c\
+execution/builtins/cd.c\
+execution/builtins/pwd.c\
+execution/builtins/unset.c\
+execution/builtins/exit.c\
+execution/builtins/export.c\
 
 
 

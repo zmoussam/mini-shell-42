@@ -6,12 +6,12 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:42:24 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/10/17 15:50:01 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:48:26 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
-#include "../../include/libft.h"
+#include "../../../include/libft.h"
 #include<stdlib.h>
 
 t_env_node	*lstlast(t_env_node *lst)

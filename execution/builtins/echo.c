@@ -6,11 +6,11 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:03 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/02 18:52:33 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:47:55 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/builtins.h"
+#include "../../include/builtins.h"
 #include <stdio.h>
 
 void    echo(t_node *root)

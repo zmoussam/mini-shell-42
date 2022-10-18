@@ -6,12 +6,12 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:38:13 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/10/17 15:50:04 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:48:35 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
-#include "../../include/libft.h"
+#include "../../../include/libft.h"
 
 t_env_node *env_find(t_env_node *env, char  *s, int len)
 {

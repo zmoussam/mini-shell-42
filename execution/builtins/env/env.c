@@ -6,11 +6,11 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:42:14 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/17 15:50:09 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:48:40 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/libft.h"
+#include "../../../include/libft.h"
 #include "env.h"
 
 void	print_list()
