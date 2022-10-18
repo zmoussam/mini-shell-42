@@ -56,6 +56,7 @@ execution/builtins/pwd.c\
 execution/builtins/unset.c\
 execution/builtins/exit.c\
 execution/builtins/export.c\
+execution/execution.c\
 
 
 

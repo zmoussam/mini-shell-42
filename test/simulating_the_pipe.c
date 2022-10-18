@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 06:57:19 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/18 17:05:12 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:55:25 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
         execlp("ping", "ping", "-c", "5", "google.com", NULL);
     }
     else {
-        // parent process
+        // parent processz
             dup2(fd[0], STDIN_FILENO);
             close(fd[0]);
             close(fd[1]);
