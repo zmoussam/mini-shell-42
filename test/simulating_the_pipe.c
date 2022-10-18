@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 06:57:19 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/28 08:16:32 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:05:12 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,9 @@ int main(int argc, char **argv)
     }
     else {
         // parent process
-        waitpid(pid, NULL, 0);
-        int fd2[2];
-        if (pipe(fd2) == -1)
-            return 1;
-        int pid2 = fork();
-        if (pid2 == 0)
-        {
             dup2(fd[0], STDIN_FILENO);
-            dup2(fd2[1], STDOUT_FILENO);
             close(fd[0]);
             close(fd[1]);
-            execlp("grep", "grep", "ttl", NULL);
-            
-        }
-        else{
-            dup2(fd2[0], STDIN_FILENO);
-            close(fd[0]);
-            close(fd[1]);
-            close(fd2[0]);
-            close(fd2[1]);
             execlp("wc", "wc" , "-l", NULL);
         }
-     }
 }

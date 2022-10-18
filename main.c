@@ -22,6 +22,7 @@
 #include <readline/history.h>
 #include <signal.h>
 #include <sys/signal.h>
+#include<sys/wait.h>
 
 t_sh_state	g_sh_state = {0};
 t_env_node *env_list;
@@ -39,20 +40,74 @@ int	check_path(char *path)
 	}
 	return (0);
 }
-void    execution_cmd(t_node *root)
+void	launch_executabl(t_node *root)
 {
-	int i;
-	int	pid;
-	char **path_content = NULL;
+	int pid;
+	int	i;
+	char **path_content;
 	char *tmp_path;
 	char *tmp2_path;
 	char **args;
-	char *copy;
 
 	args = (char **)malloc(sizeof(char *) * root->argc + 1);
+
+	if (check_path(root->argv[0]))
+	{
+		if (!access(root->argv[0], X_OK))
+		{
+			pid = fork();
+			if (pid == 0)
+				execve(root->argv[0],root->argv ,NULL);
+			else 
+				wait(NULL);
+		}
+		else 
+			printf("bash: %s: No such file or directory\n", root->argv[0]);
+	}
+	else
+	{
+		if (env_find(env_list, "PATH", 4))
+		{
+			path_content = ft_split(env_find(env_list , "PATH", 4)->content, ":");
+			i = 0;
+			while (path_content[i])
+			{
+				tmp2_path = ft_strjoin("/", root->argv[0]);
+				tmp_path = ft_strjoin(path_content[i], tmp2_path);
+				free(tmp2_path);
+				if (!access(tmp_path, X_OK))
+				{
+					pid = fork();
+					if (pid == 0)
+					{
+						args[0] = tmp_path;
+						i = 1;
+						while (root->argv[i])
+						{
+							args[i] = root->argv[i];
+							i++;
+						}
+						args[i] = NULL;
+						execve(tmp_path, args ,NULL);
+					}
+					else
+						wait(NULL);
+				}
+				free(tmp_path);
+				//free path_content!!
+				i++;
+			}
+		}
+		else 
+			printf("bash: %s: No such file or directory\n", root->argv[0]);
+	}
+}
+void    execution_cmd(t_node *root)
+{
+	char	*copy;
+
 	copy = ft_strdup(root->argv[0]);
 	ft_strtolower(copy);
-	i = 0;
     if (ft_strcmp(copy, "echo") == 0)
         echo(root);
    else if (ft_strcmp(copy, "env") == 0)
@@ -67,68 +122,35 @@ void    execution_cmd(t_node *root)
 		exit_cmd();
 	else if (ft_strcmp(root->argv[0], "export") == 0)
 		export(root);
-	else if (check_path(root->argv[0]))
-	{
-		if (!access(root->argv[0], X_OK))
-		{
-			pid = fork();
-			if (pid== 0)
-				execve(root->argv[0],root->argv ,NULL);
-			else 
-				wait(NULL);
-		}
-		else 
-			printf("bash: %s: No such file or directory\n", root->argv[0]);
-	}
-	else if(!check_path(root->argv[0]))
-	{
-		if (env_find(env_list, "PATH", 4))
-			path_content = ft_split(env_find(env_list , "PATH", 4)->content, ":");
-		while (path_content[i])
-		{
-			tmp2_path = ft_strjoin("/", root->argv[0]);
-			tmp_path = ft_strjoin(path_content[i], tmp2_path);
-			free(tmp2_path);
-			if (!access(tmp_path, X_OK))
-			{
-				pid = fork();
-				if (pid == 0)
-				{
-					args[0] = tmp_path;
-					i = 1;
-					while (root->argv[i])
-					{
-						args[i] = root->argv[i];
-						i++;
-					}
-					args[i] = NULL;
-					if (execve(tmp_path, args ,NULL) == -1)
-						printf("hi\n");
-				}
-				else
-				{
-					wait(NULL);
-				}
-			}
-			free(tmp_path);
-			i++;
-		}
-	}
-	
+	else
+		launch_executabl(root); 
 }
 
-void    execution(t_node *root){
+void    execution(t_node *root, int fd)
+{
+	int	fd1[2];
+	int	pid;
+
+	if (pipe(fd) == -1)
+        return ;
     if (root == NULL){
         return;
     }
     if (root->type == PIPE)
     {
-        execution(root->left);
-        execution(root->right);   
+		pid = fork();
+		if (pid == 0)
+		{	
+			dup2(fd1[1], STDOUT_FILENO);
+			execution(root->left, fd1[1]);
+			exit(1);
+		}
+		else
+        execution(root->right, fd1[0]);   
+        // execution(root->left);
     }
     else
         execution_cmd(root);
-	
 }
 
 
@@ -137,6 +159,7 @@ char	*get_wd(char *path)
 	char	*working_directory;
 	char	*cwd;
 	char	*dup;
+
 	working_directory = ft_strrchr(path, '/');
 	if (working_directory[1] == '\0')
 	{
@@ -177,7 +200,8 @@ int	main(int argc, char **argv, char **env)
 		if (ft_strspn(line, " \n\t") < ft_strlen(line))
 			add_history(line);
 		tree = parse(line);
-		execution(tree);
+		// printf("left = %s\n", tree->right->right->argv[0]);
+		execution(tree, 1);
 
 		node_tree_clear(&tree);
 		free(line);
