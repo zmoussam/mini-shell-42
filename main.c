@@ -49,12 +49,26 @@ char	*get_wd(char *path)
 		return (cwd);
 	}	
 }
-
+void	handler(int signum)
+{
+	if (signum == SIGQUIT)
+		return;
+	if (signum == SIGINT)
+		{
+			rl_redisplay();
+		}
+}
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
 	t_node	*tree;
+	struct sigaction sa;
+	sa.sa_handler = &handler;
+	sa.sa_flags = SA_RESTART;
 
+	rl_catch_signals = 0;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 	char		*prompt;
 	(void)argc;
 	(void)argv;
@@ -70,6 +84,7 @@ int	main(int argc, char **argv, char **env)
 	free(prompt);
 	while (line)
 	{
+		// rl_redisplay();
 		if (ft_strspn(line, " \n\t") < ft_strlen(line))
 			add_history(line);
 		tree = parse(line);
@@ -81,4 +96,5 @@ int	main(int argc, char **argv, char **env)
 		line = readline(prompt);
 		free(prompt);
 	}
+	return (printf("exit\n"));
 }

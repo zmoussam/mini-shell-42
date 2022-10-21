@@ -1,8 +1,8 @@
 DEBUG := 0
 CC := cc
-INCLUDES := -I include -I$(HOME)/.homebrew/opt/readline/include
+INCLUDES := -I include -I$(HOME)/.brew/opt/readline/include
 CFLAGS := $(INCLUDES) -Wall -Wextra -Werror -MMD $(shell [ "$(DEBUG)" = "1" ] && echo " -g")
-LDFLAGS := -L$(HOME)/.homebrew/opt/readline/lib -lreadline
+LDFLAGS := -L$(HOME)/.brew/opt/readline/lib  -lreadline
 NAME := minishell
 SRC := env/env_cmp.c\
 env/env_destroy.c\
@@ -83,6 +83,6 @@ libft.a:
 	mv libft/libft.a .
 
 $(NAME): libft.a $(OBJ)
-	$(CC) -o $(NAME) $(OBJ) libft.a $(LDFLAGS)
+	$(CC) -o $(NAME) $(OBJ) libft.a $(LDFLAGS) 
 
 -include $(DEP)
