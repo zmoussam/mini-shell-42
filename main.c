@@ -23,6 +23,7 @@
 #include <signal.h>
 #include <sys/signal.h>
 #include<sys/wait.h>
+#include <sys/errno.h>
 
 t_sh_state	g_sh_state = {0};
 t_env_node *env_list;
@@ -33,16 +34,19 @@ char	*get_wd(char *path)
 	char	*cwd;
 
 	working_directory = ft_strrchr(path, '/');
-	working_directory = ft_strjoin("\033[0;33m➜  \033[0;36m", working_directory);
-	cwd = ft_strjoin(working_directory, "\033[0;31m :: \033[0;37m");
+	working_directory = ft_strjoin("\e[1;41m➜\e[0m\e[1;41m", working_directory);
+	cwd = ft_strjoin(working_directory, "\e[0m\e[1;41m => \e[0m ");
 	free(path);
 	free(working_directory);
 	return (cwd);	
 }
 void	handler(int signum)
 {
+	char c = 10;
 	if (signum == SIGQUIT)
 		return ;
+	if (signum == SIGINT)
+		write(0, &c, 1);
 }
 int	main(int argc, char **argv, char **env)
 {
@@ -64,7 +68,6 @@ int	main(int argc, char **argv, char **env)
 	if (sh_state_init(argc, argv, env))
 		return (1);	
 	ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
-	printf("promt = %s\n", prompt);	
 	line = readline(prompt);
 	free(prompt);
 	while (line)
@@ -76,7 +79,6 @@ int	main(int argc, char **argv, char **env)
 		execution(tree);
 		node_tree_clear(&tree);
 		free(line);
-		// printf("\001\033[0;33m➜  \001\033[0;36m");
 		prompt = get_wd(getcwd(NULL, 0));
 		line = readline(prompt);
 		free(prompt);

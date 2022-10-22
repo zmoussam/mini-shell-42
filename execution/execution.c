@@ -6,12 +6,14 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/18 22:16:54 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/22 21:12:39 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/builtins.h"
 #include "../include/execution.h"
+#include<string.h>
+#include <sys/errno.h>
 
 int	check_path(char *path)
 {
@@ -43,13 +45,17 @@ void	launch_executabl(t_node *root)
 		if (!access(root->argv[0], X_OK))
 		{
 			pid = fork();
-			if (pid == 0)
-				execve(root->argv[0],root->argv ,NULL);
-			else 
-				waitpid(pid, NULL, 0);
+			if (pid == -1)
+				printf("%s\n", strerror(errno));
+			else if (pid == 0)
+			{
+				if (execve(root->argv[0],root->argv ,NULL) == -1)
+					printf("%s\n", strerror(errno));
+			}
+			wait(NULL);
 		}
 		else 
-			printf("bash: %s: No such file or directory\n", root->argv[0]);
+			printf("%s\n", strerror(errno));
 	}
 	else
 	{
@@ -63,8 +69,10 @@ void	launch_executabl(t_node *root)
 				tmp_path = ft_strjoin(path_content[i], tmp2_path);
 				free(tmp2_path);
 				if (!access(tmp_path, X_OK))
-				{
+				{ 
 					pid = fork();
+					if (pid == -1)
+						printf("%s\n", strerror(errno));
 					if (pid == 0)
 					{
 						args[0] = tmp_path;
@@ -75,15 +83,18 @@ void	launch_executabl(t_node *root)
 							i++;
 						}
 						args[i] = NULL;
-						execve(tmp_path, args ,NULL);
+						if (execve(tmp_path, args ,NULL) == -1)
+							printf("%s\n", strerror(errno));
 					}
 					else
 						waitpid(pid, NULL, 0);
 				}
 				free(tmp_path);
-				//free path_content!!
 				i++;
 			}
+			i = 0;
+			while (path_content[i])
+			 free(path_content[i++]);
 		}
 		else 
 			printf("bash: %s: No such file or directory\n", root->argv[0]);
@@ -128,7 +139,7 @@ void    execution(t_node *root)
         pid = fork();
         if (pid == 0)
         {
-            close(STDOUT_FILENO);
+            //close(STDOUT_FILENO);
             dup2(fd[1], STDOUT_FILENO);
             close(fd[0]);
             close(fd[1]);
@@ -139,7 +150,7 @@ void    execution(t_node *root)
         pid = fork();
         if (pid == 0)
         {
-            close(STDIN_FILENO);
+            //close(STDIN_FILENO);
             dup2(fd[0], STDIN_FILENO);
             close(fd[0]);
             close(fd[1]);
