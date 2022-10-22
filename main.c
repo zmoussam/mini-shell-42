@@ -31,32 +31,18 @@ char	*get_wd(char *path)
 {
 	char	*working_directory;
 	char	*cwd;
-	char	*dup;
 
 	working_directory = ft_strrchr(path, '/');
-	if (working_directory[1] == '\0')
-	{
-		cwd = ft_strjoin(working_directory, "\033[0;31m :: \033[0;37m");
-		free(path);
-		return (cwd);
-	}
-	else
-	{
-		dup = ft_strdup(working_directory + 1);
-		cwd = ft_strjoin(dup, "\033[0;31m :: \033[0;37m");
-		free(dup);
-		free(path);
-		return (cwd);
-	}	
+	working_directory = ft_strjoin("\033[0;33m➜  \033[0;36m", working_directory);
+	cwd = ft_strjoin(working_directory, "\033[0;31m :: \033[0;37m");
+	free(path);
+	free(working_directory);
+	return (cwd);	
 }
 void	handler(int signum)
 {
 	if (signum == SIGQUIT)
-		return;
-	if (signum == SIGINT)
-		{
-			rl_redisplay();
-		}
+		return ;
 }
 int	main(int argc, char **argv, char **env)
 {
@@ -64,8 +50,7 @@ int	main(int argc, char **argv, char **env)
 	t_node	*tree;
 	struct sigaction sa;
 	sa.sa_handler = &handler;
-	sa.sa_flags = SA_RESTART;
-
+	// sa.sa_flags = SA_RESTART;
 	rl_catch_signals = 0;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
@@ -79,7 +64,7 @@ int	main(int argc, char **argv, char **env)
 	if (sh_state_init(argc, argv, env))
 		return (1);	
 	ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
-	printf("\033[0;33m➜  \033[0;36m");	
+	printf("promt = %s\n", prompt);	
 	line = readline(prompt);
 	free(prompt);
 	while (line)
@@ -91,7 +76,7 @@ int	main(int argc, char **argv, char **env)
 		execution(tree);
 		node_tree_clear(&tree);
 		free(line);
-		printf("\033[0;33m➜  \033[0;36m");
+		// printf("\001\033[0;33m➜  \001\033[0;36m");
 		prompt = get_wd(getcwd(NULL, 0));
 		line = readline(prompt);
 		free(prompt);
