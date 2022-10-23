@@ -28,6 +28,8 @@
 t_sh_state	g_sh_state = {0};
 t_env_node *env_list;
 
+// extern char **environ;
+
 char	*get_wd(char *path)
 {
 	char	*working_directory;
@@ -42,37 +44,50 @@ char	*get_wd(char *path)
 }
 void	handler(int signum)
 {
-	char c = 10;
+
+
 	if (signum == SIGQUIT)
 		return ;
 	if (signum == SIGINT)
-		write(0, &c, 1);
+	{
+		rl_done = 1;
+		// write(0, &c, 1);
+		// rl_on_new_line();
+		// rl_replace_line("", 0);
+		// rl_redisplay();
+	}
+}
+int get_c()
+{
+	return 0;
 }
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
 	t_node	*tree;
 	struct sigaction sa;
+	t_env_node *copy;
 	sa.sa_handler = &handler;
-	// sa.sa_flags = SA_RESTART;
+	sa.sa_flags = SA_RESTART;
+
 	rl_catch_signals = 0;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
+		printf("%s\n", strerror(errno));
 	char		*prompt;
 	(void)argc;
 	(void)argv;
-	
 	prompt = get_wd(getcwd(NULL, 0));
 	env_list = create_env(env);
+	copy = env_list;
 
 	if (sh_state_init(argc, argv, env))
 		return (1);	
 	ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
+	rl_event_hook = get_c;
 	line = readline(prompt);
 	free(prompt);
 	while (line)
 	{
-		// rl_redisplay();
 		if (ft_strspn(line, " \n\t") < ft_strlen(line))
 			add_history(line);
 		tree = parse(line);

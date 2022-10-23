@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:42:14 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/18 18:48:40 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/23 17:10:35 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,18 @@ void	print_list()
 		head = head->next;
 	}
 }
-
+int	env_listsize(t_env_node *env)
+{
+	int i;
+	i = 0;
+	
+	while (env)
+	{
+		i++;		
+		env = env->next;
+	}
+	return (i);
+}
 void    env_cmd(int argc)
 {
     if (argc != 1)

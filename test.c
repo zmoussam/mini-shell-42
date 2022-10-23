@@ -4,7 +4,14 @@
 #include <sys/errno.h>
 #include<string.h>
 #include<stdlib.h>
-int main()
+#include <unistd.h>
+#include <stdio.h>
+
+extern char **environ;
+//...
+int main ()
 {
-    printf("tty = %s\n", ttyname(1));
-}
+int i = 0;
+while(environ[i]) {
+  printf("%s\n", environ[i++]); // prints in form of "variable=value"
+}}

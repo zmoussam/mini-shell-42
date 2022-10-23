@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/22 21:12:39 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/23 18:14:19 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,53 @@ int	check_path(char *path)
 	}
 	return (0);
 }
+void	copy_env(char *env[])
+{
+	int i = 0;
+	char	*temp;
+	int size;
+	size = env_listsize(env_list);
+	t_env_node *head;
 
+	head = env_list;
+
+	while (head && i < size)
+	{
+		temp = ft_strjoin(head->name, "=");
+		env[i] = ft_strjoin(temp, head->content);
+		free(temp);
+		head = head->next;
+		i++;	
+	}	
+}
+
+void	free_env(char **env)
+{
+	int	i;
+	i = 0;
+	
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
+}
 void	launch_executabl(t_node *root)
 {
 	int pid;
 	int	i;
+	int	size;
 	char **path_content;
 	char *tmp_path;
 	char *tmp2_path;
 	char **args;
-
+	char **env;
+	
+	size = env_listsize(env_list);
+	env = (char **)malloc(size * sizeof(char *) + 1);
+	copy_env(env);
+	env[size - 1] = NULL;
 	args = (char **)malloc(sizeof(char *) * root->argc + 1);
 
 	if (check_path(root->argv[0]))
@@ -49,7 +86,7 @@ void	launch_executabl(t_node *root)
 				printf("%s\n", strerror(errno));
 			else if (pid == 0)
 			{
-				if (execve(root->argv[0],root->argv ,NULL) == -1)
+				if (execve(root->argv[0],root->argv ,env) == -1)
 					printf("%s\n", strerror(errno));
 			}
 			wait(NULL);
@@ -83,7 +120,7 @@ void	launch_executabl(t_node *root)
 							i++;
 						}
 						args[i] = NULL;
-						if (execve(tmp_path, args ,NULL) == -1)
+						if (execve(tmp_path, args, env) == -1)
 							printf("%s\n", strerror(errno));
 					}
 					else
@@ -99,6 +136,7 @@ void	launch_executabl(t_node *root)
 		else 
 			printf("bash: %s: No such file or directory\n", root->argv[0]);
 	}
+	free_env(env);
 }
 void    execution_cmd(t_node *root)
 {
