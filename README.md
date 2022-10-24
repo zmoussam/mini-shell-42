@@ -1,4 +1,5 @@
 <html>
+   <head>
    <style>
         .tab1 {
             tab-size: 2;
@@ -12,6 +13,7 @@
             tab-size: 8;
         }
     </style>
+      </head>
 # Minishell42
 This project is about creating a simple shell. Yes, your own little bash. You will learn a lot about processes and file descriptors.
 <h1>GNU Readline library</h1>
