@@ -1,4 +1,17 @@
 <html>
+   <style>
+        .tab1 {
+            tab-size: 2;
+        }
+  
+        .tab2 {
+            tab-size: 4;
+        }
+  
+        .tab4 {
+            tab-size: 8;
+        }
+    </style>
 # Minishell42
 This project is about creating a simple shell. Yes, your own little bash. You will learn a lot about processes and file descriptors.
 <h1>GNU Readline library</h1>
@@ -24,7 +37,7 @@ of the major and minor version numbers of the library, of the form 0xMMmm.
 MM is the two-digit major version number; mm is the two-digit minor version number. 
 For Readline 4.2, for example, the value of RL_READLINE_VERSION would be 0x0402.
 
-<h2>Readline functions use on this project</h2>
+<h2>Readline functions used on this project</h2>
 <h3>readline() :</h3>
 Many programs provide a command line interface, such as mail, ftp, and sh. 
 For such programs, the default behaviour of Readline is sufficient. 
@@ -35,6 +48,6 @@ The function readline() prints a prompt prompt and then reads and returns a
 single line of text from the user. If prompt is NULL or the empty string, no
 prompt is displayed. The line readline returns is allocated with malloc(); the caller should free() 
 the line when it has finished with it. The declaration for readline in ANSI C is
-             char *readline (const char *prompt);
+             <b class="tab2">char *readline (const char *prompt);</b>
 So, one might say:
  </html>             
