@@ -16,8 +16,8 @@
 #include "shell.h"
 #include "./include/execution.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <signal.h>
@@ -30,7 +30,7 @@ t_env_node *env_list;
 
 // extern char **environ;
 
-char	*get_wd(char *path)
+const char	*get_wd(char *path)
 {
 	char	*working_directory;
 	char	*cwd;
@@ -42,25 +42,21 @@ char	*get_wd(char *path)
 	free(working_directory);
 	return (cwd);	
 }
+
 void	handler(int signum)
 {
-
 
 	if (signum == SIGQUIT)
 		return ;
 	if (signum == SIGINT)
-	{
 		rl_done = 1;
-		// write(0, &c, 1);
-		// rl_on_new_line();
-		// rl_replace_line("", 0);
-		// rl_redisplay();
-	}
 }
+
 int get_c()
 {
 	return 0;
 }
+// 
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
@@ -69,11 +65,11 @@ int	main(int argc, char **argv, char **env)
 	t_env_node *copy;
 	sa.sa_handler = &handler;
 	sa.sa_flags = SA_RESTART;
-
+	//initialize_readline();
 	rl_catch_signals = 0;
 	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("%s\n", strerror(errno));
-	char		*prompt;
+	const	char	*prompt;
 	(void)argc;
 	(void)argv;
 	prompt = get_wd(getcwd(NULL, 0));
@@ -85,18 +81,22 @@ int	main(int argc, char **argv, char **env)
 	ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
 	rl_event_hook = get_c;
 	line = readline(prompt);
-	free(prompt);
+	free((void *)prompt);
 	while (line)
 	{
 		if (ft_strspn(line, " \n\t") < ft_strlen(line))
 			add_history(line);
 		tree = parse(line);
-		execution(tree);
-		node_tree_clear(&tree);
+		if (tree->argv[0] != NULL)
+		{
+			execution(tree);
+			node_tree_clear(&tree);
+		}
 		free(line);
 		prompt = get_wd(getcwd(NULL, 0));
 		line = readline(prompt);
-		free(prompt);
+		// printf("%d", rl_end);
+		free((void *)prompt);
 	}
 	return (printf("exit\n"));
 }

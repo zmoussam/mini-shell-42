@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/23 18:14:19 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:55:08 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,5 +200,10 @@ void    execution(t_node *root)
         waitpid(pid, NULL, 0);
 	}
     else
+	{
+		// if redc_list;
+		// call redc function
+		// else
         execution_cmd(root);
+	}
 }

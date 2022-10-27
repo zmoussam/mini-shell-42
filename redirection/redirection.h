@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:53 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/10/27 19:28:39 by zmoussam         ###   ########.fr       */
+/*   Created: 2022/10/27 17:04:49 by zmoussam          #+#    #+#             */
+/*   Updated: 2022/10/27 17:54:35 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#ifndef REDIRECTION_H
+#define REDIRECTION_H
 
-void	ft_lstdelone(t_list *lst,  (void *)del(void *))
+typedef enum t_typerdc{
+    HEREDOC,
+    RDC_IN,
+    RDC_OUT,
+    DBL_RDC_OUT,
+}t_typerdc;
+
+typedef struct t_redc
 {
-	if (lst && del)
-		del(lst->content);
-	free(lst);
-}
+    int type;
+    char *file_name;
+    struct t_redc *next;
+}t_redc;
+#endif
