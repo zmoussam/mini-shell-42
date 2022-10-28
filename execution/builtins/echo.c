@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:03 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/18 18:47:55 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:33:58 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ void    echo(t_node *root)
 
     i = 1;
     k = 0;
-    j = 2;
-    if (root->argv[i] && (root->argv[i][0] == '-' && root->argv[i][1] == '\0'))
-        i++;
-    else if (root->argv[i] && root->argv[i][0] == '-' && root->argv[i][1] == 'n')
+    while (root->argv[i] && (ft_strcmp(root->argv[i], "-n") == 0 \
+    || ( root->argv[i][0] == '-' && root->argv[i][1] == 'n')))
     {
+        j = 2;
         while (root->argv[i][j] && root->argv[i][j] == 'n')
             j++;
         if (root->argv[i][j] == '\0')
@@ -33,6 +32,10 @@ void    echo(t_node *root)
             i++;
             k = 1;
         }
+        while (ft_strcmp(root->argv[i], "-n") == 0)
+            i++;
+        if (root->argv[i][j] != 'n')
+            break; 
     }
     while (root->argv[i])
     {

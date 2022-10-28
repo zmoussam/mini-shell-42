@@ -87,11 +87,7 @@ int	main(int argc, char **argv, char **env)
 		if (ft_strspn(line, " \n\t") < ft_strlen(line))
 			add_history(line);
 		tree = parse(line);
-		if (tree->argv[0] != NULL)
-		{
-			execution(tree);
-			node_tree_clear(&tree);
-		}
+		execution(tree);
 		free(line);
 		prompt = get_wd(getcwd(NULL, 0));
 		line = readline(prompt);

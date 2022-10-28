@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:18:15 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/27 22:53:16 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/27 23:17:21 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,3 +123,7 @@ int main(int argc, char **argv)
 
 //gedit
 // /bin/sysinfo
+        |
+echo            |
+       ls -la         |
+                cat        ls

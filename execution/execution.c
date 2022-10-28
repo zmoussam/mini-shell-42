@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/27 17:55:08 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/27 23:28:45 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void    execution(t_node *root)
         pid = fork();
         if (pid == 0)
         {
-            //close(STDOUT_FILENO);
+            close(STDOUT_FILENO);
             dup2(fd[1], STDOUT_FILENO);
             close(fd[0]);
             close(fd[1]);
@@ -188,7 +188,7 @@ void    execution(t_node *root)
         pid = fork();
         if (pid == 0)
         {
-            //close(STDIN_FILENO);
+            close(STDIN_FILENO);
             dup2(fd[0], STDIN_FILENO);
             close(fd[0]);
             close(fd[1]);
