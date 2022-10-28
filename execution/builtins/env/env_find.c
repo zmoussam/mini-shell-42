@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:38:13 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/10/18 18:48:35 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/28 18:46:25 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void ft_list_remove_if(t_env_node **begin_list, void *data_ref, int (*cmp)())
 {
 	if (*begin_list == NULL || begin_list == NULL)
 		return ;
-         
 	t_env_node *cur = *begin_list;
 
 	if (cmp(cur->name , data_ref) == 0)
@@ -44,14 +43,8 @@ void ft_list_remove_if(t_env_node **begin_list, void *data_ref, int (*cmp)())
         free(cur->name);
         free(cur->content);
 		free(cur);
-        cur->content = NULL;
-        cur->name = NULL;
-        cur = NULL;
 		ft_list_remove_if(begin_list, data_ref, cmp);
 	}
     else
-    {
-        cur = *begin_list;
         ft_list_remove_if(&cur->next, data_ref, cmp);
-    }
 }

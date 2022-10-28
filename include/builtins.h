@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 17:01:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/23 16:10:28 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/28 16:53:00 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define BUILTINS_H
 #include "parser.h"
 #include "../execution/builtins/env/env.h"
+#include<string.h>
+#include<errno.h>
 
 void    echo(t_node *root);
 void    env_cmd(int argc);

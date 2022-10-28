@@ -91,6 +91,7 @@ int	main(int argc, char **argv, char **env)
 		free(line);
 		prompt = get_wd(getcwd(NULL, 0));
 		line = readline(prompt);
+		node_tree_clear(&tree);
 		// printf("%d", rl_end);
 		free((void *)prompt);
 	}

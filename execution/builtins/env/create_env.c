@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:42:24 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/10/18 18:48:26 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/28 18:36:27 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void    *manu(t_env_node   *var, char *s)
     while (s[j])
     {
         if (s[j] == '=')
-            add_back(&var, new_node(ft_strdup(ft_substr(s, j + 1, -1)), ft_strdup(ft_substr(s, 0, j)), j));
+            add_back(&var, new_node(ft_substr(s, j + 1, -1), ft_substr(s, 0, j), j));
         j++;
     }
     return(var);

@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 15:26:54 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/23 16:10:53 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/28 18:14:34 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,58 +15,62 @@
 
 void    cd(t_node *root)
 {  
-    char *oldpwd;
-    char *first_cwd;
+    static char *oldpwd;
+    char *tmp_cwd;
+    char    *tmp_content;
     
-    oldpwd = NULL;
-    first_cwd = getcwd(NULL, 0);
-    if (env_find(env_list, "OLDPWD", -1) != NULL)
-    {
-        oldpwd = (env_find(env_list, "OLDPWD", 6)->content);
-        ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
-        add_back(&env_list, new_node(getcwd(NULL, 0), ft_strdup("OLDPWD"), 6));
-    }
-    if (root->argc == 1 || (root->argc == 2 && (ft_strcmp(root->argv[1], "~") == 0 || ft_strcmp(root->argv[1], "--") == 0)))
+    tmp_cwd = NULL;
+    if (oldpwd != NULL)
+        tmp_cwd = ft_strdup(oldpwd);
+    if (root->argc == 1)
     {
         if (env_find(env_list, "HOME", -1))
-            if (chdir(env_find(env_list, "HOME", -1)->content) == -1)
+        {
+            tmp_content = env_find(env_list, "HOME", -1)->content;
+            oldpwd = getcwd(NULL, 0);
+            ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
+            add_back(&env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));
+            if (chdir(tmp_content) == -1)
             {
-                printf("error in changin directory\n");
-                return ;
+                printf("minishell: cd: %s:No such file or directory\n", tmp_content);
+                oldpwd = tmp_cwd;
+                ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
+                add_back(&env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));
+                    return ;
             }
+        }
+        else 
+            printf("minishell: cd: HOME not set\n");
     }
-    else if (root->argc == 2)
+    else if (root->argc > 1)
     {
         if (ft_strcmp(root->argv[1], "-") == 0)
         {
-            if (env_find(env_list, "OLDPWD", -1))
+            if (oldpwd != NULL)
             {
-                if (chdir(oldpwd) == -1)
-                    printf("error in changing directory\n");
-                else
-                    printf("%s\n", oldpwd);
-                return ;
+                oldpwd = getcwd(NULL, 0);
+                ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
+                add_back(&env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));   
             }
-            else
+            if (env_find(env_list, "OLDPWD", -1) == NULL || chdir(tmp_cwd) == -1)
                 printf("minishe v0.1: cd: OLDPWD not set\n");
+            else
+                printf("%s\n", oldpwd);
             return ;
         }
         else 
         {
+            oldpwd = getcwd(NULL, 0);
+            ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
+            add_back(&env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6)); 
             if (chdir(root->argv[1]) == -1)
             {
-                printf("cd: no such file or directory: %s\n", root->argv[1]);
-                if (oldpwd)
-                {
-                    ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
+                printf("minishell: cd: %s:no such file or directory\n", root->argv[1]);
+                oldpwd = tmp_cwd;
+                ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
+                if (oldpwd != NULL)
                     add_back(&env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));
-                    return ;
-                }
             }
-            else if (oldpwd == NULL)
-                add_back(&env_list, new_node(first_cwd, ft_strdup("OLDPWD"), 6));
         }
     }
-    else 
-        printf("cd: string not in pwd: %s\n", root->argv[1]);
 }
