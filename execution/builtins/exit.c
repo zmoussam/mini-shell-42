@@ -6,14 +6,14 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:49 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/18 18:48:00 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/30 21:09:59 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 
-void    exit_cmd()
+void	exit_cmd(void)
 {
-    printf("exit\n");
-    exit(1);
+	printf("exit\n");
+	exit(1);
 }

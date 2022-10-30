@@ -45,7 +45,6 @@ const char	*get_wd(char *path)
 
 void	handler(int signum)
 {
-
 	if (signum == SIGQUIT)
 		return ;
 	if (signum == SIGINT)

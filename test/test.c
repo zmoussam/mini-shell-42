@@ -1,11 +1,11 @@
 #include<stdio.h>
  #include <stdlib.h>
  #include <unistd.h>
+ #include <fcntl.h>
 int main()
 {
-    static char *pwd;
+    int fd;
+    fd = open("/etc/passwd", O_RDWR, 0777);
+    printf("fd = %d\n", fd);
 
-    pwd = getcwd(NULL, 0);
-    printf("home = %s\n", pwd);
-    free(pwd); 
 }

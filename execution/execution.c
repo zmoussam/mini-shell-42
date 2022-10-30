@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/27 23:28:45 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:43:05 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_path(char *path)
 	int	i;
 
 	i = 0;
-	while(path[i])
+	while (path[i])
 	{
 		if (path[i] == '/')
 			return (1);
@@ -28,31 +28,36 @@ int	check_path(char *path)
 	}
 	return (0);
 }
-void	copy_env(char *env[])
+
+char	**copy_env(void)
 {
-	int i = 0;
-	char	*temp;
-	int size;
+	int			i;
+	char		*temp;
+	int			size;
+	t_env_node	*head;
+	char		**env;
+
+	i = 0;
 	size = env_listsize(env_list);
-	t_env_node *head;
-
+	env = (char **)malloc(size * sizeof(char *) + 1);
 	head = env_list;
-
 	while (head && i < size)
 	{
 		temp = ft_strjoin(head->name, "=");
 		env[i] = ft_strjoin(temp, head->content);
 		free(temp);
 		head = head->next;
-		i++;	
-	}	
+		i++;
+	}
+	env[i] = NULL;
+	return (env);
 }
 
 void	free_env(char **env)
 {
 	int	i;
+
 	i = 0;
-	
 	while (env[i])
 	{
 		free(env[i]);
@@ -60,23 +65,19 @@ void	free_env(char **env)
 	}
 	free(env);
 }
+
 void	launch_executabl(t_node *root)
 {
-	int pid;
-	int	i;
-	int	size;
-	char **path_content;
-	char *tmp_path;
-	char *tmp2_path;
-	char **args;
-	char **env;
-	
-	size = env_listsize(env_list);
-	env = (char **)malloc(size * sizeof(char *) + 1);
-	copy_env(env);
-	env[size - 1] = NULL;
-	args = (char **)malloc(sizeof(char *) * root->argc + 1);
+	int		pid;
+	int		i;
+	char	**path_content;
+	char	*tmp_path;
+	char	*tmp2_path;
+	char	**args;
+	char	**env;
 
+	env = copy_env();
+	args = (char **)malloc(sizeof(char *) * root->argc + 1);
 	if (check_path(root->argv[0]))
 	{
 		if (!access(root->argv[0], X_OK))
@@ -86,19 +87,20 @@ void	launch_executabl(t_node *root)
 				printf("%s\n", strerror(errno));
 			else if (pid == 0)
 			{
-				if (execve(root->argv[0],root->argv ,env) == -1)
+				if (execve(root->argv[0], root->argv, env) == -1)
 					printf("%s\n", strerror(errno));
 			}
-			wait(NULL);
+			waitpid(pid, NULL, 0);
 		}
-		else 
+		else
 			printf("%s\n", strerror(errno));
 	}
 	else
 	{
 		if (env_find(env_list, "PATH", 4))
 		{
-			path_content = ft_split(env_find(env_list , "PATH", 4)->content, ":");
+			path_content = \
+				ft_split(env_find(env_list, "PATH", 4)->content, ":");
 			i = 0;
 			while (path_content[i])
 			{
@@ -106,7 +108,7 @@ void	launch_executabl(t_node *root)
 				tmp_path = ft_strjoin(path_content[i], tmp2_path);
 				free(tmp2_path);
 				if (!access(tmp_path, X_OK))
-				{ 
+				{
 					pid = fork();
 					if (pid == -1)
 						printf("%s\n", strerror(errno));
@@ -121,7 +123,9 @@ void	launch_executabl(t_node *root)
 						}
 						args[i] = NULL;
 						if (execve(tmp_path, args, env) == -1)
+						{
 							printf("%s\n", strerror(errno));
+						}
 					}
 					else
 						waitpid(pid, NULL, 0);
@@ -131,23 +135,26 @@ void	launch_executabl(t_node *root)
 			}
 			i = 0;
 			while (path_content[i])
-			 free(path_content[i++]);
+				free(path_content[i++]);
+			free(path_content);
 		}
-		else 
+		else
 			printf("bash: %s: No such file or directory\n", root->argv[0]);
 	}
 	free_env(env);
+	free(args);
 }
-void    execution_cmd(t_node *root)
+
+void	execution_cmd(t_node *root)
 {
 	char	*copy;
 
 	copy = ft_strdup(root->argv[0]);
 	ft_strtolower(copy);
-    if (ft_strcmp(copy, "echo") == 0)
-        echo(root);
-    else if (ft_strcmp(copy, "env") == 0)
-        env_cmd(root->argc);
+	if (ft_strcmp(copy, "echo") == 0)
+		echo(root);
+	else if (ft_strcmp(copy, "env") == 0)
+		env_cmd(root->argc);
 	else if (ft_strcmp(root->argv[0], "cd") == 0)
 		cd(root);
 	else if (ft_strcmp(copy, "pwd") == 0)
@@ -159,47 +166,47 @@ void    execution_cmd(t_node *root)
 	else if (ft_strcmp(root->argv[0], "export") == 0)
 		export(root);
 	else
-		launch_executabl(root); 
+		launch_executabl(root);
+	free(copy);
 }
 
-void    execution(t_node *root)
+void	execution(t_node *root)
 {
 	int	pid;
 	int	fd[2];
 
-    if (pipe(fd) == -1)
-        return ;
-    if (root == NULL){
-        return;
-    }
-    if (root->type == PIPE)
-    {
-        pid = fork();
-        if (pid == 0)
-        {
-            close(STDOUT_FILENO);
-            dup2(fd[1], STDOUT_FILENO);
-            close(fd[0]);
-            close(fd[1]);
-            execution(root->left);
-            exit(0);
-        }
-        waitpid(pid, NULL, 0);
-        pid = fork();
-        if (pid == 0)
-        {
-            close(STDIN_FILENO);
-            dup2(fd[0], STDIN_FILENO);
-            close(fd[0]);
-            close(fd[1]);
-            execution(root->right);
-            exit(0);  
-        }
-        close(fd[0]);
-        close(fd[1]);
-        waitpid(pid, NULL, 0);
+	if (pipe(fd) == -1)
+		return ;
+	if (root == NULL)
+		return ;
+	if (root->type == PIPE)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			close(STDOUT_FILENO);
+			dup2(fd[1], STDOUT_FILENO);
+			close(fd[0]);
+			close(fd[1]);
+			execution(root->left);
+			exit(0);
+		}
+		waitpid(pid, NULL, 0);
+		pid = fork();
+		if (pid == 0)
+		{
+			close(STDIN_FILENO);
+			dup2(fd[0], STDIN_FILENO);
+			close(fd[0]);
+			close(fd[1]);
+			execution(root->right);
+			exit(0);
+		}
+		close(fd[0]);
+		close(fd[1]);
+		waitpid(pid, NULL, 0);
 	}
-    else
+	else
 	{
 		// if redc_list;
 		// call redc function
