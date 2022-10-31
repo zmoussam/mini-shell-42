@@ -26,7 +26,7 @@
 #include <sys/errno.h>
 
 t_sh_state	g_sh_state = {0};
-t_env_node *env_list;
+t_env_list *g_env_list;
 
 // extern char **environ;
 
@@ -61,10 +61,8 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 	t_node	*tree;
 	struct sigaction sa;
-	t_env_node *copy;
 	sa.sa_handler = &handler;
 	sa.sa_flags = SA_RESTART;
-	//initialize_readline();
 	rl_catch_signals = 0;
 	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("%s\n", strerror(errno));
@@ -72,12 +70,11 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	prompt = get_wd(getcwd(NULL, 0));
-	env_list = create_env(env);
-	copy = env_list;
+	g_env_list = create_env(env);
 
 	if (sh_state_init(argc, argv, env))
 		return (1);	
-	ft_list_remove_if(&env_list, "OLDPWD", &ft_strcmp);
+	ft_list_remove_if(&g_env_list, "OLDPWD", &ft_strcmp);
 	rl_event_hook = get_c;
 	line = readline(prompt);
 	free((void *)prompt);
@@ -91,7 +88,6 @@ int	main(int argc, char **argv, char **env)
 		prompt = get_wd(getcwd(NULL, 0));
 		line = readline(prompt);
 		node_tree_clear(&tree);
-		// printf("%d", rl_end);
 		free((void *)prompt);
 	}
 	return (printf("exit\n"));

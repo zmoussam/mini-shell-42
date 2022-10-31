@@ -6,21 +6,21 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/30 21:25:30 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/31 20:58:19 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 
-t_env_node	get_max_variable(void)
+t_env_list	get_max_variable(void)
 {
-	t_env_node	*head;
-	t_env_node	max;
+	t_env_list	*head;
+	t_env_list	max;
 
 	max.name = "";
 	max.content = "";
 	max.len = 0;
-	head = env_list;
+	head = g_env_list;
 	while (head)
 	{
 		if (ft_strcmp(head->name, max.name) >= 0)
@@ -35,16 +35,16 @@ t_env_node	get_max_variable(void)
 
 void	print_sort_list(void)
 {
-	t_env_node	*head;
-	t_env_node	min;
+	t_env_list	*head;
+	t_env_list	min;
 	int			*tmp;
 	int			k;
 
 	min = get_max_variable();
 	k = 0;
-	if (env_list)
+	if (g_env_list)
 	{
-		head = env_list;
+		head = g_env_list;
 		while (head)
 		{
 			if (ft_strcmp(head->name, min.name) <= 0 && head->len != -1)
@@ -71,11 +71,11 @@ void	print_sort_list(void)
 		print_sort_list();
 }
 
-t_env_node	*get_new_node(char *variable_with_content)
+t_env_list	*get_new_node(char *variable_with_content)
 {
 	int		i;
-    int		len;
-    int		len2;
+	int		len;
+	int		len2;
 	char	*content;
 	char	*name;
 
@@ -110,9 +110,9 @@ t_env_node	*get_new_node(char *variable_with_content)
 
 void	intialise_len_variable(void)
 {
-	t_env_node	*head;
+	t_env_list	*head;
 
-	head = env_list;
+	head = g_env_list;
 	while (head)
 	{
 		head->len = ft_strlen(head->name);
@@ -120,7 +120,7 @@ void	intialise_len_variable(void)
 	}
 }
 
-int	parss_variable(t_env_node *new_node)
+int	parss_variable(t_env_list *new_node)
 {
 	int		i;
 	char	*tmp_content;
@@ -169,10 +169,10 @@ int	parss_variable(t_env_node *new_node)
 		tmp_name = new_node->name;
 		new_node->name = ft_strtrim(new_node->name, "+");
 		free(tmp_name);
-		if (env_find(env_list, new_node->name, -1) && new_node->content[0] != '\0')
+		if (env_find(g_env_list, new_node->name, -1) && new_node->content[0] != '\0')
 		{
 			tmp_content = new_node->content;
-			new_node->content = ft_strjoin(env_find(env_list, new_node->name, -1)->content, new_node->content);
+			new_node->content = ft_strjoin(env_find(g_env_list, new_node->name, -1)->content, new_node->content);
 			free(tmp_content);
 		}
 	}
@@ -182,7 +182,7 @@ int	parss_variable(t_env_node *new_node)
 void	export(t_node *root)
 {
 	int			i;
-	t_env_node	*new_node;
+	t_env_list	*new_node;
 
 	i = 1;
 	if (root->argc == 1 || (root->argc == 2 \
@@ -204,13 +204,13 @@ void	export(t_node *root)
 				free(new_node->name);
 				free(new_node->content);
 				free(new_node);
-				continue;
+				continue ;
 			}
 			else if (root->argv[i][0] == ';')
 				break ;
-			if (env_find(env_list, new_node->name, -1))
-				ft_list_remove_if(&env_list, new_node->name, &ft_strcmp);
-			add_back(&env_list, new_node);
+			if (env_find(g_env_list, new_node->name, -1))
+				ft_list_remove_if(&g_env_list, new_node->name, &ft_strcmp);
+			add_back(&g_env_list, new_node);
 			i++;
 		}
 	}

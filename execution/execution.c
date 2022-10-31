@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/30 20:43:05 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/31 20:58:43 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ char	**copy_env(void)
 	int			i;
 	char		*temp;
 	int			size;
-	t_env_node	*head;
+	t_env_list	*head;
 	char		**env;
 
 	i = 0;
-	size = env_listsize(env_list);
+	size = env_listsize(g_env_list);
 	env = (char **)malloc(size * sizeof(char *) + 1);
-	head = env_list;
+	head = g_env_list;
 	while (head && i < size)
 	{
 		temp = ft_strjoin(head->name, "=");
@@ -97,10 +97,10 @@ void	launch_executabl(t_node *root)
 	}
 	else
 	{
-		if (env_find(env_list, "PATH", 4))
+		if (env_find(g_env_list, "PATH", 4))
 		{
 			path_content = \
-				ft_split(env_find(env_list, "PATH", 4)->content, ":");
+				ft_split(env_find(g_env_list, "PATH", 4)->content, ":");
 			i = 0;
 			while (path_content[i])
 			{

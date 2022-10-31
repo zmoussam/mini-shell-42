@@ -4,8 +4,12 @@
  #include <fcntl.h>
 int main()
 {
-    int fd;
-    fd = open("/etc/passwd", O_RDWR, 0777);
-    printf("fd = %d\n", fd);
+    static char *str;
+    char    *copy;
+    str = getcwd(NULL, 0);
+    copy = str;
+    str = copy;
+    free(copy);
+
 
 }

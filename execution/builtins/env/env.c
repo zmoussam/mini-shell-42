@@ -6,41 +6,43 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:42:14 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/30 09:50:16 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/10/31 20:55:28 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/libft.h"
 #include "env.h"
 
-void	print_list()
+void	print_list(void)
 {
-	t_env_node *head;
+	t_env_list	*head;
 
-	head = env_list;
+	head = g_env_list;
 	while (head)
 	{
-		if (head->content[0] != '\0' )
+		if (head->content[0] != '\0')
 			printf("%s=%s\n", head->name, head->content);
 		head = head->next;
 	}
 }
-int	env_listsize(t_env_node *env)
+
+int	env_listsize(t_env_list *env)
 {
-	int i;
+	int	i;
+
 	i = 0;
-	
 	while (env)
 	{
-		i++;		
+		i++;
 		env = env->next;
 	}
 	return (i);
 }
-void    env_cmd(int argc)
+
+void	env_cmd(int argc)
 {
-    if (argc != 1)
-        printf("use env with no options or arguments\n");
-    else
-        print_list();
+	if (argc != 1)
+		printf("use env with no options or arguments\n");
+	else
+		print_list();
 }
