@@ -27,11 +27,12 @@ void	cd(t_node *root)
 		if (env_find(g_env_list, "HOME", -1))
 		{
 			tmp_content = env_find(g_env_list, "HOME", -1)->content;
-			oldpwd = getcwd(NULL, 0);
 			ft_list_remove_if(&g_env_list, "OLDPWD", &ft_strcmp);
+			oldpwd = getcwd(NULL, 0);
 			add_back(&g_env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));
 			if (chdir(tmp_content) == -1)
 			{
+				free(oldpwd);
 				printf("minishell: cd: %s:%s\n", \
 					tmp_content, strerror(errno));
 				oldpwd = tmp_cwd;
@@ -47,20 +48,24 @@ void	cd(t_node *root)
 	{
 		if (ft_strcmp(root->argv[1], "-") == 0)
 		{
-			if (oldpwd != NULL)
+			if (env_find(g_env_list, "OLDPWD", -1) == NULL)
+			{
+				printf("minishell: cd: OLDPWD not set\n");
+				free(tmp_cwd);
+				return ;
+			}
+			else if (oldpwd != NULL)
 			{
 				ft_list_remove_if(&g_env_list, "OLDPWD", &ft_strcmp);
-				printf("hi\n");
 				oldpwd = getcwd(NULL, 0);
 				add_back(&g_env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));
 			}
-			if (env_find(g_env_list, "OLDPWD", -1) == NULL)
-				printf("minishell: cd: OLDPWD not set\n");
-			else if(chdir(tmp_cwd) == -1)
-				printf("minishell: cd: %s:%s\n", \
+			if(chdir(tmp_cwd) == -1)
+				printf("minishell1: cd: %s:%s\n", \
 					tmp_cwd, strerror(errno));
 			else
 				printf("%s\n", oldpwd);
+			free(tmp_cwd);
 			return ;
 		}
 		else
@@ -70,17 +75,19 @@ void	cd(t_node *root)
 			add_back(&g_env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));
 			if (chdir(root->argv[1]) == -1)
 			{
+
 				printf("minishell: cd: %s:%s\n", \
 					root->argv[1], strerror(errno));
 				ft_list_remove_if(&g_env_list, "OLDPWD", &ft_strcmp);
-				oldpwd = tmp_cwd;	
+				oldpwd = tmp_cwd;
 				if (oldpwd != NULL)
 				{
-					printf("oldpwd = %s\n", oldpwd);
 					add_back(&g_env_list, new_node(oldpwd, \
 						ft_strdup("OLDPWD"), 6));	
 				}
 			}
+			else if (tmp_cwd != NULL)
+				free(tmp_cwd);
 		}
 	}
 }
