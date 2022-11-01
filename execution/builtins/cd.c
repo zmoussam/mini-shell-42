@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 15:26:54 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/31 22:24:09 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/01 08:52:03 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	cd(t_node *root)
 
 	tmp_cwd = NULL;
 	if (oldpwd != NULL)
-		tmp_cwd = oldpwd;
+		tmp_cwd = ft_strdup(oldpwd);
 	if (root->argc == 1)
 	{
 		if (env_find(g_env_list, "HOME", -1))
@@ -50,6 +50,7 @@ void	cd(t_node *root)
 			if (oldpwd != NULL)
 			{
 				ft_list_remove_if(&g_env_list, "OLDPWD", &ft_strcmp);
+				printf("hi\n");
 				oldpwd = getcwd(NULL, 0);
 				add_back(&g_env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));
 			}
@@ -75,6 +76,7 @@ void	cd(t_node *root)
 				oldpwd = tmp_cwd;	
 				if (oldpwd != NULL)
 				{
+					printf("oldpwd = %s\n", oldpwd);
 					add_back(&g_env_list, new_node(oldpwd, \
 						ft_strdup("OLDPWD"), 6));	
 				}
