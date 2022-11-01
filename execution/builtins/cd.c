@@ -32,17 +32,18 @@ void	cd(t_node *root)
 			add_back(&g_env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));
 			if (chdir(tmp_content) == -1)
 			{
-				free(oldpwd);
 				printf("minishell: cd: %s:%s\n", \
 					tmp_content, strerror(errno));
 				oldpwd = tmp_cwd;
 				ft_list_remove_if(&g_env_list, "OLDPWD", &ft_strcmp);
-				add_back(&g_env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));
+				if (oldpwd != NULL)
+					add_back(&g_env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));
 				return ;
 			}
 		}
 		else
 			printf("minishell: cd: HOME not set\n");
+		free(tmp_cwd);
 	}
 	else if (root->argc > 1)
 	{
@@ -60,7 +61,7 @@ void	cd(t_node *root)
 				oldpwd = getcwd(NULL, 0);
 				add_back(&g_env_list, new_node(oldpwd, ft_strdup("OLDPWD"), 6));
 			}
-			if(chdir(tmp_cwd) == -1)
+			if (chdir(tmp_cwd) == -1) // check !! if we set HOME manuel
 				printf("minishell1: cd: %s:%s\n", \
 					tmp_cwd, strerror(errno));
 			else
@@ -86,7 +87,7 @@ void	cd(t_node *root)
 						ft_strdup("OLDPWD"), 6));	
 				}
 			}
-			else if (tmp_cwd != NULL)
+			else
 				free(tmp_cwd);
 		}
 	}

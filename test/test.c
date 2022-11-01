@@ -4,12 +4,6 @@
  #include <fcntl.h>
 int main()
 {
-    static char *str;
-    char    *copy;
-    str = getcwd(NULL, 0);
-    copy = str;
-    str = copy;
-    free(copy);
-
-
+    free(NULL);
+    printf("hi\n");
 }
