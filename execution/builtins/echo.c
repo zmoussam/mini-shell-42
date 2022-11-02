@@ -13,36 +13,43 @@
 #include "../../include/builtins.h"
 #include <stdio.h>
 
+void	print_echo_argv(char **argv, int argc, int i)
+{
+	while (argv[i])
+	{
+		printf("%s", argv[i]);
+		i++;
+		if (i != argc)
+		printf(" ");
+	}
+}
+void	check_new_line(char **argv, int *i, int *k)
+{
+	int j;
+	while (argv[*i] && argv[*i][0] == '-' && argv[*i][1] == 'n')
+	{
+		j = 2;
+		while (argv[*i][j] == 'n')
+			j++;
+		if (argv[*i][j] == '\0')
+			*k = 1;
+		else
+			break ;
+		*i += 1;
+	}
+}
 void	echo(t_node *root)
 {
 	int	i;
-	int	j;
 	int	k;
 
 	i = 1;
 	k = 0;
-	while (root->argv[i] && (ft_strcmp(root->argv[i], "-n") == 0 \
-		|| (root->argv[i][0] == '-' && root->argv[i][1] == 'n')))
+
+	if (root->argc > 1)
 	{
-		j = 2;
-		while (root->argv[i][j] && root->argv[i][j] == 'n')
-			j++;
-		if (root->argv[i][j] == '\0')
-		{
-			i++;
-			k = 1;
-		}
-		while (ft_strcmp(root->argv[i], "-n") == 0)
-			i++;
-		if (root->argv[i][j] != 'n')
-			break ;
-	}
-	while (root->argv[i])
-	{
-		printf("%s", root->argv[i]);
-		i++;
-		if (i != root->argc)
-			printf(" ");
+		check_new_line(root->argv, &i, &k);
+		print_echo_argv(root->argv, root->argc, i);
 	}
 	if (k == 0)
 		printf("\n");
