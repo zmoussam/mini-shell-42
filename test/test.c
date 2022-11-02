@@ -2,7 +2,8 @@
  #include <stdlib.h>
  #include <unistd.h>
  #include <fcntl.h>
+ #include <string.h>
 int main()
 {
-    printf("env = %s\n", getenv("HOME"));
+    printf("HOME = %d\n", strcmp(NULL, NULL));
 }
