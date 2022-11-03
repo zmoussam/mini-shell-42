@@ -46,3 +46,10 @@ void	env_cmd(int argc)
 	else
 		print_list();
 }
+
+void 	delone_env(t_env_list *node)
+{
+	free(node->name);
+	free(node->content);
+	free(node);
+}

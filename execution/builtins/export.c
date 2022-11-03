@@ -32,7 +32,7 @@ t_env_list	get_max_variable(void)
 	}
 	return (max);
 }
-t_env_list	get_min_variable(t_env_list max)
+t_env_list	get_min_variable(t_env_list min)
 {
 	t_env_list	*tmp;
 	int			*tmp_len;
@@ -41,15 +41,26 @@ t_env_list	get_min_variable(t_env_list max)
 	tmp = g_env_list;
 	while(tmp)
 	{
-		if (ft_strcmp(tmp->name, max.name) <= 0 && tmp->len != -1)
+		if (ft_strcmp(tmp->name, min.name) <= 0 && tmp->len != -1)
 		{
-			max = *tmp;
+			min = *tmp;
 			tmp_len = &tmp->len;
 		}
 		tmp = tmp->next;
 	}
 	*tmp_len = -1;
-	return (max);
+	return (min);
+}
+void	intialise_len_variable(void)
+{
+	t_env_list *head;
+
+	head = g_env_list;
+	while (head)
+	{
+		head->len = ft_strlen(head->name);
+		head = head->next;
+	}
 }
 
 void	print_sort_list()
@@ -71,6 +82,7 @@ void	print_sort_list()
 			printf("declare a-x %s=\"%s\"\n", min.name, min.content);
 		tmp = tmp->next;
 	}
+	intialise_len_variable();
 }
 
 t_env_list	*get_new_node(char *variable_with_content)
@@ -100,71 +112,69 @@ t_env_list	*get_new_node(char *variable_with_content)
 	return (new_node(content, \
 	ft_substr(variable_with_content, 0, len2), len2));
 }
-
-void	intialise_len_variable(void)
+int	check_sign_plus(char *name, char *content)
 {
-	t_env_list *head;
+	int i;
+	int	c;
 
-	head = g_env_list;
-	while (head)
+	i = 0;
+	c = 0;
+	while (name[i])
 	{
-		head->len = ft_strlen(head->name);
-		head = head->next;
+		if (name[i] == '+')
+			c++;
+		i++;
 	}
+	if ((name[i - 1] == '+' && c > 1) || (name[i - 1] == '+' && content[0] == '\0'))
+		return (1);
+	else
+		return (0);
 }
-int	parss_variable(t_env_list *new_node)
+int	check_special_char(char *name, char *content, int len)
+{
+	int i;
+
+	i = 0;
+	if (ft_isdigit(name[i]))
+		return(printf("minishell: export: `%s=%s': not a valid identifier\n", \
+		name, content));
+	if (name[i] == '-')
+		return (printf("minishell: export: %s: invalid option \nexport: usage: export [name[=value] ...] or export \n", name));
+	if (check_sign_plus(name, content))
+		return (printf("minishell: export: `%s': not a valid identifier\n", \
+		name));
+	while (name[i])
+	{
+		if (((name[i] <= 64 && !ft_isdigit(name[i])) \
+		|| (name[i] >= 91 && name[i] <= 96 && name[i] != '_') \
+		|| name[i] >= 123) && name[len - 1] != '+')
+		return (printf("minishell: export: `%s=%s': not a valid identifier\n", \
+		name, content));
+		i++;
+	}
+	return (0);
+}
+int	parss_variable(t_env_list *node)
 {
 	int		i;
 	char	*tmp_content;
 	char	*tmp_name;
-	int		k;
+	int 	len;
 
+	len = ft_strlen(node->name);
 	i = 0;
-	if (ft_isdigit(new_node->name[0]))
-	{
-		printf("minishell: export: `%s=%s': not a valid identifier\n", \
-			new_node->name, new_node->content);
+	if (check_special_char(node->name, node->content, len))
 		return (1);
-	}
-	k = 0;
-	while (new_node->name[i])
+	if (node->name[len - 1] == '+' && node->len != 1)
 	{
-		if (new_node->name[i] == '+')
-			k++;
-		if (((new_node->name[i] <= 64 && !ft_isdigit(new_node->name[i])) \
-			|| (new_node->name[i] >= 91 && new_node->name[i] <= 96 && new_node->name[i] != '_') \
-			|| new_node->name[i] >= 123)
-			&& new_node->name[new_node->len - 1] != '+')
-		{
-			if (new_node->name[0] == '-')
-			{
-				printf("minishell: export: %s: invalid option\n", \
-					new_node->name);
-				printf("export: usage: export [name[=value] ...] \
-					or export \n");
-			}
-			else
-				printf("minishell: export: `%s=%s': not a valid identifier\n", \
-					new_node->name, new_node->content);
-			return (1);
-		}
-		i++;
-	}
-	if (new_node->name[new_node->len - 1] == '+' && new_node->len != 1)
-	{
-		if (k > 1)
-		{
-			printf("minishell: export: `%s=%s': not a valid identifier\n", \
-				new_node->name, new_node->content);
-			return (1);
-		}
-		tmp_name = new_node->name;
-		new_node->name = ft_strtrim(new_node->name, "+");
+		tmp_name = node->name;
+		node->name = ft_strtrim(node->name, "+");
 		free(tmp_name);
-		if (env_find(g_env_list, new_node->name, -1) && new_node->content[0] != '\0')
+		if (env_find(g_env_list, node->name, -1) && node->content[0] != '\0' \
+		&& ft_strcmp(node->content, "\"\""))
 		{
-			tmp_content = new_node->content;
-			new_node->content = ft_strjoin(env_find(g_env_list, new_node->name, -1)->content, new_node->content);
+			tmp_content = node->content;
+			node->content = ft_strjoin(env_find(g_env_list, node->name, -1)->content, node->content);
 			free(tmp_content);
 		}
 	}
@@ -179,29 +189,24 @@ void	export(t_node *root)
 	i = 1;
 	if (root->argc == 1 || (root->argc == 2 \
 		&& (root->argv[1][0] == '#' || root->argv[1][0] == ';')))
-	{
 		print_sort_list();
-		intialise_len_variable();
-	}
 	else
 	{
 		while (root->argv[i])
 		{
+			if (root->argv[i][0] == ';')
+				break ;
 			new_node = get_new_node(root->argv[i]);
 			if (!new_node)
 				return ;
-			if (parss_variable(new_node) == 1)
+			if (parss_variable(new_node))
 			{
 				i++;
-				free(new_node->name);
-				free(new_node->content);
-				free(new_node);
+				delone_env(new_node);
 				continue ;
 			}
-			else if (root->argv[i][0] == ';')
-				break ;
 			if (env_find(g_env_list, new_node->name, -1))
-				ft_list_remove_if(&g_env_list, new_node->name, &ft_strcmp);
+				ft_list_remove_if(&g_env_list, new_node->name);
 			add_back(&g_env_list, new_node);
 			i++;
 		}

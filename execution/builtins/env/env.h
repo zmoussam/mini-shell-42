@@ -31,9 +31,9 @@ t_env_list	*env_find(t_env_list *env, char *s, int len);
 void		print_list(void);
 void		add_back(t_env_list **lst, t_env_list *new);
 t_env_list	*new_node(char *content, char *name, int len);
-void		ft_list_remove_if(t_env_list **begin_list, \
-			void *data_ref, int (*cmp)());
+void		ft_list_remove_if(t_env_list **begin_list, void *data_ref);
 int			env_listsize(t_env_list *env);
+void		delone_env(t_env_list *node);
 
 
 #endif

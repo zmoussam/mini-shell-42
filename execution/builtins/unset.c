@@ -51,7 +51,7 @@ void	unset(t_node *root)
 					j++;
 				}
 				if (env_find(g_env_list, root->argv[i], -1))
-					ft_list_remove_if(&g_env_list, root->argv[i], &ft_strcmp);
+					ft_list_remove_if(&g_env_list, root->argv[i]);
 				i++;
 			}
 		}

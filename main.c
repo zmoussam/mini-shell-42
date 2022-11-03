@@ -79,7 +79,7 @@ int	main(int argc, char **argv, char **env)
 
 	if (sh_state_init(argc, argv, env))
 		return (1);	
-	ft_list_remove_if(&g_env_list, "OLDPWD", &ft_strcmp);
+	ft_list_remove_if(&g_env_list, "OLDPWD");
 	rl_event_hook = get_c;
 	line = readline(prompt);
 	free((void *)prompt);
