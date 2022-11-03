@@ -58,7 +58,7 @@ int get_c()
 {
 	return 0;
 }
-// 
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
@@ -90,8 +90,7 @@ int	main(int argc, char **argv, char **env)
 		tree = parse(line);
 		if (x == 0)
 			execution(tree);
-		else 
-			x = 0;
+		x = 0;
 		free(line);
 		prompt = get_wd(getcwd(NULL, 0));
 		line = readline(prompt);

@@ -65,81 +65,88 @@ void	free_env(char **env)
 	}
 	free(env);
 }
-
-void	launch_executabl(t_node *root)
+int	execute_file(char *path, char **argv, char **env, int v)
 {
-	int		pid;
-	int		i;
-	char	**path_content;
+	int	pid;
+
+	if (!access(path, X_OK))
+	{
+		pid = fork();
+		if (pid == -1)
+			printf("minishell: %s\n", strerror(errno));
+		else if (pid == 0)
+			if (execve(path, argv, env) == -1)
+				printf("minishell: %s\n", strerror(errno));
+		waitpid(pid, NULL, 0);
+		if (v == 2)
+			free(path);
+		return (1);
+	}
+	else if (v == 1)
+		printf("minishell: %s: %s\n", path, strerror(errno));
+	return (0);
+}
+void	copy_argv_for_execve(char **root_argv ,char **args, char *first_arg)
+{
+	int	j;
+
+	args[0] = first_arg;
+	j = 1;
+	while (root_argv[j])
+	{
+		args[j] = root_argv[j];
+		j++;
+	}
+	args[j] = NULL;
+}
+
+void	searsh_in_path(char *path_content, char **argv, char **env, char **args)
+{
+	char	**split_content;
 	char	*tmp_path;
 	char	*tmp2_path;
+	int		i;
+
+	split_content = ft_split(path_content, ":");
+	i = 0;
+	while (split_content[i])
+	{
+		tmp2_path = ft_strjoin("/", argv[0]);
+		tmp_path = ft_strjoin(split_content[i], tmp2_path);
+		free(tmp2_path);
+		copy_argv_for_execve(argv, args, tmp_path);
+		if (execute_file(tmp_path, args, env, 2))
+			break;
+		else if (split_content[i + 1] == NULL)
+			printf("minishell: %s: command not found\n", argv[0]);
+		free(tmp_path);
+			i++;
+		}
+	i = 0;
+	while (split_content[i])
+		free(split_content[i++]);
+	free(split_content);
+
+}
+void	launch_executabl(t_node *root)
+{
+	t_env_list *path_node;
 	char	**args;
 	char	**env;
 
 	env = copy_env();
 	args = (char **)malloc(sizeof(char *) * root->argc + 1);
 	if (check_path(root->argv[0]))
-	{
-		if (!access(root->argv[0], X_OK))
-		{
-			pid = fork();
-			if (pid == -1)
-				printf("%s\n", strerror(errno));
-			else if (pid == 0)
-			{
-				if (execve(root->argv[0], root->argv, env) == -1)
-					printf("%s\n", strerror(errno));
-			}
-			waitpid(pid, NULL, 0);
-		}
-		else
-			printf("%s\n", strerror(errno));
-	}
+		execute_file(root->argv[0], root->argv, env, 1);
 	else
 	{
-		if (env_find(g_env_list, "PATH", 4))
+		path_node = env_find(g_env_list, "PATH", 4);
+		if (path_node)
 		{
-			path_content = \
-				ft_split(env_find(g_env_list, "PATH", 4)->content, ":");
-			i = 0;
-			while (path_content[i])
-			{
-				tmp2_path = ft_strjoin("/", root->argv[0]);
-				tmp_path = ft_strjoin(path_content[i], tmp2_path);
-				free(tmp2_path);
-				if (!access(tmp_path, X_OK))
-				{
-					pid = fork();
-					if (pid == -1)
-						printf("%s\n", strerror(errno));
-					if (pid == 0)
-					{
-						args[0] = tmp_path;
-						i = 1;
-						while (root->argv[i])
-						{
-							args[i] = root->argv[i];
-							i++;
-						}
-						args[i] = NULL;
-						if (execve(tmp_path, args, env) == -1)
-						{
-							printf("%s\n", strerror(errno));
-						}
-					}
-					else
-						waitpid(pid, NULL, 0);
-				}
-				free(tmp_path);
-				i++;
-			}
-			i = 0;
-			while (path_content[i])
-				free(path_content[i++]);
-			free(path_content);
+			searsh_in_path(path_node->content, root->argv, env, args);
 		}
 		else
-			printf("bash: %s: No such file or directory\n", root->argv[0]);
+			printf("minishell: %s: No such file or directory\n", root->argv[0]);
 	}
 	free_env(env);
 	free(args);
@@ -169,48 +176,46 @@ void	execution_cmd(t_node *root)
 		launch_executabl(root);
 	free(copy);
 }
-
+void	execute_left(int *fd, t_node *left)
+{
+	close(STDOUT_FILENO);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
+	close(fd[1]);
+	execution(left);
+	exit(0);
+}	
+void execute_right(int *fd, t_node *right)
+{
+	close(STDIN_FILENO);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	close(fd[1]);
+	execution(right);
+	exit(0);
+}
 void	execution(t_node *root)
 {
 	int	pid;
 	int	fd[2];
 
-	if (pipe(fd) == -1)
-		return ;
 	if (root == NULL)
 		return ;
 	if (root->type == PIPE)
 	{
+		if (pipe(fd) == -1)
+			return ;
 		pid = fork();
 		if (pid == 0)
-		{
-			close(STDOUT_FILENO);
-			dup2(fd[1], STDOUT_FILENO);
-			close(fd[0]);
-			close(fd[1]);
-			execution(root->left);
-			exit(0);
-		}
+			execute_left(fd, root->left);
 		waitpid(pid, NULL, 0);
 		pid = fork();
 		if (pid == 0)
-		{
-			close(STDIN_FILENO);
-			dup2(fd[0], STDIN_FILENO);
-			close(fd[0]);
-			close(fd[1]);
-			execution(root->right);
-			exit(0);
-		}
+			execute_right(fd, root->right);
 		close(fd[0]);
 		close(fd[1]);
 		waitpid(pid, NULL, 0);
 	}
 	else
-	{
-		// if redc_list;
-		// call redc function
-		// else
-        execution_cmd(root);
-	}
+        execution_cmd(root); // if red else ...
 }

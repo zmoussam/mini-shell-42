@@ -17,7 +17,7 @@ void	print_unset_error(char *argv, int *check)
 	*check = 1;
 	printf("minishell: unset: %s: not a valid identifier\n", argv);
 }
-void	parse_variable(char *argv, int *check)
+void	parse_unset_variable(char *argv, int *check)
 {
 	int i;
 
@@ -55,7 +55,7 @@ void	unset(t_node *root)
 			while (root->argv[i])
 			{
 				k = 0;
-				parse_variable(root->argv[i], &k);
+				parse_unset_variable(root->argv[i], &k);
 				if (k == 0 && env_find(g_env_list, root->argv[i], -1))
 					ft_list_remove_if(&g_env_list, root->argv[i]);
 				i++;
