@@ -12,13 +12,37 @@
 
 #include "../../include/builtins.h"
 
+void	print_unset_error(char *argv, int *check)
+{
+	*check = 1;
+	printf("minishell: unset: %s: not a valid identifier\n", argv);
+}
+void	parse_variable(char *argv, int *check)
+{
+	int i;
+
+	i = 0;
+	if (ft_isdigit(argv[0]))
+	{
+		print_unset_error(argv, check);
+		return ;
+	}
+	while (argv[i] && *check == 0)
+	{
+		if ((argv[i] <= 64 \
+		&& !ft_isdigit(argv[i])) \
+		|| (argv[i] >= 91 && argv[i] <= 96 \
+		&& argv[i] != '_') || argv[i] >= 123)
+			print_unset_error(argv, check);
+		i++;
+	}
+}
 void	unset(t_node *root)
 {
 	int	i;
-	int	j;
+	int k;
 
 	i = 1;
-	j = 0;
 	if (root->argc > 1)
 	{
 		if (root->argv[1][0] == '-')
@@ -30,27 +54,9 @@ void	unset(t_node *root)
 		{
 			while (root->argv[i])
 			{
-				j = 0;
-				while (root->argv[i][j])
-				{
-					if (j == 0 && ft_isdigit(root->argv[i][j]))
-					{
-						printf("minishell: unset: %s: not a valid \
-							identifier\n", root->argv[i]);
-						break ;
-					}
-					if ((root->argv[i][j] <= 64 \
-					&& !ft_isdigit(root->argv[i][j])) \
-					|| (root->argv[i][j] >= 91 && root->argv[i][j] <= 96) \
-					|| root->argv[i][j] >= 123)
-					{
-						printf("minishell: unset: %s: not a valid identifier\n", \
-							root->argv[i]);
-						break ;
-					}
-					j++;
-				}
-				if (env_find(g_env_list, root->argv[i], -1))
+				k = 0;
+				parse_variable(root->argv[i], &k);
+				if (k == 0 && env_find(g_env_list, root->argv[i], -1))
 					ft_list_remove_if(&g_env_list, root->argv[i]);
 				i++;
 			}
