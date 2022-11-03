@@ -27,7 +27,7 @@
 
 t_sh_state	g_sh_state = {0};
 t_env_list *g_env_list;
-
+int			*check_signal;
 // extern char **environ;
 
 const char	*get_wd(char *path)
@@ -48,7 +48,10 @@ void	handler(int signum)
 	if (signum == SIGQUIT)
 		return ;
 	if (signum == SIGINT)
+	{
+		*check_signal = 1;
 		rl_done = 1;
+	}
 }
 
 int get_c()
@@ -61,6 +64,8 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 	t_node	*tree;
 	struct sigaction sa;
+	int		x = 0;
+	check_signal = &x;
 	sa.sa_handler = &handler;
 	sa.sa_flags = SA_RESTART;
 	rl_catch_signals = 0;
@@ -83,7 +88,10 @@ int	main(int argc, char **argv, char **env)
 		if (ft_strspn(line, " \n\t") < ft_strlen(line))
 			add_history(line);
 		tree = parse(line);
-		execution(tree);
+		if (x == 0)
+			execution(tree);
+		else 
+			x = 0;
 		free(line);
 		prompt = get_wd(getcwd(NULL, 0));
 		line = readline(prompt);

@@ -32,43 +32,45 @@ t_env_list	get_max_variable(void)
 	}
 	return (max);
 }
-
-void	print_sort_list(void)
+t_env_list	get_min_variable(t_env_list max)
 {
-	t_env_list	*head;
-	t_env_list	min;
-	int			*tmp;
-	int			k;
+	t_env_list	*tmp;
+	int			*tmp_len;
 
-	min = get_max_variable();
-	k = 0;
-	if (g_env_list)
+	tmp_len = NULL;
+	tmp = g_env_list;
+	while(tmp)
 	{
-		head = g_env_list;
-		while (head)
+		if (ft_strcmp(tmp->name, max.name) <= 0 && tmp->len != -1)
 		{
-			if (ft_strcmp(head->name, min.name) <= 0 && head->len != -1)
-			{
-				min.name = head->name;
-				min.content = head->content;
-				tmp = &head->len;
-				k = 1;
-			}
-			head = head->next;
+			max = *tmp;
+			tmp_len = &tmp->len;
 		}
-		if (k == 1)
-		{
-			if (min.content[0] == '\0')
-				printf("declare -x %s\n", min.name);
-			else if (min.content[0] == '\"')
-				printf("declare -x %s=%s\n", min.name, min.content);
-			else
-				printf("declare a-x %s=\"%s\"\n", min.name, min.content);
-		}
-		*tmp = -1;
+		tmp = tmp->next;
 	}
-	if (k == 1)
-		print_sort_list();
+	*tmp_len = -1;
+	return (max);
+}
+
+void	print_sort_list()
+{
+	t_env_list	min;
+	t_env_list	*tmp;
+	t_env_list	max;
+
+	max = get_max_variable();
+	tmp = g_env_list;
+	while(tmp)
+	{
+		min = get_min_variable(max);
+		if (min.content[0] == '\0')
+			printf("declare -x %s\n", min.name);
+		else if (min.content[0] == '\"')
+			printf("declare -x %s=%s\n", min.name, min.content);
+		else
+			printf("declare a-x %s=\"%s\"\n", min.name, min.content);
+		tmp = tmp->next;
+	}
 }
 
 t_env_list	*get_new_node(char *variable_with_content)
@@ -77,40 +79,31 @@ t_env_list	*get_new_node(char *variable_with_content)
 	int		len;
 	int		len2;
 	char	*content;
-	char	*name;
 
 	len = ft_strlen(variable_with_content);
+	len2 = len;
 	i = 0;
 	while (variable_with_content[i] != '=' && variable_with_content[i])
 		i++;
 	if (variable_with_content[i] == '\0')
-	{
-		content = (char *)malloc(1);
-		content[0] = '\0';
-		len2 = len;
-	}
+		content = ft_strdup("");
 	else if (variable_with_content[i + 1] == '\0')
 	{
-		content = (char *)malloc(3);
-		ft_strlcpy(content, "\"\"", 3);
+		content = ft_strdup("\"\"");
 		len2 = len - 1;
 	}
 	else
 	{
-		content = (char *)malloc(sizeof(char) * \
-			ft_strlen(&variable_with_content[i] + 1) + 1);
-		ft_strlcpy(content, &variable_with_content[i] + 1, \
-			ft_strlen(&variable_with_content[i]) + 1);
+		content = ft_strdup(&variable_with_content[i] + 1);
 		len2 = len - ft_strlen(&variable_with_content[i]);
 	}
-	name = (char *)malloc(sizeof(char) * len2 + 1);
-	ft_strlcpy(name, variable_with_content, len2 + 1);
-	return (new_node(content, name, len2));
+	return (new_node(content, \
+	ft_substr(variable_with_content, 0, len2), len2));
 }
 
 void	intialise_len_variable(void)
 {
-	t_env_list	*head;
+	t_env_list *head;
 
 	head = g_env_list;
 	while (head)
@@ -119,7 +112,6 @@ void	intialise_len_variable(void)
 		head = head->next;
 	}
 }
-
 int	parss_variable(t_env_list *new_node)
 {
 	int		i;
@@ -140,7 +132,7 @@ int	parss_variable(t_env_list *new_node)
 		if (new_node->name[i] == '+')
 			k++;
 		if (((new_node->name[i] <= 64 && !ft_isdigit(new_node->name[i])) \
-			|| (new_node->name[i] >= 91 && new_node->name[i] <= 96) \
+			|| (new_node->name[i] >= 91 && new_node->name[i] <= 96 && new_node->name[i] != '_') \
 			|| new_node->name[i] >= 123)
 			&& new_node->name[new_node->len - 1] != '+')
 		{
