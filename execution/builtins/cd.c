@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 15:26:54 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/01 08:52:03 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/04 00:56:01 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	go_to_newpath(char **oldpwd, char *path)
 
 	tmp_cwd = getcwd(NULL, 0);
 	if (chdir(path) == -1)
-		return(printf("minishell: cd: %s:%s\n", path, strerror(errno)), free(tmp_cwd));
+		return (printf("minishell: cd: %s:%s\n", path, \
+			strerror(errno)), free(tmp_cwd));
 	else
 	{
 		if (oldpwd == NULL)
@@ -30,8 +31,8 @@ void	go_to_newpath(char **oldpwd, char *path)
 			*oldpwd = tmp_cwd;
 		}
 	}
-
 }
+
 void	go_to_oldpath(char **oldpwd)
 {
 	char	*tmp_cwd;
@@ -42,7 +43,8 @@ void	go_to_oldpath(char **oldpwd)
 	else
 	{
 		if (chdir(*oldpwd) == -1)
-			return (printf("minishell: cd: %s:%s\n", tmp_cwd, strerror(errno)), free(tmp_cwd));
+			return (printf("minishell: cd: %s:%s\n", tmp_cwd, \
+				strerror(errno)), free(tmp_cwd));
 		else
 		{
 			printf("%s\n", tmp_cwd);
@@ -50,7 +52,8 @@ void	go_to_oldpath(char **oldpwd)
 			*oldpwd = tmp_cwd;
 		}
 	}
-} 
+}
+
 void	go_to_home(char **oldpwd)
 {
 	char		*tmp_old;
@@ -65,7 +68,8 @@ void	go_to_home(char **oldpwd)
 	if (home)
 	{
 		if (chdir(home) == -1)
-			return(printf("minishell: cd: %s:%s\n", home, strerror(errno)), free(tmp_old));
+			return (printf("minishell: cd: %s:%s\n", home, \
+				strerror(errno)), free(tmp_old));
 		else if (oldpwd == NULL)
 			add_back(&g_env_list, new_node(tmp_old, ft_strdup("OLDPWD"), 6));
 		else
@@ -77,10 +81,11 @@ void	go_to_home(char **oldpwd)
 	else
 		printf("minishell: cd: HOME not set\n");
 }
+
 void	cd(t_node *root)
 {
 	char		**oldpwd;
-	t_env_list *tmp_env_oldpwd;
+	t_env_list	*tmp_env_oldpwd;
 
 	oldpwd = NULL;
 	tmp_env_oldpwd = env_find(g_env_list, "OLDPWD", 6);

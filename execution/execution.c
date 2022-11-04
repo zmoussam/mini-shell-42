@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/31 20:58:43 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/04 00:52:43 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	free_env(char **env)
 	}
 	free(env);
 }
+
 int	execute_file(char *path, char **argv, char **env, int v)
 {
 	int	pid;
@@ -86,12 +87,13 @@ int	execute_file(char *path, char **argv, char **env, int v)
 		printf("minishell: %s: %s\n", path, strerror(errno));
 	return (0);
 }
-void	copy_argv_for_execve(char **root_argv ,char **args, char *first_arg)
+
+void	copy_argv_for_execve(char **root_argv, char **args, char *first_arg)
 {
 	int	j;
 
-	args[0] = first_arg;
 	j = 1;
+	args[0] = first_arg;
 	while (root_argv[j])
 	{
 		args[j] = root_argv[j];
@@ -116,23 +118,23 @@ void	searsh_in_path(char *path_content, char **argv, char **env, char **args)
 		free(tmp2_path);
 		copy_argv_for_execve(argv, args, tmp_path);
 		if (execute_file(tmp_path, args, env, 2))
-			break;
+			break ;
 		else if (split_content[i + 1] == NULL)
 			printf("minishell: %s: command not found\n", argv[0]);
 		free(tmp_path);
-			i++;
-		}
+		i++;
+	}
 	i = 0;
 	while (split_content[i])
 		free(split_content[i++]);
 	free(split_content);
-
 }
+
 void	launch_executabl(t_node *root)
 {
-	t_env_list *path_node;
-	char	**args;
-	char	**env;
+	t_env_list	*path_node;
+	char		**args;
+	char		**env;
 
 	env = copy_env();
 	args = (char **)malloc(sizeof(char *) * root->argc + 1);
@@ -142,9 +144,7 @@ void	launch_executabl(t_node *root)
 	{
 		path_node = env_find(g_env_list, "PATH", 4);
 		if (path_node)
-		{
 			searsh_in_path(path_node->content, root->argv, env, args);
-		}
 		else
 			printf("minishell: %s: No such file or directory\n", root->argv[0]);
 	}
@@ -176,6 +176,7 @@ void	execution_cmd(t_node *root)
 		launch_executabl(root);
 	free(copy);
 }
+
 void	execute_left(int *fd, t_node *left)
 {
 	close(STDOUT_FILENO);
@@ -184,8 +185,9 @@ void	execute_left(int *fd, t_node *left)
 	close(fd[1]);
 	execution(left);
 	exit(0);
-}	
-void execute_right(int *fd, t_node *right)
+}
+
+void	execute_right(int *fd, t_node *right)
 {
 	close(STDIN_FILENO);
 	dup2(fd[0], STDIN_FILENO);
@@ -194,6 +196,7 @@ void execute_right(int *fd, t_node *right)
 	execution(right);
 	exit(0);
 }
+
 void	execution(t_node *root)
 {
 	int	pid;
@@ -217,5 +220,5 @@ void	execution(t_node *root)
 		waitpid(pid, NULL, 0);
 	}
 	else
-        execution_cmd(root); // if red else ...
+		execution_cmd(root);
 }

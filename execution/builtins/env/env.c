@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:42:14 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/31 20:55:28 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/04 01:12:10 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	env_cmd(int argc)
 		print_list();
 }
 
-void 	delone_env(t_env_list *node)
+void	delone_env(t_env_list *node)
 {
 	free(node->name);
 	free(node->content);

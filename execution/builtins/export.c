@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/31 20:58:19 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/04 01:09:15 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_env_list	get_max_variable(void)
 	}
 	return (max);
 }
+
 t_env_list	get_min_variable(t_env_list min)
 {
 	t_env_list	*tmp;
@@ -39,7 +40,7 @@ t_env_list	get_min_variable(t_env_list min)
 
 	tmp_len = NULL;
 	tmp = g_env_list;
-	while(tmp)
+	while (tmp)
 	{
 		if (ft_strcmp(tmp->name, min.name) <= 0 && tmp->len != -1)
 		{
@@ -51,9 +52,10 @@ t_env_list	get_min_variable(t_env_list min)
 	*tmp_len = -1;
 	return (min);
 }
+
 void	intialise_len_variable(void)
 {
-	t_env_list *head;
+	t_env_list	*head;
 
 	head = g_env_list;
 	while (head)
@@ -63,7 +65,7 @@ void	intialise_len_variable(void)
 	}
 }
 
-void	print_sort_list()
+void	print_sort_list(void)
 {
 	t_env_list	min;
 	t_env_list	*tmp;
@@ -71,7 +73,7 @@ void	print_sort_list()
 
 	max = get_max_variable();
 	tmp = g_env_list;
-	while(tmp)
+	while (tmp)
 	{
 		min = get_min_variable(max);
 		if (min.content[0] == '\0')
@@ -112,9 +114,10 @@ t_env_list	*get_new_node(char *variable_with_content)
 	return (new_node(content, \
 	ft_substr(variable_with_content, 0, len2), len2));
 }
+
 int	check_sign_plus(char *name, char *content)
 {
-	int i;
+	int	i;
 	int	c;
 
 	i = 0;
@@ -125,23 +128,25 @@ int	check_sign_plus(char *name, char *content)
 			c++;
 		i++;
 	}
-	if ((name[i - 1] == '+' && c > 1) || (name[i - 1] == '+' && content[0] == '\0'))
+	if ((name[i - 1] == '+' && c > 1) \
+		|| (name[i - 1] == '+' && content[0] == '\0'))
 		return (1);
 	else
 		return (0);
 }
+
 int	check_special_char(char *name, char *content, int len)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_isdigit(name[i]))
-		return(printf("minishell: export: `%s=%s': not a valid identifier\n", \
+		return (printf("minishell: export: `%s=%s': not a valid identifier\n", \
 		name, content));
 	if (name[i] == '-')
 	{
 		printf("minishell: export: %s: invalid option \n", name);
-		return(printf("export: usage: export [name[=value] ...] or export \n"));
+		return (printf("export: usage: export [name[=value]...] or export \n"));
 	}
 	if (check_sign_plus(name, content))
 		return (printf("minishell: export: `%s': not a valid identifier\n", \
@@ -151,19 +156,20 @@ int	check_special_char(char *name, char *content, int len)
 		if (((name[i] <= 64 && !ft_isdigit(name[i])) \
 		|| (name[i] >= 91 && name[i] <= 96 && name[i] != '_') \
 		|| name[i] >= 123) && name[len - 1] != '+')
-		return (printf("minishell: export: `%s=%s': not a valid identifier\n", \
-		name, content));
+			return (printf("minishell: export: `%s=%s': ", name, content), \
+				printf("not a valid identifier\n"));
 		i++;
 	}
 	return (0);
 }
+
 int	parss_export_variable(t_env_list *node)
 {
-	t_env_list *node_name;
-	int		i;
-	char	*tmp_content;
-	char	*tmp_name;
-	int 	len;
+	t_env_list	*node_name;
+	int			i;
+	char		*tmp_content;
+	char		*tmp_name;
+	int			len;
 
 	len = ft_strlen(node->name);
 	i = 0;
@@ -185,6 +191,7 @@ int	parss_export_variable(t_env_list *node)
 	}
 	return (0);
 }
+
 int	remove_old_variable(t_env_list *new_node, int *i)
 {
 	if (!ft_strcmp(new_node->name, "PATH") && new_node->content[0] == '\0')
@@ -193,14 +200,15 @@ int	remove_old_variable(t_env_list *new_node, int *i)
 		delone_env(new_node);
 		return (1);
 	}
-	else 
+	else
 		ft_list_remove_if(&g_env_list, new_node->name);
 	return (0);
 }
+
 void	add_export_variable(char **argv)
 {
-	t_env_list *new_node;
-	int i;
+	t_env_list	*new_node;
+	int			i;
 
 	i = 1;
 	while (argv[i])
@@ -218,11 +226,12 @@ void	add_export_variable(char **argv)
 		}
 		if (env_find(g_env_list, new_node->name, -1))
 			if (remove_old_variable(new_node, &i))
-				continue;
+				continue ;
 		add_back(&g_env_list, new_node);
 		i++;
 	}
 }
+
 void	export(t_node *root)
 {
 	if (root->argc == 1 || (root->argc == 2 \

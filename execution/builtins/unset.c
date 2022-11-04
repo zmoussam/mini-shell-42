@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:55 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/31 20:52:59 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/04 01:10:31 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	print_unset_error(char *argv, int *check)
 	*check = 1;
 	printf("minishell: unset: %s: not a valid identifier\n", argv);
 }
+
 void	parse_unset_variable(char *argv, int *check)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_isdigit(argv[0]))
@@ -37,10 +38,11 @@ void	parse_unset_variable(char *argv, int *check)
 		i++;
 	}
 }
+
 void	unset(t_node *root)
 {
 	int	i;
-	int k;
+	int	k;
 
 	i = 1;
 	if (root->argc > 1)
