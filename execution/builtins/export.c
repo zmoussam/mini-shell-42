@@ -179,6 +179,7 @@ int	parss_export_variable(t_env_list *node)
 	{
 		tmp_name = node->name;
 		node->name = ft_strtrim(node->name, "+");
+		node->len = ft_strlen(node->name);
 		free(tmp_name);
 		node_name = env_find(g_env_list, node->name, -1);
 		if (node_name && node->content[0] != '\0' \
@@ -201,7 +202,9 @@ int	remove_old_variable(t_env_list *new_node, int *i)
 		return (1);
 	}
 	else
+	{
 		ft_list_remove_if(&g_env_list, new_node->name);
+	}
 	return (0);
 }
 
@@ -224,7 +227,7 @@ void	add_export_variable(char **argv)
 			delone_env(new_node);
 			continue ;
 		}
-		if (env_find(g_env_list, new_node->name, -1))
+		if (env_find(g_env_list, new_node->name, ft_strlen(new_node->name)))
 			if (remove_old_variable(new_node, &i))
 				continue ;
 		add_back(&g_env_list, new_node);
