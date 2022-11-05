@@ -169,7 +169,7 @@ void	execution_cmd(t_node *root)
 	else if (ft_strcmp(root->argv[0], "unset") == 0)
 		unset(root);
 	else if (ft_strcmp(root->argv[0], "exit") == 0)
-		exit_cmd();
+		exit_cmd(root);
 	else if (ft_strcmp(root->argv[0], "export") == 0)
 		export(root);
 	else

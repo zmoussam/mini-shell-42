@@ -5,5 +5,5 @@
  #include <string.h>
 int main(int argc, char **argv)
 {
-    printf("HOME = %s\n", argv[1]);
+    printf("HOME = %d\n", sizeof(argv[1]));
 }
