@@ -1,56 +1,67 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   itoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:53 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:02 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/11 18:24:54 by mel-hous          #+#    #+#             */
+/*   Updated: 2021/11/12 09:01:13 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
-#include <stddef.h>
-#include <stdlib.h>
-#include <limits.h>
 
-static unsigned int	ft_digitc(int n)
+static int	ft_len(long int n)
 {
-	unsigned int	c;
+	long int	i;
 
-	c = 1;
-	if (n == INT_MIN)
-		n = INT_MAX;
-	n = ft_abs(n);
-	while (n > 9)
+	i = 1;
+	if (n < 0)
+		n = n * -1;
+	while (n >= 10)
 	{
-		n /= 10;
-		c++;
+		n = n / 10;
+		i++;
 	}
-	return (c);
+	return (i);
+}
+
+static char	*str_cpy(char *str, long int n, int len)
+{
+	int		beg;
+
+	str[len] = '\0';
+	len = len - 1;
+	if (n < 0)
+	{
+		n *= -1;
+		beg = 1;
+		str[0] = '-';
+	}
+	else
+		beg = 0;
+	while (len >= beg)
+	{
+		str[len] = n % 10 + '0';
+		n = n / 10;
+		len--;
+	}
+	return (str);
 }
 
 char	*ft_itoa(int n)
 {
 	char			*str;
-	unsigned int	len;
+	int				len;
+	long int		lln;
 
-	len = ft_digitc(n);
-	if (n < 0)
-		len++;
-	str = malloc(len + 1);
+	lln = n;
+	len = ft_len(lln);
+	if (lln < 0)
+		len = len + 1;
+	str = malloc(sizeof(char) * len + 1);
 	if (!str)
 		return (NULL);
-	str += len;
-	*str = '\0';
-	while (n > 9 || n < -9)
-	{
-		*(--str) = ft_abs(n % 10) + 48;
-		n /= 10;
-	}
-	*(--str) = ft_abs(n) + 48;
-	if (n < 0)
-		*(--str) = '-';
+	str = str_cpy(str, lln, len);
 	return (str);
 }

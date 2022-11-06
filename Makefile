@@ -1,64 +1,60 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/09/23 11:32:30 by mel-hous          #+#    #+#              #
+#    Updated: 2022/11/06 18:47:53 by zmoussam         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 DEBUG := 0
 CC := cc
 INCLUDES := -I include -I$(HOME)/.brew/opt/readline/include
-CFLAGS := $(INCLUDES) -Wall -Wextra -Werror -MMD $(shell [ "$(DEBUG)" = "1" ] && echo " -g")
+CFLAGS := $(INCLUDES) -Wall -Wextra -Werror -MMD $(shell [ "$(DEBUG)" = "1" ] && echo " -g") -g
 LDFLAGS := -L$(HOME)/.brew/opt/readline/lib  -lreadline
 NAME := minishell
-SRC := env/env_cmp.c\
-env/env_destroy.c\
-env/env_init.c\
-env/env_update.c\
-env/sh_getenv.c\
-env/sh_getenvn.c\
-env/sh_getenvp.c\
-env/sh_setenv.c\
-env/sh_unsetenv.c\
-lexer/lexer_advance.c\
-lexer/lexer_eat.c\
-lexer/lexer_eat_string.c\
-lexer/lexer_init.c\
-lexer/lexer_next.c\
-lexer/lexer_peek.c\
-lexer/lexer_perror.c\
-lexer/lexer_skip_spaces.c\
-lexer/token_init.c\
-main.c\
-state.c\
-parser/expand_glob.c\
-parser/expand_params.c\
-parser/node_destroy.c\
-parser/node_init.c\
-parser/node_tree_destroy.c\
-parser/parse.c\
-parser/parse_cmd.c\
-parser/parse_cmd_elem.c\
-parser/parse_line.c\
-parser/parse_pipe.c\
-parser/parse_pipeline.c\
-parser/parse_rdr.c\
-parser/print_syntax_error.c\
-parser/rdr_destroy.c\
-parser/rdr_init.c\
-utils/encode_quotes.c\
-utils/glob_match_enc.c\
-utils/is_glob_enc.c\
-utils/lst_to_strarr.c\
-utils/remove_quotes.c\
-utils/remove_quotes_enc.c\
-utils/switch_quote_mode.c\
-utils/switch_quote_mode_enc.c\
-execution/builtins/echo.c\
-execution/builtins/env/create_env.c\
-execution/builtins/env/env_find.c\
-execution/builtins/env/env.c\
-execution/builtins/cd.c\
-execution/builtins/pwd.c\
-execution/builtins/unset.c\
-execution/builtins/exit.c\
-execution/builtins/export.c\
-execution/execution.c\
-
-
+SRC =	env1/create_env.c\
+		env1/env_find.c\
+		env1/env_ld.c\
+	    lexer/change_mode.c\
+		lexer/check_next_token.c\
+		lexer/ft_expand_var.c\
+		lexer/ft_expand_wldc.c\
+		lexer/get_next_token.c\
+		lexer/get_token.c\
+		lexer/initialisation.c\
+		lexer/is_match.c\
+		lexer/lex_search.c\
+		lexer/quote_def.c\
+		lexer/wc_ld_create.c\
+		utils/cmd_list.c\
+		utils/remove_q.c\
+		utils/wc_ld.c\
+		av_creat.c\
+		check_pipe.c\
+		cmd_components.c\
+		collect_cmd.c\
+		collect_rdr.c\
+		ft_pipe_line.c\
+		node_creat.c\
+		node_del.c\
+		parse_input.c\
+		parser_start.c\
+		rdr_addback.c\
+		execution/execution_utils.c\
+		execution/execution_utils2.c\
+		execution/execution.c\
+		execution/builtins/cd.c\
+		execution/builtins/echo.c\
+		execution/builtins/env.c\
+		execution/builtins/exit.c\
+		execution/builtins/export.c\
+		execution/builtins/pwd.c\
+		execution/builtins/unset.c\
+		main.c\
 
 OBJ := $(SRC:.c=.o)
 DEP := $(SRC:.c=.d)
@@ -83,6 +79,6 @@ libft.a:
 	mv libft/libft.a .
 
 $(NAME): libft.a $(OBJ)
-	$(CC) -o $(NAME) $(OBJ) libft.a $(LDFLAGS) 
+	$(CC) -o $(NAME) $(OBJ) libft.a $(LDFLAGS)
 
 -include $(DEP)

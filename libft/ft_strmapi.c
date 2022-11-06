@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   strmapi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/12 10:13:00 by mel-hous          #+#    #+#             */
+/*   Updated: 2021/11/12 11:25:01 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include"libft.h"
 
-#include "libft.h"
-#include <stdlib.h>
-#include <stddef.h>
-
-char	*ft_strmapi(char const *s, char (*f)(size_t, char))
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*mapped;
-	size_t	len;
-	size_t	i;
+	unsigned int	i;
+	char			*dest;
 
-	len = ft_strlen(s);
-	mapped = malloc(len + 1);
-	if (!mapped)
+	if (s == NULL || !f)
+		return (NULL);
+	dest = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (dest == NULL)
 		return (NULL);
 	i = 0;
-	while (s[i])
+	while (s[i] != '\0')
 	{
-		mapped[i] = f(i, s[i]);
+		dest[i] = f(i, s[i]);
 		i++;
 	}
-	mapped[i] = '\0';
-	return (mapped);
+	dest[i] = '\0';
+	return (dest);
 }

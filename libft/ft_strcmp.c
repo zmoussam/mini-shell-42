@@ -5,19 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/28 18:56:33 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/10/07 16:30:48 by zmoussam         ###   ########.fr       */
+/*   Created: 2022/11/06 18:04:24 by zmoussam          #+#    #+#             */
+/*   Updated: 2022/11/06 18:04:28 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-
-int	ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
+	while (s1[i] == s2[i] && (s1[i] != '\0' && s2[i] != '\0'))
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return (s1[i] - s2[i]);
 }

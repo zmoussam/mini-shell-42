@@ -1,35 +1,37 @@
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/18 01:23:22 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/10/04 20:06:58 by zmoussam         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "libft.h"
 #include "parser.h"
-#include "shell.h"
-#include "./include/execution.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
+#include "./execution/execution.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/errno.h>
 #include <signal.h>
 #include <sys/signal.h>
-#include<sys/wait.h>
-#include <sys/errno.h>
 
-t_sh_state	g_sh_state = {0};
-t_env_list *g_env_list;
-int			*check_signal;
-// extern char **environ;
+t_glb_v glb_v;
+int		*check_signal;
 
+size_t	ft_strspn(const char *s, const char *accept)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] && !ft_strchr(accept, s[i]))
+		i++;
+	return (i);
+}
+
+
+void	print_node_argv(t_parser_node *node)
+{
+	char	**argv = node->av;
+
+	while (argv && *argv)
+		printf("%s\n", *argv++);
+}
+int get_c()
+{
+	return 0;
+}
 const char	*get_wd(char *path)
 {
 	char	*working_directory;
@@ -42,7 +44,6 @@ const char	*get_wd(char *path)
 	free(working_directory);
 	return (cwd);	
 }
-
 void	handler(int signum)
 {
 	if (signum == SIGQUIT)
@@ -53,49 +54,50 @@ void	handler(int signum)
 		rl_done = 1;
 	}
 }
-
-int get_c()
-{
-	return 0;
-}
-
-int	main(int argc, char **argv, char **env)
+int main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	t_node	*tree;
+	t_parser_node	*tree = NULL;
 	struct sigaction sa;
+	const	char	*prompt;
 	int		x = 0;
+
 	check_signal = &x;
 	sa.sa_handler = &handler;
 	sa.sa_flags = SA_RESTART;
 	rl_catch_signals = 0;
+
 	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("%s\n", strerror(errno));
-	const	char	*prompt;
-	(void)argc;
-	(void)argv;
-	prompt = get_wd(getcwd(NULL, 0));
-	g_env_list = create_env(env);
 
-	if (sh_state_init(argc, argv, env))
-		return (1);	
-	ft_list_remove_if(&g_env_list, "OLDPWD");
-	rl_event_hook = get_c;
-	line = readline(prompt);
-	free((void *)prompt);
-	while (line)
+
+	if (argc < 2 && !argv[1])
 	{
-		if (ft_strspn(line, " \n\t") < ft_strlen(line))
-			add_history(line);
-		tree = parse(line);
-		if (x == 0)
-			execution(tree);
-		x = 0;
-		free(line);
+		glb_v.list = create_env(envp);
+		ft_list_remove_if(&glb_v.list, "OLDPWD");
+		rl_event_hook = get_c;
 		prompt = get_wd(getcwd(NULL, 0));
 		line = readline(prompt);
-		node_tree_clear(&tree);
 		free((void *)prompt);
+		while (line)
+		{
+			// printf("%zu\n", ft_strspn(line, " \n\t"));
+			if (ft_strspn(line, " \n\t") < ft_strlen(line))
+				add_history(line);
+			tree = parse(line);
+			if (tree)
+			{
+				if (x == 0)
+				    execution(tree);//  print_node_argv(tree);
+				x = 0;
+				node_del(&tree);
+			}
+			free(line);
+			prompt = get_wd(getcwd(NULL, 0));
+			line = readline(prompt);
+			free((void *)prompt);
+		}
+		return (printf("exit\n"));
 	}
-	return (printf("exit\n"));
+	// sh_state_destroy();
 }

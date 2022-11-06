@@ -1,41 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   atoi.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:53 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/01/18 01:12:20 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/02 15:53:27 by mel-hous          #+#    #+#             */
+/*   Updated: 2021/11/16 08:53:23 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <limits.h>
-#include <errno.h>
-
-int	ft_atoi(const char *str)
+int	ft_atoi(const char	*str)
 {
-	int	result;
-	int	digit;
-	int	sign;
+	int			i;
+	long int	result;
+	int			signe;
 
 	result = 0;
-	sign = 1;
-	while (ft_isspace(*str))
-		str++;
-	if (*str == '-')
-		sign = -1;
-	if (*str == '-' || *str == '+')
-		str++;
-	while (ft_isdigit(*str))
+	i = 0;
+	signe = 1;
+	while (str[i] && (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13)))
+		i++;
+	if (str[i] && (str[i] == '-' || str[i] == '+'))
 	{
-		digit = (*(str++) - 48);
-		if (sign == 1 && (INT_MAX - digit) / 10 < result)
-			return (errno = ERANGE, INT_MAX);
-		if (sign == -1 && (INT_MIN + digit) / 10 > result)
-			return (errno = ERANGE, INT_MIN);
-		result = result * 10 + digit * sign;
+		if (str[i] == '-')
+			signe *= -1;
+		i++;
 	}
-	return (result);
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 + (str[i] - 48);
+		if (result * signe > 2147483647)
+			return (-1);
+		else if (result * signe < -2147483648)
+			return (0);
+		i++;
+	}
+	return (result * signe);
 }

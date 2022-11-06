@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   strnstr.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:57 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/06 16:22:02 by mel-hous          #+#    #+#             */
+/*   Updated: 2021/11/15 15:16:22 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include"libft.h"
 
-#include "libft.h"
-#include <stddef.h>
-
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+char	*ft_strnstr(const char *str, const char *sub, size_t n)
 {
-	int		len_needle;
 	size_t	i;
+	int		j;
 
-	len_needle = ft_strlen(needle);
-	if (len_needle == 0)
-		return ((char *)haystack);
-	if (len == 0)
-		return (NULL);
+	if (*sub == '\0')
+		return ((char *)str);
 	i = 0;
-	while (haystack[i] && i <= len - len_needle)
+	while (str[i] != '\0' && i < n)
 	{
-		if (ft_strncmp(haystack + i, needle, len_needle) == 0)
-			return ((char *)haystack + i);
+		if (str[i] == sub[0])
+		{
+			j = 0;
+			while (sub[j] && str[i + j] && i + j < n
+				&& str[i + j] == sub[j])
+				j++;
+			if (sub[j] == '\0')
+				return ((char *)str + i);
+		}
 		i++;
 	}
-	return (NULL);
+	return (0);
 }

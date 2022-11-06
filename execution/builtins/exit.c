@@ -6,11 +6,11 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:49 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/30 21:09:59 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/06 18:24:31 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
+#include "builtins.h"
 
 unsigned long long	ft_llatoi(const char *str)
 {
@@ -42,42 +42,39 @@ unsigned long long	ft_llatoi(const char *str)
 
 int	check_if_all_digit(char *arg)
 {
-	int	i;
-
-	i = 0;
-	while(arg[i])
+	while(*arg)
 	{
-		if (!ft_isdigit(arg[i]) && arg[i] != '-')
+		if (!ft_isdigit(*arg) && *arg != '-')
 			return (0);
-		i++;
+		arg++;
 	}
 	return (1);
 }
 
-void	exit_cmd(t_node *root)
+void	exit_cmd(t_parser_node *root)
 {
 	unsigned long long	result;
 
 	printf("exit\n");
-	if (root->argc == 1)
+	if (root->ac == 1)
 		exit(1);
-	else if ((root->argc > 1 && !check_if_all_digit(root->argv[1])) \
-	|| (check_if_all_digit(root->argv[1]) && ft_strlen(root->argv[1]) > 19))
+	else if ((root->ac > 1 && !check_if_all_digit(root->av[1])) \
+	|| (check_if_all_digit(root->av[1]) && ft_strlen(root->av[1]) > 19))
 	{
-		printf("minishell: exit: %s: numeric argument require\n", root->argv[1]);
+		printf("minishell: exit: %s: numeric argument require\n", root->av[1]);
 		exit(255);
 	}
-	else if (root->argc == 2 && check_if_all_digit(root->argv[1]))
+	else if (root->ac == 2 && check_if_all_digit(root->av[1]))
 	{
-		result = ft_llatoi(root->argv[1]);
+		result = ft_llatoi(root->av[1]);
 		printf("result  = %lld\n", result);
 		if (result < 0)
 			exit(256 - ((result * -1) % 256));	
 		exit(result % 256);
 	}
-	else if (root->argc > 2 && check_if_all_digit(root->argv[1]))
+	else if (root->ac > 2 && check_if_all_digit(root->av[1]))
 	{
-		printf("minishell: exit: %s: too many arguments\n", root->argv[1]);
+		printf("minishell: exit: %s: too many arguments\n", root->av[1]);
 	}
 	//u should free data;
 }

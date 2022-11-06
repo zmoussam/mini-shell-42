@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   calloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:53 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:02 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/09 08:02:59 by mel-hous          #+#    #+#             */
+/*   Updated: 2021/11/16 07:59:14 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
-#include <stdlib.h>
-#include <stddef.h>
+#include"libft.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void	*b;
+	char	*p;
 
-	b = malloc(count * size);
-	if (b)
-		return (ft_memset(b, 0, count * size));
-	return (b);
+	p = malloc(size * count);
+	if (!p)
+		return (NULL);
+	ft_memset(p, 0, size * count);
+	return (p);
 }

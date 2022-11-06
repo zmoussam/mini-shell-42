@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:55 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:16 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/14 09:05:31 by mel-hous          #+#    #+#             */
+/*   Updated: 2021/11/14 09:06:43 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include"libft.h"
 
-#include <unistd.h>
-#include <sys/types.h>
-
-ssize_t	ft_putchar_fd(char c, int fd)
+void	ft_putchar_fd(char c, int fd)
 {
-	return (write(fd, &c, 1));
+	write(fd, &c, 1);
 }

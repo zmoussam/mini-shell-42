@@ -3,26 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:55 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:16 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/14 09:29:06 by mel-hous          #+#    #+#             */
+/*   Updated: 2021/11/16 08:36:46 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <sys/types.h>
+#include"libft.h"
 
-ssize_t	ft_putendl_fd(const char *s, int fd)
+void	ft_putendl_fd(char *s, int fd)
 {
-	ssize_t	count;
-	ssize_t	tmp;
-
-	count = ft_putstr_fd(s, fd);
-	if (count == -1)
-		return (-1);
-	tmp = ft_putchar_fd('\n', fd);
-	if (tmp == -1)
-		return (-1);
-	return (count + tmp);
+	if (s != NULL)
+	{
+		while (*s)
+		{
+			write(fd, &*s, 1);
+			s++;
+		}
+	}
+	write(fd, "\n", 1);
 }

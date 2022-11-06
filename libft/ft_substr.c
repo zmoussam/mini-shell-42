@@ -3,28 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:58 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/08 18:19:11 by mel-hous          #+#    #+#             */
+/*   Updated: 2022/10/07 15:07:36 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stddef.h>
-#include <stdlib.h>
 
-char	*ft_substr(char const *s, size_t start, size_t len)
+char	*ft_substr(char const *s, unsigned int beg, int len)
 {
-	char	*sub;
+	char	*str;
+	int		i;
 
-	start = ft_strnlen(s, start);
-	len = ft_strnlen(s + start, len);
-	sub = malloc(len + 1);
-	if (sub)
+	i = 0;
+	if (!s)
+		return (NULL);
+	if (beg >= ft_strlen(s))
+		return (ft_strdup(""));
+	if (len == -1)
+		len = ft_strlen(s) - (beg);
+	if (len > (int)ft_strlen(&s[beg]))
+		len = ft_strlen(&s[beg]);
+	str = (char *)malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (0);
+	while (i < len)
 	{
-		ft_memcpy(sub, s + start, len);
-		sub[len] = '\0';
+		str[i] = s[beg + i];
+		i++;
 	}
-	return (sub);
+	str[i] = 0;
+	return (str);
 }

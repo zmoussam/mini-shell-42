@@ -3,63 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:56 by syakoubi          #+#    #+#             */
-/*   Updated: 2022/06/06 21:08:45 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/09 14:38:48 by mel-hous          #+#    #+#             */
+/*   Updated: 2022/10/28 18:27:42 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
-#include <stddef.h>
+#include"libft.h"
 
-static char	*ft_token(const char **s, char *sep)
+static char	**ft_clear_split(char **tab)
 {
-	size_t		len;
-	char		*token;
+	unsigned int	i;
 
-	*s += ft_strspn(*s, sep);
-	if (**s == '\0')
-		return (NULL);
-	len = ft_strcspn(*s, sep);
-	token = ft_substr(*s, 0, len);
-	if (token)
-		*s += len;
-	return (token);
-}
-
-static size_t	ft_tokenc(const char *s, char *sep)
-{
-	size_t		count;
-
-	count = 0;
-	s += ft_strspn(s, sep);
-	while (*s)
-	{
-		count++;
-		s += ft_strcspn(s, sep);
-		s += ft_strspn(s, sep);
-	}
-	return (count);
-}
-
-char	**ft_split(char const *s, char *sep)
-{
-	size_t	i;
-	size_t	tokenc;
-	char	**tokens;
-
-	tokenc = ft_tokenc(s, sep);
-	tokens = malloc(sizeof(char *) * (tokenc + 1));
-	if (tokens == NULL)
-		return (NULL);
 	i = 0;
-	tokens[i] = ft_token(&s, sep);
-	while (tokens[i])
-		tokens[++i] = ft_token(&s, sep);
-	if (*s == '\0')
-		return (tokens);
-	ft_free_strarr(tokens);
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 	return (NULL);
+}
+
+static int	nb_words(const char *str, char c)
+{
+	int	i;
+	int	words;
+
+	words = 0;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if ((str[i + 1] == c || str[i + 1] == '\0') == 1
+			&& (str[i] == c || str[i] == '\0') == 0)
+			words++;
+		i++;
+	}
+	return (words);
+}
+
+static void	write_word(char *dest, const char *s, char c)
+{
+	int	i;
+
+	i = 0;
+	while ((s[i] == c || s[i] == '\0') == 0)
+	{
+		dest[i] = s[i];
+		i++;
+	}
+	dest[i] = '\0';
+}
+
+static char	**cpy_split(char **dest, const char *str, char c)
+{
+	int		i;
+	int		j;
+	int		word;
+
+	word = 0;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			i++;
+		else
+		{
+			j = 0;
+			while ((str[i + j] == c || str[i + j] == '\0') == 0)
+				j++;
+			dest[word] = (char *)malloc(sizeof(char) * (j + 1));
+			if (dest[word] == NULL)
+				return (ft_clear_split(dest));
+			write_word(dest[word], str + i, c);
+			i += j;
+			word++;
+		}
+	}
+	return (dest);
+}
+
+char	**ft_split(const char *str, char c)
+{
+	char	**dest;
+	int		words;
+
+	if (!str)
+		return (NULL);
+	words = nb_words(str, c);
+	dest = (char **)malloc(sizeof(char *) * (words + 1));
+	if (dest == NULL)
+		return (NULL);
+	dest[words] = 0;
+	if (cpy_split(dest, str, c) == NULL)
+		return (NULL);
+	return (dest);
 }

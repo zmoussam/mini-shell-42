@@ -6,11 +6,11 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 15:26:54 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/04 00:56:01 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/06 18:23:38 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
+#include "builtins.h"
 #include <unistd.h>
 
 void	go_to_newpath(char **oldpwd, char *path)
@@ -24,7 +24,7 @@ void	go_to_newpath(char **oldpwd, char *path)
 	else
 	{
 		if (oldpwd == NULL)
-			add_back(&g_env_list, new_node(tmp_cwd, ft_strdup("OLDPWD"), 6));
+			add_back(&glb_v.list, new_node(tmp_cwd, ft_strdup("OLDPWD"), 6));
 		else
 		{
 			free(*oldpwd);
@@ -61,7 +61,7 @@ void	go_to_home(char **oldpwd)
 	t_env_list	*tmp_env_home;
 
 	home = NULL;
-	tmp_env_home = env_find(g_env_list, "HOME", 4);
+	tmp_env_home = env_find(glb_v.list, "HOME", 4);
 	if (tmp_env_home)
 		home = tmp_env_home->content;
 	tmp_old = getcwd(NULL, 0);
@@ -71,7 +71,7 @@ void	go_to_home(char **oldpwd)
 			return (printf("minishell: cd: %s:%s\n", home, \
 				strerror(errno)), free(tmp_old));
 		else if (oldpwd == NULL)
-			add_back(&g_env_list, new_node(tmp_old, ft_strdup("OLDPWD"), 6));
+			add_back(&glb_v.list, new_node(tmp_old, ft_strdup("OLDPWD"), 6));
 		else
 		{
 			free(*oldpwd);
@@ -82,23 +82,23 @@ void	go_to_home(char **oldpwd)
 		printf("minishell: cd: HOME not set\n");
 }
 
-void	cd(t_node *root)
+void	cd(t_parser_node *root)
 {
 	char		**oldpwd;
 	t_env_list	*tmp_env_oldpwd;
 
 	oldpwd = NULL;
-	tmp_env_oldpwd = env_find(g_env_list, "OLDPWD", 6);
+	tmp_env_oldpwd = env_find(glb_v.list, "OLDPWD", 6);
 	if (tmp_env_oldpwd)
 		oldpwd = &(tmp_env_oldpwd->content);
-	if (root->argc == 1 || ft_strcmp(root->argv[1], "~" ) == 0 \
-	|| ft_strcmp(root->argv[1], "--" ) == 0)
+	if (root->ac == 1 || ft_strcmp(root->av[1], "~" ) == 0 \
+	|| ft_strcmp(root->av[1], "--" ) == 0)
 		go_to_home(oldpwd);
-	else if (root->argc > 1)
+	else if (root->ac > 1)
 	{
-		if (ft_strcmp(root->argv[1], "-") == 0)
+		if (ft_strcmp(root->av[1], "-") == 0)
 			go_to_oldpath(oldpwd);
 		else
-			go_to_newpath(oldpwd, root->argv[1]);
+			go_to_newpath(oldpwd, root->av[1]);
 	}
 }

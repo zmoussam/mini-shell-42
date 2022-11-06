@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:56 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/04 12:16:19 by mel-hous          #+#    #+#             */
+/*   Updated: 2022/10/06 17:37:49 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 
-char	*ft_strchr(const char *s, int c)
+int	ft_strchr(const char *str, char c)
 {
-	while (*s != (char)c)
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
-		if (*s == '\0')
-			return (NULL);
-		s++;
+		if (str[i] == c)
+			return (0);
+		i++;
 	}
-	return ((char *)s);
+	return (1);
 }

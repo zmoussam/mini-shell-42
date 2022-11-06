@@ -6,11 +6,11 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:55 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/04 01:10:31 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/06 18:26:51 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
+#include "builtins.h"
 
 void	print_unset_error(char *argv, int *check)
 {
@@ -39,27 +39,27 @@ void	parse_unset_variable(char *argv, int *check)
 	}
 }
 
-void	unset(t_node *root)
+void	unset(t_parser_node *root)
 {
 	int	i;
 	int	k;
 
 	i = 1;
-	if (root->argc > 1)
+	if (root->ac > 1)
 	{
-		if (root->argv[1][0] == '-')
+		if (root->av[1][0] == '-')
 		{
-			printf("minishell: unset: %s: invalid option\n", root->argv[1]);
+			printf("minishell: unset: %s: invalid option\n", root->av[1]);
 			printf("unset: usage: unset [-f] [name ...]\n");
 		}
-		else if (root->argc >= 2)
+		else if (root->ac >= 2)
 		{
-			while (root->argv[i])
+			while (root->av[i])
 			{
 				k = 0;
-				parse_unset_variable(root->argv[i], &k);
-				if (k == 0 && env_find(g_env_list, root->argv[i], -1))
-					ft_list_remove_if(&g_env_list, root->argv[i]);
+				parse_unset_variable(root->av[i], &k);
+				if (k == 0 && env_find(glb_v.list, root->av[i], -1))
+					ft_list_remove_if(&glb_v.list, root->av[i]);
 				i++;
 			}
 		}

@@ -1,26 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   strtrim.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:58 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:17 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/11 06:52:34 by mel-hous          #+#    #+#             */
+/*   Updated: 2021/11/11 17:42:49 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stddef.h>
+#include"libft.h"
 
-char	*ft_strtrim(char const *s, char const *set)
+int	ft_strbegin(char const *s1, char const *set)
 {
-	size_t	i;
+	int	i;
 
-	while (*s && ft_strchr(set, *s))
-		s++;
-	i = ft_strlen(s);
-	while (i && ft_strchr(set, s[i]))
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		if (ft_strchr(set, s1[i]) == 0)
+			break ;
+		i++;
+	}
+	return (i);
+}
+
+int	ft_strend(char const *s1, char const *set)
+{
+	int	i;
+
+	i = ft_strlen((char *)s1);
+	while (i >= 0)
+	{
+		if (ft_strchr(set, s1[i]) == 0)
+			break ;
 		i--;
-	return (ft_substr(s, 0, i + 1));
+	}
+	return (i + 1);
+}
+
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	int		begin;
+	int		end;
+	char	*dest;
+
+	if (s1 == NULL)
+		return (NULL);
+	if (set == NULL)
+		return ((char *)s1);
+	begin = ft_strbegin(s1, set);
+	end = ft_strend(s1, set);
+	if (begin >= end)
+		return (ft_strdup(""));
+	dest = malloc(sizeof(char) * (end - begin + 1));
+	if (dest == NULL)
+		return (NULL);
+	ft_strlcpy(dest, (char *)s1 + begin, end - begin + 1);
+	return (dest);
 }

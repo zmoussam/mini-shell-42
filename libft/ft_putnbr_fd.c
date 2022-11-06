@@ -3,26 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syakoubi <splentercell.1997@gmail.com>     +#+  +:+       +#+        */
+/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 11:41:55 by syakoubi          #+#    #+#             */
-/*   Updated: 2021/12/26 11:42:16 by syakoubi         ###   ########.fr       */
+/*   Created: 2021/11/14 13:54:55 by mel-hous          #+#    #+#             */
+/*   Updated: 2021/11/15 15:18:06 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include"libft.h"
 
-#include "libft.h"
-#include <stdlib.h>
-#include <sys/types.h>
-
-ssize_t	ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char	*str;
-	ssize_t	count;
-
-	str = ft_itoa(n);
-	if (!str)
-		return (-1);
-	count = ft_putstr_fd(str, fd);
-	free(str);
-	return (count);
+	if (n == -2147483648)
+	{
+		write (fd, "-2147483648", 11);
+	}
+	else if (n >= 0 && n <= 9)
+	{
+		ft_putchar_fd (n + '0', fd);
+	}
+	else if (n < 0)
+	{
+		ft_putchar_fd ('-', fd);
+		ft_putnbr_fd (n * -1, fd);
+	}
+	else
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_fd(n % 10, fd);
+	}
 }
