@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:05:28 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/07 23:57:04 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/08 00:32:23 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,9 @@ int main(int argc, char **argv, char **envp)
 	glb_v.check_signal = &x;
 	sa.sa_handler = &handler;
 	sa.sa_flags = SA_RESTART;
+	
 	rl_catch_signals = 0;
-
+  
 	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("%s\n", strerror(errno));
 
