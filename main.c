@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:05:28 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/07 13:23:27 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/07 23:49:29 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int main(int argc, char **argv, char **envp)
 		glb_v.list = create_env(envp);
 		ft_list_remove_if(&glb_v.list, "OLDPWD");
 		rl_event_hook = get_c;
+		
 		prompt = get_wd(getcwd(NULL, 0));
 		line = readline(prompt);
 		free((void *)prompt);
