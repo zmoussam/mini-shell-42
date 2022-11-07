@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:05:28 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/07 23:51:47 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/07 23:58:56 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int main(int argc, char **argv, char **envp)
 		free((void *)prompt);
 		while (line)
 		{
-			// printf("%zu\n", ft_strspn(line, " \n\t"));
+			// printf("%zu\n"    , ft_strspn(line, " \n\t"));
+			
 			if (ft_strspn(line, " \n\t") < ft_strlen(line))
 				add_history(line);
 			tree = parse(line);
