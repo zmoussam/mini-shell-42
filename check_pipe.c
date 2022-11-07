@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 14:55:10 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/07 10:40:54 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/07 15:02:24 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ t_parser_node   *check_pipe(t_lexer  *lexer)
     if (lexer->curent_type.type == PIPE)
     {
         pipe_line = ft_pipe_line(lexer);
-        if (!pipe_line)
+        if (!pipe_line || pipe_line == MISSMATCH)
         {
-            printf("ERROE");
+            ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
             return (NULL);
         }
         else
