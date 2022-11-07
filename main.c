@@ -6,7 +6,11 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:05:28 by zmoussam          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/08 00:01:44 by zmoussam         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/08 00:34:43 by zmoussam         ###   ########.fr       */
+>>>>>>> execution
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +93,16 @@ int main(int argc, char **argv, char **envp)
 	glb_v.check_signal = &x;
 	sa.sa_handler = &handler;
 	sa.sa_flags = SA_RESTART;
+	
 	rl_catch_signals = 0;
-
+  
 	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("%s\n", strerror(errno));
 
 
 	if (argc < 2 && !argv[1])
 	{
-		glb_v.list = create_env(envp);
+		glb_v.list =  create_env(envp);
 		ft_list_remove_if(&glb_v.list, "OLDPWD");
 		rl_event_hook = get_c;	
 		prompt = get_wd(getcwd(NULL, 0));
