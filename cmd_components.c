@@ -12,7 +12,7 @@
 
 #include "parser.h"
 
-t_cmd *cmd_ccomponents(t_lexer *lexer, t_rdr_node *rdr)
+t_cmd *cmd_ccomponents(t_lexer *lexer, t_rdr_node **rdr)
 {
 	t_token token;
 	t_cmd *cmd;
@@ -31,7 +31,7 @@ t_cmd *cmd_ccomponents(t_lexer *lexer, t_rdr_node *rdr)
 			cmd_addback(&cmd, ft_new_cmd(token.pos, &token.wildcard));
 		else if (token.type == RD_APP || token.type == RD_IN ||
 				 token.type == RD_OUT || token.type == HERDOC)
-			rdr_addback(&rdr, collect_rdr(lexer, rdr, token));
+			rdr_addback(rdr, collect_rdr(lexer, *rdr, token));
 	}
 	return (cmd);
 }

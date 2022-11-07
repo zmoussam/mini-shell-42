@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:32:18 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/06 18:49:53 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:16:01 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	searsh_in_path(char *path_content, char **argv, char **env, char **args)
 
 void	launch_executabl(t_parser_node *root)
 {
-	t_env_list	*path_node;
+	t_env_node	*path_node;
 	char		**args;
 	char		**env;
 

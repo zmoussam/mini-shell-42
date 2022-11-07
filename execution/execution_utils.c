@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:30:07 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/06 19:08:47 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:27:52 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**copy_env(void)
 	int			i;
 	char		*temp;
 	int			size;
-	t_env_list	*head;
+	t_env_node	*head;
 	char		**env;
 
 	i = 0;

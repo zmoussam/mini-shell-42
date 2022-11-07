@@ -6,16 +6,16 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/06 18:25:54 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:15:21 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-t_env_list	get_max_variable(void)
+t_env_node	get_max_variable(void)
 {
-	t_env_list	*head;
-	t_env_list	max;
+	t_env_node	*head;
+	t_env_node	max;
 
 	max.name = "";
 	max.content = "";
@@ -33,9 +33,9 @@ t_env_list	get_max_variable(void)
 	return (max);
 }
 
-t_env_list	get_min_variable(t_env_list min)
+t_env_node	get_min_variable(t_env_node min)
 {
-	t_env_list	*tmp;
+	t_env_node	*tmp;
 	int			*tmp_len;
 
 	tmp_len = NULL;
@@ -55,7 +55,7 @@ t_env_list	get_min_variable(t_env_list min)
 
 void	intialise_len_variable(void)
 {
-	t_env_list	*head;
+	t_env_node	*head;
 
 	head = glb_v.list;
 	while (head)
@@ -67,9 +67,9 @@ void	intialise_len_variable(void)
 
 void	print_sort_list(void)
 {
-	t_env_list	min;
-	t_env_list	*tmp;
-	t_env_list	max;
+	t_env_node	min;
+	t_env_node	*tmp;
+	t_env_node	max;
 
 	max = get_max_variable();
 	tmp = glb_v.list;
@@ -87,7 +87,7 @@ void	print_sort_list(void)
 	intialise_len_variable();
 }
 
-t_env_list	*get_new_node(char *variable_with_content)
+t_env_node	*get_new_node(char *variable_with_content)
 {
 	int		i;
 	int		len;
@@ -163,9 +163,9 @@ int	check_special_char(char *name, char *content, int len)
 	return (0);
 }
 
-int	parss_export_variable(t_env_list *node)
+int	parss_export_variable(t_env_node *node)
 {
-	t_env_list	*node_name;
+	t_env_node	*node_name;
 	int			i;
 	char		*tmp_content;
 	char		*tmp_name;
@@ -193,7 +193,7 @@ int	parss_export_variable(t_env_list *node)
 	return (0);
 }
 
-int	remove_old_variable(t_env_list *new_node, int *i)
+int	remove_old_variable(t_env_node *new_node, int *i)
 {
 	if (!ft_strcmp(new_node->name, "PATH") && new_node->content[0] == '\0')
 	{
@@ -210,7 +210,7 @@ int	remove_old_variable(t_env_list *new_node, int *i)
 
 void	add_export_variable(char **argv)
 {
-	t_env_list	*new_node;
+	t_env_node	*new_node;
 	int			i;
 
 	i = 1;

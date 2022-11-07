@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/07 13:05:28 by zmoussam          #+#    #+#             */
+/*   Updated: 2022/11/07 13:23:27 by zmoussam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "parser.h"
 #include "./execution/execution.h"
@@ -8,7 +20,6 @@
 #include <sys/signal.h>
 
 t_glb_v glb_v;
-int		*check_signal;
 
 size_t	ft_strspn(const char *s, const char *accept)
 {
@@ -25,13 +36,24 @@ void	print_node_argv(t_parser_node *node)
 {
 	char	**argv = node->av;
 
-	while (argv && *argv)
-		printf("%s\n", *argv++);
+	if(node->type == PIPE)
+	{
+		print_node_argv(node->left);
+		print_node_argv(node->right);
+	}
+	else
+	{
+		while (argv && *argv)
+			printf("%s\n", *argv++);
+		if(node->rdrlst)
+			printf("file = %s\n", node->rdrlst->file);
+	}
 }
 int get_c()
 {
 	return 0;
 }
+
 const char	*get_wd(char *path)
 {
 	char	*working_directory;
@@ -44,16 +66,18 @@ const char	*get_wd(char *path)
 	free(working_directory);
 	return (cwd);	
 }
+
 void	handler(int signum)
 {
 	if (signum == SIGQUIT)
 		return ;
 	if (signum == SIGINT)
 	{
-		*check_signal = 1;
+		*glb_v.check_signal = 1;
 		rl_done = 1;
 	}
 }
+
 int main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -62,7 +86,7 @@ int main(int argc, char **argv, char **envp)
 	const	char	*prompt;
 	int		x = 0;
 
-	check_signal = &x;
+	glb_v.check_signal = &x;
 	sa.sa_handler = &handler;
 	sa.sa_flags = SA_RESTART;
 	rl_catch_signals = 0;

@@ -18,9 +18,10 @@ t_token	get_next_token(t_lexer	*lexer)
 	int	i;
 
 	i = 0;
+	lexer->prev_type = lexer->curent_type;
 	token = get_token(lexer);
 	lexer->str += token.len;
-	lexer->prev_type = token;
+	lexer->curent_type = token;
 	while (lexer->str[i] && lexer->str[i] == 32)
 		i++;
 	lexer->str += i;

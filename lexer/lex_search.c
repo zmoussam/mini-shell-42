@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 13:27:05 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/05 21:36:43 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/07 12:38:52 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ t_token	word_collect(t_lexer *lexer)
 	while (s[len] != '\0' && (mode != 0 || (ft_strchr(" \t\n|&()<>", s[len]))))
 	{
 		mode = change_mode2(mode, s[len]);
-		if(s[len] == '$' && mode != 1)
+		if (s[len] == '$' && mode != 1)
 		{
-			if(var == 2)
+			if (var == 2)
 				var = 3;
 			var = 1;
 		}
-		if((s[len] == '*' && var == 0))
+		if ((s[len] == '*' && var == 0))
 			var = 2;
 		len++;
 	}
@@ -50,11 +50,11 @@ t_token	word_collect(t_lexer *lexer)
 		return (t_init(END, i, s));
 	if (var == 2 || var == 3)
 	{
-		token = lex_wildcard(*lexer, i);
+		token = lex_wildcard(*lexer, len);
 		if (token.wildcard != NULL)
 		{
 			token.len = len;
-			return(token);
+			return (token);
 		}
 	}
 
@@ -64,9 +64,8 @@ t_token	word_collect(t_lexer *lexer)
 		if(token.type == VAR)
 		{
 			token.len = len;
-			return(token);
+			return (token);
 		}
 	}
 	return (t_init(WORD, len, s));
 }
-

@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 15:26:54 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/06 18:23:38 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:14:49 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	go_to_home(char **oldpwd)
 {
 	char		*tmp_old;
 	char		*home;
-	t_env_list	*tmp_env_home;
+	t_env_node	*tmp_env_home;
 
 	home = NULL;
 	tmp_env_home = env_find(glb_v.list, "HOME", 4);
@@ -85,7 +85,7 @@ void	go_to_home(char **oldpwd)
 void	cd(t_parser_node *root)
 {
 	char		**oldpwd;
-	t_env_list	*tmp_env_oldpwd;
+	t_env_node	*tmp_env_oldpwd;
 
 	oldpwd = NULL;
 	tmp_env_oldpwd = env_find(glb_v.list, "OLDPWD", 6);

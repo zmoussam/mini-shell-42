@@ -24,7 +24,7 @@ t_parser_node   *collect_cmd(t_lexer *lexer)
 	rdrlst = NULL;
 	token = get_token(lexer);
 	if (token.type != ERROR || token.type != PIPE || token.type != END)
-		elem = cmd_ccomponents(lexer, rdrlst);
+		elem = cmd_ccomponents(lexer, &rdrlst);
 	if (elem || rdrlst)
 		node = node_create(&elem, rdrlst, CMD);
 	else

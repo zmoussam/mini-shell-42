@@ -6,29 +6,16 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:38:13 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/06 18:44:05 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:19:09 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "../lexer/lexer.h"
 
-void	print_list(void)
+t_env_node *env_find(t_env_node *env, char  *s, int len)
 {
-	t_env_list	*head;
-
-	head = glb_v.list;
-	while (head)
-	{
-		if (head->content[0] != '\0')
-			printf("%s=%s\n", head->name, head->content);
-		head = head->next;
-	}
-}
-
-t_env_list *env_find(t_env_list *env, char  *s, int len)
-{
-    t_env_list *node;
+    t_env_node *node;
     
     if (len == -1)
         len = ft_strlen(s);
@@ -44,7 +31,7 @@ t_env_list *env_find(t_env_list *env, char  *s, int len)
     return (NULL);
 }
 
-char *env_find2(t_env_list *env, char  *s, int len)
+char *env_find2(t_env_node *env, char  *s, int len)
 {   
     while(env)
     {
@@ -55,9 +42,22 @@ char *env_find2(t_env_list *env, char  *s, int len)
     return (NULL);
 }
 
-void	ft_list_remove_if(t_env_list **begin_list, void *data_ref)
+void	print_list(void)
 {
-	t_env_list	*cur;
+	t_env_node	*head;
+
+	head = glb_v.list;
+	while (head)
+	{
+		if (head->content[0] != '\0')
+			printf("%s=%s\n", head->name, head->content);
+		head = head->next;
+	}
+}
+
+void	ft_list_remove_if(t_env_node **begin_list, void *data_ref)
+{
+	t_env_node	*cur;
 
 	if (*begin_list == NULL || begin_list == NULL)
 		return ;
@@ -74,7 +74,7 @@ void	ft_list_remove_if(t_env_list **begin_list, void *data_ref)
 		ft_list_remove_if(&cur->next, data_ref);
 }
 
-int	env_listsize(t_env_list *env)
+int	env_listsize(t_env_node *env)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 14:15:14 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/05 16:43:46 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/07 10:51:35 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void    node_clear(t_parser_node    *node)
     i = 0;
     if (node)
     {
-        while (node->av[i])
+        while (node->av && node->av[i])
             free(node->av[i++]);
         free(node->av);
         rdr_clear(&node->rdrlst);

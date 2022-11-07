@@ -21,6 +21,7 @@ t_lexer	*lex_init(char *s)
 	lexer->full_str = s;
 	lexer->str = s;
 	lexer->prev_type = t_init(CHAR_NULL, 0, NULL);
+	lexer->curent_type = t_init(CHAR_NULL, 0, NULL);
 	return (lexer);
 }
 

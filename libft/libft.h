@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:28:10 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/06 18:04:49 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:23:09 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		ft_atoi(const char *str);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strcmp(char *s1, char *s2);
 size_t	ft_strlen(const char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
@@ -46,7 +47,6 @@ void	*ft_memchr(const void *str, int c, size_t n);
 int		ft_memcmp(const void *str1, const void *str2, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *src);
-int		ft_strcmp(char *s1, char *s2);
 //PART 2
 char	*ft_substr(char const *s, unsigned int start, int len);
 char	*ft_strjoin(char *s1, char *s2);

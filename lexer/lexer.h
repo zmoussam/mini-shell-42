@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:22:46 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/06 18:41:27 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:08:02 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # define DEF_SINGEL_Q -1
 # define DEF_DOUBEL_Q -2
 
-#include"../env1/env.h"
 #include"../libft/libft.h"
+#include"../env1/env.h"
 #include"../utils/utils.h"
 #include <stdbool.h>
 
@@ -59,12 +59,14 @@ typedef struct s_lexer
 	char	*full_str;
 	char	*str;
 	t_token	prev_type;
+	t_token	curent_type;
 	t_error	error;
 }		t_lexer;
 
 typedef struct s_glb_v
 {
-	t_env_list	*list;
+	t_env_node	*list;
+	int			*check_signal;
 }			t_glb_v;
 
 extern t_glb_v glb_v;

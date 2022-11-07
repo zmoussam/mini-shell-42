@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:07:17 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/10/29 12:57:44 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/06 18:26:11 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_token	lex_wildcard(t_lexer	lexer, int i)
 
 	list = NULL;
 	len = 0;
+	if (lexer.prev_type.type == HERDOC)
+		return (t_init(WORD, len, lexer.str));
 	s = lexer.str;
 	if (i > 0)
 	{

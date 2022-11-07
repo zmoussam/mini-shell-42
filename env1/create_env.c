@@ -12,7 +12,7 @@
 
 #include "env.h"
 
-void    *manu(t_env_list   *var, char *s)
+void    *manu(t_env_node   *var, char *s)
 {
     int j;
 
@@ -26,9 +26,9 @@ void    *manu(t_env_list   *var, char *s)
     return(var);
 }
 
-t_env_list *create_env(char *env[])
+t_env_node *create_env(char *env[])
 {
-    t_env_list *var;
+    t_env_node *var;
     int i;
 
     i = 0;

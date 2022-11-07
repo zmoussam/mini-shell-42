@@ -18,7 +18,7 @@ t_parser_node   *ft_pipe_line(t_lexer   *lexer)
 	t_parser_node	*pipe;
 
 	cmd = collect_cmd(lexer);
-	if (cmd && cmd == MISSMATCH)
+	if (cmd && cmd != MISSMATCH)
 	{
     	pipe = check_pipe(lexer);
 		if (pipe == MISSMATCH)
