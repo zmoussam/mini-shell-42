@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:05:28 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 00:00:43 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/08 00:01:44 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int main(int argc, char **argv, char **envp)
 				if (x == 0)
 				    execution(tree);//  print_node_argv(tree);
 				x = 0;
-				node_del    (&tree);
+				node_del(&tree);
 			}
 			free(line);
 			prompt = get_wd(getcwd(NULL, 0));
