@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:36:04 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/06 18:47:40 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/07 15:32:27 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	read_heredoc(char *f, char *delim, bool expand)
 	line = readline(">");
 	while (line)
 	{
-		if (!ft_strncmp(line, delim, ft_strlen(line)))
+		if (!ft_strcmp(line, delim))
 			break ;
 		if (write_heredoc_line(f, fd, line, expand))
 			return (-1);
