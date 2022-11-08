@@ -5,15 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 13:05:28 by zmoussam          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/08 00:01:44 by zmoussam         ###   ########.fr       */
-=======
-/*   Updated: 2022/11/08 00:34:43 by zmoussam         ###   ########.fr       */
->>>>>>> execution
+/*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
+/*   Updated: 2022/11/08 16:02:16 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "parser.h"
 #include "./execution/execution.h"
@@ -115,6 +110,9 @@ int main(int argc, char **argv, char **envp)
 			if (ft_strspn(line, " \n\t") < ft_strlen(line))
 				add_history(line);
 			tree = parse(line);
+		// printf("cmd == %s\n", tree->av[0]);
+		// printf("type == %d\n", tree->type);
+		// printf("type == %s\n", tree->rdrlst->file);
 			if (tree)
 			{
 				if (x == 0)
