@@ -5,25 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 17:04:49 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/10/27 17:54:35 by zmoussam         ###   ########.fr       */
+/*   Created: 2022/11/08 16:50:12 by zmoussam          #+#    #+#             */
+/*   Updated: 2022/11/08 16:55:51 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REDIRECTION_H
-#define REDIRECTION_H
+# define REDIRECTION_H
 
-typedef enum t_typerdc{
-    HEREDOC,
-    RDC_IN,
-    RDC_OUT,
-    DBL_RDC_OUT,
-}t_typerdc;
+#include<string.h>
+#include<errno.h>
+#include "../parser.h"
 
-typedef struct t_redc
-{
-    int type;
-    char *file_name;
-    struct t_redc *next;
-}t_redc;
+void    redirect_input(t_parser_node *node);
+void    redirect_output(t_parser_node *node);
+void    redirection(t_parser_node *node);
+
 #endif

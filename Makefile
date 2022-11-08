@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+         #
+#    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 11:32:30 by mel-hous          #+#    #+#              #
-#    Updated: 2022/11/08 14:30:58 by mel-hous         ###   ########.fr        #
+#    Updated: 2022/11/08 16:58:22 by zmoussam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRC =	env1/create_env.c\
 		execution/builtins/export.c\
 		execution/builtins/pwd.c\
 		execution/builtins/unset.c\
+		redirection/redirection.c\
 		print_error.c\
 		main.c\
 
