@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:07:17 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/06 18:26:11 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/08 09:56:05 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,14 @@
 t_token	lex_wildcard(t_lexer	lexer, int i)
 {
 	char			*s;
-	int				len;
 	t_wc_node		*list;
 
 	list = NULL;
-	len = 0;
 	if (lexer.prev_type.type == HERDOC)
-		return (t_init(WORD, len, lexer.str));
-	s = lexer.str;
-	if (i > 0)
-	{
-		while (s[i] != 32)
-			i--;
-	}
-	while (s[i] != '\0' && ft_strchr(" \t\n|&()<>", s[i]))
-		i++;
-	len = i; 
-	if (len == 0)
-		len += 1;
-	s = ft_substr(s, 0, len);
-	list = wc_ld_create(s);
-	return (t_wc_init(WLDC, len, list));
+		return (t_init(WORD, i, lexer.str));
+	s = ft_substr(lexer.str, 0, i);
+	if(!s)
+		return(t_init(ERROR, 0, NULL));
+	list = wc_ld_create(remove_q(s));
+	return (t_wc_init(WLDC, i, list, lexer.str));
 }

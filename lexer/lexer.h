@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:22:46 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/07 13:08:02 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:37:17 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 typedef enum token_type
 {
 	CHAR_NULL,
+	TOK,
+	ENDF,
 	CMD,
 	VAR,
 	WLDC,
@@ -81,7 +83,7 @@ t_token		get_token(t_lexer *lexer);
 t_token		get_next_token(t_lexer	*lexer);
 t_token		check_next_token(t_lexer	lexer, int i);
 t_token 	lex_wildcard(t_lexer    lexer, int  i);
-t_token		t_wc_init(t_token_type	type, int len, t_wc_node *p);
+t_token		t_wc_init(t_token_type	type, int len, t_wc_node *p, char *pos);
 t_wc_node	*wc_ld_create(char *s);
 t_token 	lex_var(t_lexer lexer, int len);
 bool    	is_match(char *p, char *dir_n, int mode);

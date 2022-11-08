@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:36:04 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/07 15:32:27 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/08 10:55:42 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static char	*get_filename(t_token file)
 		if (wc_size(file.wildcard) != 1)
 		{
 			ft_putstr_fd("minishell ", 2);
-			// ft_putstr_fd(file, 2);
+			ft_putnstr(file.pos, file.len, 2);
 			ft_putstr_fd(": ambiguous redirect", 2);
 			wc_clear(&file.wildcard);
 			return (NULL);
@@ -119,13 +119,21 @@ static char	*get_filename(t_token file)
 		s = file.wildcard->d_name;
 	}
 	else
-		s = ft_substr(file.pos, 0, file.len);	// ft_lstdelone(wc_list, NULL);
+		s = ft_substr(file.pos, 0, file.len);
 	return (s);
 }
 
 t_rdr_node	*collect_rdr(t_lexer	*lexer, t_rdr_node	*rdr, t_token token)
 {
 	token = get_next_token(lexer);
+	if(token.type != WORD && token.type != WLDC && token.type != VAR)
+	{
+		ft_putstr_fd("minishell :syntax error near unexpected token ", 2);
+		write(2,"'",1);
+		ft_putnstr(token.pos,token.len,2);
+		write(2,"'\n",2);
+		return(MISSMATCH);
+	}
 	rdr = malloc(sizeof(t_rdr_node));
 	if (!rdr)
 	{
