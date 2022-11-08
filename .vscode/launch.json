@@ -8,12 +8,12 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/Users/zmoussam/Desktop/minishell/minishell",
+            "program": "/Users/mel-hous/Desktop/full/minishell",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "MIMode": "lldb"
         }
 

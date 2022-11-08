@@ -6,13 +6,14 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 16:26:10 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:34:37 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./builtins/builtins.h"
 #include "execution.h"
 #include<string.h>
+#include <fcntl.h>
 #include <sys/errno.h>
 
 void	execution_cmd(t_parser_node *root)
@@ -60,6 +61,58 @@ void	execute_right(int *fd, t_parser_node *right)
 	exit(0);
 }
 
+void    redirect_input(t_parser_node *node)
+{
+    int pid;
+    int fd;
+    
+    fd = open(node->rdrlst->file, O_RDWR, 0777);
+    if (fd == -1)
+        printf("%s\n", strerror(errno));
+    pid = fork();
+    if (pid == -1)
+        printf("%s\n", strerror(errno));
+    else if (pid == 0)
+    {
+        dup2(fd, STDIN_FILENO);
+        close(fd);
+        execution_cmd(node);
+        exit(0);
+    }
+	waitpid(pid, NULL, 0);
+}
+
+void    redirect_output(t_parser_node *node)
+{
+    int fd = 0;
+    int pid;
+    
+    if (node->rdrlst->type == RD_OUT)
+        fd = open(node->rdrlst->file, O_CREAT | O_RDWR | O_TRUNC, 0777);
+    else if (node->rdrlst->type ==  RD_APP)
+        fd = open(node->rdrlst->file, O_CREAT | O_RDWR | O_APPEND, 0777);
+    if (fd == -1)
+        printf("%s\n", strerror(errno));
+    pid = fork();
+    if (pid == -1)
+        printf("%s\n", strerror(errno));
+    else if (pid == 0)
+    {
+         //close(STDOUT_FILENO);
+        dup2(fd, STDOUT_FILENO);
+        close(fd);
+        execution_cmd(node);
+        exit(0);
+    }
+    waitpid(pid, NULL, 0);
+}
+void    redirection(t_parser_node *node)
+{   
+    if (node->rdrlst->type == RD_OUT|| node->rdrlst->type == RD_APP)
+         redirect_output(node);
+   	else if (node->rdrlst->type == RD_IN)
+		redirect_input(node);
+}
 void	execution(t_parser_node *root)
 {
 	int	pid;
@@ -82,5 +135,10 @@ void	execution(t_parser_node *root)
 		waitpid(-1, NULL, 0);
 	}
 	else if (root->type == CMD)
+	{
+		if (root->rdrlst)
+		redirection(root);
+		else
 		execution_cmd(root);
+	}
 }
