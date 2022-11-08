@@ -1,5 +1,9 @@
+#include <fcntl.h>
 int main()
 {
-    close(0);
-    system("cat < test1.c");
+    int fd;
+    while(1)
+    {
+        fd = open("fd", O_CREAT, 0777);
+    }
 }

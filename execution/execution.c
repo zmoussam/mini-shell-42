@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 16:58:57 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:18:07 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	execution(t_parser_node *root)
 	else if (root->type == CMD)
 	{
 		if (root->rdrlst)
-		redirection(root);
+			redirection(root);
 		else
-		execution_cmd(root);
+			execution_cmd(root);
 	}
 }

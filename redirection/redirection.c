@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:48:42 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 20:50:57 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:04:26 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ t_rdr_node    *redirect_input(t_parser_node *node, t_rdr_node *rdrlst, int v, in
                 return (printf("minishell: %s: %s\n", head->file, strerror(errno)), NULL);  
         }
         else if (head->type == RD_OUT || head->type == RD_APP)
-        { 
             redirect_output(node, head, 0, &out_put_file);
-            // break;
-        }
         head = head->next;
     }
     *input_file = fd;
@@ -73,10 +70,7 @@ t_rdr_node    *redirect_output(t_parser_node *node, t_rdr_node *rdrlst, int v, i
         else if (head->type ==  RD_APP)
             fd = open(head->file, O_CREAT | O_RDWR | O_APPEND, 0777);
         else
-        {
             redirect_input(node, head, 0, &input_file);
-            // break;
-        }
         head = head->next;
     }
     if (fd == -1)
@@ -89,7 +83,6 @@ t_rdr_node    *redirect_output(t_parser_node *node, t_rdr_node *rdrlst, int v, i
             printf("%s\n", strerror(errno));
         else if (pid == 0)
         {
-            //close(STDOUT_FILENO);
             if (v == 1)
             {
                 dup2(fd, STDOUT_FILENO);
