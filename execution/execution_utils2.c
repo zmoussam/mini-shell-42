@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:32:18 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 16:03:29 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:24:13 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	execute_file(char *path, char **argv, char **env, int v)
 
 	if (!access(path, X_OK))
 	{
+		printf("hi2\n");
 		pid = fork();
 		if (pid == -1)
 			printf("minishell: %s\n", strerror(errno));

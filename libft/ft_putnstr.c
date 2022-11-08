@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_input.c                                      :+:      :+:    :+:   */
+/*   ft_putnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/25 13:05:53 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/08 14:29:19 by mel-hous         ###   ########.fr       */
+/*   Created: 2022/11/07 15:44:19 by mel-hous          #+#    #+#             */
+/*   Updated: 2022/11/08 10:32:07 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "libft.h"
 
-t_parser_node	*parse_input(t_lexer *lexer)
+void	ft_putnstr(char	*s, int len, int fd)
 {
-	t_parser_node	*pipeline;
-	t_token			token;
+	int i;
 
-	pipeline = ft_pipe_line(lexer);
-	if (!pipeline || pipeline == MISSMATCH)
-		return (pipeline);
-	token = get_next_token(lexer);
-	if (token.type != END)
-	{
-		print_error(token);
-		node_del(&pipeline);
-		return (NULL);
-	}
-	return (pipeline);
+	i = 0;
+	while (i < len)
+		write(fd, &s[i++], 1);
 }

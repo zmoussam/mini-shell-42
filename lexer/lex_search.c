@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 13:27:05 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/07 12:38:52 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:48:19 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,11 @@ t_token	word_collect(t_lexer *lexer)
 {
 	int		mode;
 	int		len;
-	int		i;
 	char 	*s;
 	t_token	token;
 	int		var;
 
 	var = 0;
-	i = 0;
-	while (lexer->str[i] && lexer->str[i] == 32)
-		i++;
-	lexer->str += i;
 	s = lexer->str;
 	mode = 0;
 	len = 0;
@@ -40,15 +35,15 @@ t_token	word_collect(t_lexer *lexer)
 				var = 3;
 			var = 1;
 		}
-		if ((s[len] == '*' && var == 0))
+		if (s[len] == '*' && var == 0 && mode == 0)
 			var = 2;
 		len++;
 	}
 	if (!len)
-		return (t_init(END, 0, NULL));
-	if (mode != 0 && s[i] == '\0')
-		return (t_init(END, i, s));
-	if (var == 2 || var == 3)
+		return (t_init(TOK, 0, lexer->str));
+	if (mode != 0 && s[len] == '\0')
+		return (t_init(ENDF, 0, NULL));
+	if (var == 2)
 	{
 		token = lex_wildcard(*lexer, len);
 		if (token.wildcard != NULL)

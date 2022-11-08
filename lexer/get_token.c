@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 12:32:06 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/10/26 14:27:00 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/08 09:58:39 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ t_token	get_token(t_lexer	*lexer)
 {
 	t_token	token;
 
+	while (lexer->str && *lexer->str == 32)
+		lexer->str++;
+	if(lexer->str[0] == '\0')
+		return (t_init(END, 0, NULL));
 	if (!ft_strncmp(lexer->str, "|", 1))
 		return (t_init(PIPE, 1, lexer->str));
 	if (!ft_strncmp(lexer->str, "<<", 2))
