@@ -1,9 +1,11 @@
 #include <fcntl.h>
+#include<string.h>
+#include<errno.h>
+#include<stdio.h>
+#include <unistd.h>
 int main()
 {
-    int fd;
-    while(1)
-    {
-        fd = open("fd", O_CREAT, 0777);
-    }
+    int pid;
+
+   printf("tty = %d\n", isatty(1));
 }

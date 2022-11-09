@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 17:55:35 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/08 23:14:18 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,16 @@ int main(int argc, char **argv, char **envp)
 		while (line)
 		{
 			// printf("%zu\n"    , ft_strspn(line, " \n\t"));
-			
 			if (ft_strspn(line, " \n\t") < ft_strlen(line))
 				add_history(line);
 			tree = parse(line);
-		// printf("cmd == %s\n", tree->av[0]);
-		// printf("type == %d\n", tree->type);
-		// printf("type == %s\n", tree->rdrlst->file);
+			// printf("cmd == %s\n", tree->av[0]);
+			// printf("cmd == %s\n", tree->av[1]);
+			// printf("argc == %d\n", tree->ac);
+			// printf("type == %d\n", tree->type);
+			// printf("type == %s\n", tree->rdrlst->file);
+			// printf("type == %p\n", (char *)tree->rdrlst);
+			// printf("type == %u\n", tree->rdrlst->type);
 			if (tree)
 			{
 				if (x == 0)
