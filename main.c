@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 23:14:18 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/09 19:59:17 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,18 @@ const char	*get_wd(char *path)
 {
 	char	*working_directory;
 	char	*cwd;
-
-	working_directory = ft_strrchr(path, '/');
-	working_directory = ft_strjoin("\e[1;41m➜\e[0m\e[1;41m", working_directory);
-	cwd = ft_strjoin(working_directory, "\e[0m\e[1;41m => \e[0m ");
-	free(path);
-	free(working_directory);
+	cwd = NULL;
+	if (path)
+	{
+		working_directory = ft_strrchr(path, '/');
+		working_directory = ft_strjoin("\e[1;41m➜", working_directory);
+		cwd = ft_strjoin(working_directory, "\e[0m\e[1;41m => \e[0m ");
+		free(path);
+		free(working_directory);	
+	}
+	else
+		cwd = ft_strdup("\e[1;41m!!➜/N.A.D => \e[0m ");
+		
 	return (cwd);	
 }
 
@@ -72,9 +78,14 @@ void	handler(int signum)
 		return ;
 	if (signum == SIGINT)
 	{
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		printf("\n");
+		rl_redisplay();
 		*glb_v.check_signal = 1;
 		rl_done = 1;
 	}
+
 }
 
 int main(int argc, char **argv, char **envp)
@@ -88,34 +99,24 @@ int main(int argc, char **argv, char **envp)
 	glb_v.check_signal = &x;
 	sa.sa_handler = &handler;
 	sa.sa_flags = SA_RESTART;
-	
 	rl_catch_signals = 0;
-  
 	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("%s\n", strerror(errno));
-
-
 	if (argc < 2 && !argv[1])
 	{
 		glb_v.list =  create_env(envp);
 		ft_list_remove_if(&glb_v.list, "OLDPWD");
-		rl_event_hook = get_c;	
-		prompt =  get_wd(getcwd(NULL, 0));
-		line = readline(prompt);
-		free((void *)prompt);
-		while (line)
+		while (true)
 		{
 			// printf("%zu\n"    , ft_strspn(line, " \n\t"));
+			prompt =  get_wd(getcwd(NULL, 0));
+			line = readline(prompt);
+			free((void *)prompt);
+			if (line == NULL)
+					break;
 			if (ft_strspn(line, " \n\t") < ft_strlen(line))
 				add_history(line);
 			tree = parse(line);
-			// printf("cmd == %s\n", tree->av[0]);
-			// printf("cmd == %s\n", tree->av[1]);
-			// printf("argc == %d\n", tree->ac);
-			// printf("type == %d\n", tree->type);
-			// printf("type == %s\n", tree->rdrlst->file);
-			// printf("type == %p\n", (char *)tree->rdrlst);
-			// printf("type == %u\n", tree->rdrlst->type);
 			if (tree)
 			{
 				if (x == 0)
@@ -124,9 +125,9 @@ int main(int argc, char **argv, char **envp)
 				node_del(&tree);
 			}
 			free(line);
-			prompt = get_wd(getcwd(NULL, 0));
-			line = readline(prompt);
-			free((void *)prompt);
+			// prompt = get_wd(getcwd(NULL, 0));
+			// line = readline(prompt);
+			// free((void *)prompt);
 		}
 		return (printf("exit\n"));
 	}

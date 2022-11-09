@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 22:57:29 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/09 18:34:05 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 void	execution_cmd(t_parser_node *root)
 {
 	char	*copy;
-
+	
 	copy = ft_strdup(root->av[0]);
 		str_tolower(copy);
 	if (ft_strcmp(copy, "echo") == 0)
