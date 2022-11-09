@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:48:42 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 21:04:26 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/09 00:36:44 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_rdr_node    *redirect_output(t_parser_node *node, t_rdr_node *rdrlst, int v, i
         *out_put_file = fd;
         pid = fork();
         if (pid == -1)
-            printf("%s\n", strerror(errno));
+            printf("minishell: %s\n", strerror(errno));
         else if (pid == 0)
         {
             if (v == 1)
@@ -100,12 +100,35 @@ void    redirection(t_parser_node *node)
 {
     int out_put_file;
     int input_file;
+    int pid;
+    int herdoc_file;
     
+    pid = 0;
+    herdoc_file = 0;
     out_put_file = 1;
     input_file = 0;
-    
-        if (node->rdrlst->type == RD_OUT || node->rdrlst->type == RD_APP)
-           node->rdrlst = redirect_output(node, node->rdrlst, 1, &out_put_file);
-        else if (node->rdrlst->type == RD_IN)
-            node->rdrlst = redirect_input(node, node->rdrlst, 1, &input_file);
+    if (node->rdrlst->type == HERDOC)
+    {
+        pid = fork();
+        if (pid == -1)
+            printf("minishell: %s\n", strerror(errno)); 
+        else if (pid == 0)
+        {
+            herdoc_file = open(node->rdrlst->file, O_RDWR, 0777);
+            if (herdoc_file == -1)
+                printf("minishell: %s\n", strerror(errno));
+            else 
+            {
+                dup2(herdoc_file, STDIN_FILENO);
+                close(herdoc_file);
+                execution_cmd(node);
+                exit(0);
+            }
+        }
+            waitpid(pid, NULL, 0);
+    }
+    else if (node->rdrlst->type == RD_OUT || node->rdrlst->type == RD_APP)
+        node->rdrlst = redirect_output(node, node->rdrlst, 1, &out_put_file);
+    else if (node->rdrlst->type == RD_IN)
+        node->rdrlst = redirect_input(node, node->rdrlst, 1, &input_file);
 }

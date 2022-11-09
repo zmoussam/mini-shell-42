@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:30:07 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/07 13:27:52 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:15:06 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ char	**copy_env(void)
 	while (head && i < size)
 	{
 		temp = ft_strjoin(head->name, "=");
-		env[i] = ft_strjoin(temp, head->content);
+		if (ft_strcmp(head->name, "SHLVL") == 0)
+			env[i] = ft_strjoin(temp, ft_itoa((ft_atoi(head->content) + 1)));
+		else 
+			env[i] = ft_strjoin(temp, head->content);
 		free(temp);
 		head = head->next;
 		i++;

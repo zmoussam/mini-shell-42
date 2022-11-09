@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:32:18 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 17:00:19 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/09 00:04:15 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int	execute_file(char *path, char **argv, char **env, int v)
 		if (pid == -1)
 			printf("minishell: %s\n", strerror(errno));
 		else if (pid == 0)
+		{
 			if (execve(path, argv, env) == -1)
 				printf("minishell: %s\n", strerror(errno));
+			exit(0);
+		}
 		waitpid(pid, NULL, 0);
 		if (v == 2)
 			free(path);
@@ -67,7 +70,7 @@ void	launch_executabl(t_parser_node *root)
 	t_env_node	*path_node;
 	char		**args;
 	char		**env;
-
+	
 	env = copy_env();
 	args = (char **)malloc(sizeof(char *) * root->ac + 1);
 	if (check_path(root->av[0]))
