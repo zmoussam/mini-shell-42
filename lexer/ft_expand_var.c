@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:35:47 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/03 15:22:54 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/09 14:05:06 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ char	*str_add(char *full, char c, char *s)
 		str[0] = c;
 		str[1] = '\0';
 		dest = ft_strjoin(full, str);
+		free(full);
+		free(str);
 		return (dest);
 	}
-	else
-		dest = ft_strjoin(full, s);
+	dest = ft_strjoin(full, s);
 	free (full);
 	free (s);
 	return (dest);
@@ -71,9 +72,11 @@ t_token	lex_var(t_lexer lexer, int len)
 	int		mode;
 	char	*s;
 	char	**str;
+	int		i;
 	char	*expnd;
 	char	*full;
 
+	i = 0;
 	if (lexer.prev_type	.type == HERDOC)
 		return (t_init(WORD, len, lexer.str));
 	full = ft_strdup("");
@@ -81,9 +84,9 @@ t_token	lex_var(t_lexer lexer, int len)
 	str = ft_split(s, DEF_DOUBEL_Q);
 	mode = 0;
 	free (s);
-	while (*str)
+	while (str[i])
 	{
-		s = *str;
+		s = str[i];
 		while (full && *s)
 		{
 			mode = change_mode2(mode, *s);
@@ -96,8 +99,12 @@ t_token	lex_var(t_lexer lexer, int len)
 			else
 				full = str_add(full,0 , expnd);
 		}
-		str++;
+		i++;
     }
+	i = 0;
+	while (str[i])
+		free(str[i++]);
+	free(str);
 	if (full)
 		return (t_init(VAR, len, full));
 	return (t_init(WORD, len, lexer.str));

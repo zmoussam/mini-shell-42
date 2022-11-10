@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:07:17 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/08 09:56:05 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:36:26 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ t_token	lex_wildcard(t_lexer	lexer, int i)
 	if(!s)
 		return(t_init(ERROR, 0, NULL));
 	list = wc_ld_create(remove_q(s));
+	free(s);
 	return (t_wc_init(WLDC, i, list, lexer.str));
 }

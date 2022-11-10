@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:32:18 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/09 00:04:15 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/10 10:37:09 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	launch_executabl(t_parser_node *root)
 	char		**env;
 	
 	env = copy_env();
-	args = (char **)malloc(sizeof(char *) * root->ac + 1);
+	args = (char **)malloc(sizeof(char *) * (root->ac + 1));
 	if (check_path(root->av[0]))
 		execute_file(root->av[0], root->av, env, 1);
 	else

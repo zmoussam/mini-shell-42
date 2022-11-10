@@ -6,26 +6,45 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 13:27:05 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/08 14:48:19 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:23:14 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include <unistd.h>
-#include <string.h>
 
-t_token	word_collect(t_lexer *lexer)
+t_token	expand_all(t_lexer	*lexer, int var, int len)
+{
+	t_token	token;
+
+	if (var == 2)
+	{
+		token = lex_wildcard(*lexer, len);
+		if (token.wildcard != NULL)
+		{
+			token.len = len;
+			return (token);
+		}
+	}
+	if (var == 1 || var == 3)
+	{
+		token = lex_var(*lexer, len - 1);
+		if (token.type == VAR)
+		{
+			token.len = len;
+			return (token);
+		}
+	}
+	return (t_init(WORD, len, lexer->str));
+}
+
+t_token	word_collect(t_lexer *lexer, int var, int len)
 {
 	int		mode;
-	int		len;
-	char 	*s;
+	char	*s;
 	t_token	token;
-	int		var;
 
-	var = 0;
 	s = lexer->str;
 	mode = 0;
-	len = 0;
 	while (s[len] != '\0' && (mode != 0 || (ft_strchr(" \t\n|&()<>", s[len]))))
 	{
 		mode = change_mode2(mode, s[len]);
@@ -43,24 +62,6 @@ t_token	word_collect(t_lexer *lexer)
 		return (t_init(TOK, 0, lexer->str));
 	if (mode != 0 && s[len] == '\0')
 		return (t_init(ENDF, 0, NULL));
-	if (var == 2)
-	{
-		token = lex_wildcard(*lexer, len);
-		if (token.wildcard != NULL)
-		{
-			token.len = len;
-			return (token);
-		}
-	}
-
-	if(var == 1 || var == 3)
-	{
-		token = lex_var(*lexer, len - 1);
-		if(token.type == VAR)
-		{
-			token.len = len;
-			return (token);
-		}
-	}
-	return (t_init(WORD, len, s));
+	token = expand_all(lexer, var, len);
+	return (token);
 }

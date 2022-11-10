@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:22:46 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/08 14:37:17 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/09 11:15:06 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char        *quote_def(char  *str);
 t_token		t_init(t_token_type	_tp, int len, char *p);
 t_token		lex_search(t_lexer	lexer);
 t_lexer		*lex_init(char *s);
-t_token		word_collect(t_lexer	*lexer);
+t_token		word_collect(t_lexer	*lexer, int var, int len);
 t_token		get_token(t_lexer *lexer);
 t_token		get_next_token(t_lexer	*lexer);
 t_token		check_next_token(t_lexer	lexer, int i);

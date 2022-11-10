@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 10:27:14 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/10/31 11:22:27 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/09 14:12:55 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	wc_clear(t_wc_node **lst)
 	{
 		tmp = *lst;
 		*lst = (*lst)->next;
-		// free((tmp)->d_name);
+		free((tmp)->d_name);
 		free(tmp);
 	}
 }
