@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 12:40:53 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/08 14:37:45 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:34:07 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_cmd *cmd_ccomponents(t_lexer *lexer, t_rdr_node **rdr)
 	t_rdr_node *tmp;
 
 	cmd = NULL;
-	token = get_token(lexer);
+	token = t_init(CHAR_NULL,0, NULL);
 	while (token.type != END && token.type != ERROR &&
 			token.type != PIPE && token.type != TOK && token.type != ENDF)
 	{

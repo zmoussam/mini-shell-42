@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 11:43:44 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/04 10:47:40 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:44:23 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	cmd_clear(t_cmd **lst)
 		if((*lst)->wc)
 		{
 			wc_clear(&(*lst)->wc);
+			tmp = *lst;
 			*lst = (*lst)->next;
 			free(tmp);
 		}

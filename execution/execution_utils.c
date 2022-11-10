@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:30:07 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 22:15:06 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/10 10:36:23 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,21 @@ char	**copy_env(void)
 	int			size;
 	t_env_node	*head;
 	char		**env;
+	char		*shlv;
 
 	i = 0;
 	size = env_listsize(glb_v.list);
-	env = (char **)malloc(size * sizeof(char *) + 1);
+	env = (char **)malloc((size + 1) * sizeof(char *));
 	head = glb_v.list;
 	while (head && i < size)
 	{
 		temp = ft_strjoin(head->name, "=");
 		if (ft_strcmp(head->name, "SHLVL") == 0)
-			env[i] = ft_strjoin(temp, ft_itoa((ft_atoi(head->content) + 1)));
+		{
+			shlv = ft_itoa((ft_atoi(head->content) + 1));
+			env[i] = ft_strjoin(temp, shlv);
+			free(shlv);
+		}
 		else 
 			env[i] = ft_strjoin(temp, head->content);
 		free(temp);

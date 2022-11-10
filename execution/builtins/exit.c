@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:49 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/08 12:30:16 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/09 18:47:41 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	exit_cmd(t_parser_node *root)
 	else if (root->ac == 2 && check_if_all_digit(root->av[1]))
 	{
 		result = ft_llatoi(root->av[1]);
-		printf("result  = %lld\n", result);
 		if (result < 0)
 			exit(256 - ((result * -1) % 256));	
 		exit(result % 256);
@@ -76,5 +75,5 @@ void	exit_cmd(t_parser_node *root)
 	{
 		printf("minishell: exit: %s: too many arguments\n", root->av[1]);
 	}
-	//u should free data;
+	node_del(&root);
 }
