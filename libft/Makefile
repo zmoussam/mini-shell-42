@@ -14,7 +14,7 @@ OBJS = ${SRCS:.c=.o}
 
 OBJSBONUS = ${BONUS:.c=.o}
 
-CC		= gcc
+CC		= cc
 RM		= rm -f
 
 CFLAGS = -g -Wall -Wextra -Werror

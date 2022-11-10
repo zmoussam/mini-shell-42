@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
+#    By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 11:32:30 by mel-hous          #+#    #+#              #
-#    Updated: 2022/11/08 16:58:22 by zmoussam         ###   ########.fr        #
+#    Updated: 2022/11/10 16:37:49 by mel-hous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 DEBUG := 0
 CC := cc
-INCLUDES := -I include -I$(HOME)/.brew/opt/readline/include
-CFLAGS := $(INCLUDES) -Wall -Wextra -Werror -MMD $(shell [ "$(DEBUG)" = "1" ] && echo " -g") -g
-LDFLAGS := -L$(HOME)/.brew/opt/readline/lib  -lreadline
+INCLUDES := -I include -I$(HOME)/.brew/opt/readline/include -fsanitize=address
+CFLAGS := $(INCLUDES) -Wall -Wextra -Werror -MMD $(shell [ "$(DEBUG)" = "1" ] && echo " -g") -g -fsanitize=address
+LDFLAGS := -L$(HOME)/.brew/opt/readline/lib  -lreadline -fsanitize=address
 NAME := minishell
 SRC =	env1/create_env.c\
 		env1/env_find.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:30:07 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/09 12:14:12 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/10 10:36:23 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**copy_env(void)
 
 	i = 0;
 	size = env_listsize(glb_v.list);
-	env = (char **)malloc(size * sizeof(char *) + 1);
+	env = (char **)malloc((size + 1) * sizeof(char *));
 	head = glb_v.list;
 	while (head && i < size)
 	{

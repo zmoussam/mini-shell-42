@@ -6,13 +6,14 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:36:04 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/08 10:55:42 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:16:45 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include <fcntl.h>
 #include <string.h>
+#include <errno.h>
 
 static int	write_heredoc_line(char *f, int fd, char *line, bool expand)
 {
@@ -34,6 +35,7 @@ static int	write_heredoc_line(char *f, int fd, char *line, bool expand)
 		ft_putstr_fd(expanded.pos, fd);
 		ft_putchar_fd('\n', fd);
 		free(lexer);
+		free(expanded.pos);
 	}
 	else
 	{
@@ -54,7 +56,7 @@ static int	read_heredoc(char *f, char *delim, bool expand)
 		ft_putstr_fd("minishel: ", 2);
 		ft_putstr_fd(f, 2);
 		ft_putstr_fd(": ", 2);
-		perror(NULL);
+		printf("minishell: %s:\n", strerror(errno));
 		return (-1);
 	}
 	line = readline(">");
