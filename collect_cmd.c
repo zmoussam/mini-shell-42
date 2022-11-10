@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 14:45:13 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/08 14:43:53 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:28:48 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,13 @@ t_parser_node   *collect_cmd(t_lexer *lexer)
 	elem = NULL;
 	rdrlst = NULL;
 	token = get_token(lexer);
-	if (token.type != ERROR || token.type != PIPE ||
-		token.type != END || token.type != ENDF)
+	if (token.type != ERROR && token.type != PIPE &&
+		token.type != END && token.type != ENDF)
+	{
+		if(token.type == VAR)
+			free(token.pos);
 		elem = cmd_ccomponents(lexer, &rdrlst);
+	}
 	if ((elem || rdrlst) && rdrlst != MISSMATCH)
 		node = node_create(&elem, rdrlst, CMD);
 	else
