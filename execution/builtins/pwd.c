@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:57 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/06 18:26:00 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/09 20:01:25 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,12 @@ void	pwd(t_parser_node *root)
 
 	cwd = getcwd(NULL, 0);
 	if (root->ac == 1)
-		printf("%s\n", cwd);
+	{
+		if(cwd == NULL)
+			printf("!!N.A.D == NO DIRECTORY\n");
+		else 
+			printf("%s\n", cwd);
+	}
 	else
 	{
 		printf("minishel v0.1: pwd: %s: illegal option\n", root->av[1]);
