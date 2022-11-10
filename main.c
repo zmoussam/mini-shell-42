@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/10 17:17:32 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/10 21:49:08 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	print_node_argv(t_parser_node *node)
 			printf("file = %s\n", node->rdrlst->file);
 	}
 }
-int get_c()
+int readline_hook()
 {
 	return 0;
 }
@@ -78,14 +78,9 @@ void	handler(int signum)
 		return ;
 	if (signum == SIGINT)
 	{
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		printf("\n");
-		rl_redisplay();
-		*glb_v.check_signal = 1;
+		glb_v.check_signal = 1;
 		rl_done = 1;
 	}
-
 }
 
 int main(int argc, char **argv, char **envp)
@@ -94,21 +89,19 @@ int main(int argc, char **argv, char **envp)
 	t_parser_node	*tree = NULL;
 	struct sigaction sa;
 	const	char	*prompt;
-	int		x = 0;
 
-	glb_v.check_signal = &x;
+	glb_v.check_signal = 0;
 	sa.sa_handler = &handler;
-	sa.sa_flags = SA_RESTART;
 	rl_catch_signals = 0;
+	rl_event_hook = readline_hook;
 	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
-		printf("%s\n", strerror(errno));
+		printf("minishell: %s\n", strerror(errno));
 	if (argc < 2 && !argv[1])
 	{
 		glb_v.list =  create_env(envp);
 		ft_list_remove_if(&glb_v.list, "OLDPWD");
 		while (true)
 		{
-			// printf("%zu\n"    , ft_strspn(line, " \n\t"));
 			prompt =  get_wd(getcwd(NULL, 0));
 			line = readline(prompt);
 			free((void *)prompt);
@@ -119,15 +112,13 @@ int main(int argc, char **argv, char **envp)
 			tree = parse(line);
 			if (tree)
 			{
-				if (x == 0)
-				    execution(tree);//  print_node_argv(tree);
-				x = 0;
+				if (glb_v.check_signal == 0)
+				// printf("file == %s\n", tree->rdrlst->next->next->file);
+				    execution(tree);
+				glb_v.check_signal = 0;
 				node_del(&tree);
 			}
 			free(line);
-			// prompt = get_wd(getcwd(NULL, 0));
-			// line = readline(prompt);
-			// free((void *)prompt);
 		}
 		return (printf("exit\n"));
 	}

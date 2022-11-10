@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:48:42 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/09 17:56:04 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/11 00:09:07 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../execution/execution.h"
 #include <fcntl.h>
 
-t_rdr_node    *redirect_input(t_parser_node *node, t_rdr_node *rdrlst, int v, int *input_file)
+void    *redirect_input(t_parser_node *node, t_rdr_node *rdrlst, int v, int *input_file)
 {
     t_rdr_node  *head;
     int pid;
@@ -36,25 +36,26 @@ t_rdr_node    *redirect_input(t_parser_node *node, t_rdr_node *rdrlst, int v, in
         head = head->next;
     }
     *input_file = fd;
-    pid = fork();
-    if (pid == -1)
-        printf("minishell: %s\n", strerror(errno));
-    else if (pid == 0)
+    printf("head->inputfile %d\n", *input_file);
+    if (v == 1)
     {
-        if (v == 1)
+        pid = fork();
+        if (pid == -1)
+            printf("minishell: %s\n", strerror(errno));
+        else if (pid == 0)
         {
             dup2(fd, STDIN_FILENO);
             dup2(out_put_file, STDOUT_FILENO);
             close(fd);
             execution_cmd(node);      
+            exit(0);
         }
-        exit(0);
+        waitpid(pid, NULL, 0);
     }
-    waitpid(pid, NULL, 0);
     return (0);  
 }
 
-t_rdr_node    *redirect_output(t_parser_node *node, t_rdr_node *rdrlst, int v, int *out_put_file)
+void    *redirect_output(t_parser_node *node, t_rdr_node *rdrlst, int v, int *out_put_file)
 {
     t_rdr_node  *head;
     int         input_file;
@@ -63,6 +64,7 @@ t_rdr_node    *redirect_output(t_parser_node *node, t_rdr_node *rdrlst, int v, i
     
     head = rdrlst;
     input_file = 0;
+    printf("kharya\n");
     while (head)
     {
         if (head->type == RD_OUT)
@@ -83,57 +85,86 @@ t_rdr_node    *redirect_output(t_parser_node *node, t_rdr_node *rdrlst, int v, i
     else 
     {
         *out_put_file = fd;
-        pid = fork();
-        if (pid == -1)
-            printf("minishell: %s\n", strerror(errno));
-        else if (pid == 0)
+        if (v == 1)
         {
-            if (v == 1)
+            pid = fork();
+            if (pid == -1)
+                printf("minishell: %s\n", strerror(errno));
+            else if (pid == 0)
             {
                 dup2(fd, STDOUT_FILENO);
                 dup2(input_file, STDIN_FILENO);
                 close(fd);
                 execution_cmd(node);  
+                exit(0);
             }
+            waitpid(pid, NULL, 0);
+        }
+    }
+    return (NULL);
+}
+
+void *herdoc_(t_parser_node *node, t_rdr_node *rdrlst)
+{
+    t_rdr_node *head;
+    t_rdr_node *tmp;
+    int         herdoc_file = 0;
+    int         pid;
+    int         v = 1;
+    int input_file = 0;
+    int output_file = 1;
+    
+    tmp = rdrlst;
+    head = rdrlst;
+    while(tmp->next && tmp->next->type == HERDOC)
+        tmp = tmp->next;
+    while (head)
+    {
+        if (head->type == RD_OUT || head->type == RD_APP)
+        {
+            redirect_output(node, head, 0, &output_file);
+        }
+        if (head->type == RD_IN)
+        {     
+            v = 0;
+            redirect_input(node, head, 0, &input_file);
+        }
+        head = head->next;
+    }
+    pid = fork();
+    if (pid == -1)
+        printf("minishell: %s\n", strerror(errno)); 
+    else if (pid == 0)
+    {
+        if (v == 1)
+            herdoc_file = open(tmp->file, O_RDWR, 0777);
+        else 
+            herdoc_file = input_file;
+        if (herdoc_file == -1)
+            printf("minishell1: %s\n", strerror(errno));
+        else 
+        {
+            dup2(herdoc_file, STDIN_FILENO);
+            dup2(output_file, STDOUT_FILENO);
+            close(herdoc_file);
+            execution_cmd(node);  
             exit(0);
         }
-        waitpid(pid, NULL, 0);
     }
+    waitpid(pid, NULL, 0);
     return (NULL);
 }
 void    redirection(t_parser_node *node)
 {
-    int out_put_file;
+    int output_file;
     int input_file;
-    int pid;
-    int herdoc_file;
     
-    pid = 0;
-    herdoc_file = 0;
-    out_put_file = 1;
+    output_file = 1;
     input_file = 0;
     if (node->rdrlst->type == HERDOC)
-    {
-        pid = fork();
-        if (pid == -1)
-            printf("minishell: %s\n", strerror(errno)); 
-        else if (pid == 0)
-        {
-            herdoc_file = open(node->rdrlst->file, O_RDWR, 0777);
-            if (herdoc_file == -1)
-                printf("minishell: %s\n", strerror(errno));
-            else 
-            {
-                dup2(herdoc_file, STDIN_FILENO);
-                close(herdoc_file);
-                execution_cmd(node);
-                exit(0);
-            }
-        }
-            waitpid(pid, NULL, 0);
-    }
+        herdoc_(node, node->rdrlst);
     else if (node->rdrlst->type == RD_OUT || node->rdrlst->type == RD_APP)
-        node->rdrlst = redirect_output(node, node->rdrlst, 1, &out_put_file);
+         redirect_output(node, node->rdrlst, 1, &output_file);
     else if (node->rdrlst->type == RD_IN)
-        node->rdrlst = redirect_input(node, node->rdrlst, 1, &input_file);
+         redirect_input(node, node->rdrlst, 1, &input_file);
 }
