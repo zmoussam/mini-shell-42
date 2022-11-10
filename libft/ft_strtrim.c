@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strtrim.c                                          :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 06:52:34 by mel-hous          #+#    #+#             */
-/*   Updated: 2021/11/11 17:42:49 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/10 17:00:17 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_strbegin(char const *s1, char const *set)
 	i = 0;
 	while (s1[i] != '\0')
 	{
-		if (ft_strchr(set, s1[i]) == 0)
+		if (ft_strchr_ex(set, s1[i]) == 0)
 			break ;
 		i++;
 	}
@@ -33,7 +33,7 @@ int	ft_strend(char const *s1, char const *set)
 	i = ft_strlen((char *)s1);
 	while (i >= 0)
 	{
-		if (ft_strchr(set, s1[i]) == 0)
+		if (ft_strchr_ex(set, s1[i]) == 0)
 			break ;
 		i--;
 	}

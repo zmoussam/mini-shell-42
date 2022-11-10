@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/09 20:41:58 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:06:29 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ int	parss_export_variable(t_env_node *node)
 	if (node->name[len - 1] == '+' && node->len != 1)
 	{
 		tmp_name = node->name;
+		printf("name = %s\n", node->name);
 		node->name = ft_strtrim(node->name, "+");
 		node->len = ft_strlen(node->name);
 		free(tmp_name);

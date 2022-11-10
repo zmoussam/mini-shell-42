@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:48:42 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/09 00:36:44 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:56:04 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,12 @@ t_rdr_node    *redirect_output(t_parser_node *node, t_rdr_node *rdrlst, int v, i
         head = head->next;
     }
     if (fd == -1)
-        printf("%s\n", strerror(errno));
+    {
+        if (node->rdrlst->file[0] == '\0')
+            printf("minishell: !! ambiguous redirect\n");
+        else
+            printf("minishell: %s\n", strerror(errno)); 
+    }
     else 
     {
         *out_put_file = fd;

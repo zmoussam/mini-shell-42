@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strchr_ex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/24 18:41:57 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/09 20:01:25 by zmoussam         ###   ########.fr       */
+/*   Created: 2022/11/10 16:56:03 by zmoussam          #+#    #+#             */
+/*   Updated: 2022/11/10 16:58:51 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
-#include<stdlib.h>
-#include <unistd.h>
-#include<stdio.h>
+#include "libft.h"
 
-void	pwd(t_parser_node *root)
+char	*ft_strchr_ex(const char *s, int c)
 {
-	char	*cwd;
+	int	i;
 
-	cwd = getcwd(NULL, 0);
-	if (root->ac == 1)
+	i = 0;
+	if (!c)
+		return ((char *)s + ft_strlen(s));
+	while (s[i])
 	{
-		if(cwd == NULL)
-			printf("!!N.A.D == NO DIRECTORY\n");
-		else 
-			printf("%s\n", cwd);
+		if (s[i] == (unsigned char)c)
+			return ((char *)s + i);
+		i++;
 	}
-	else
-	{
-		printf("minishel v0.1: pwd: %s: illegal option\n", root->av[1]);
-		printf("Usage: pwd []\n");
-	}
-	free(cwd);
+	return (0);
 }
