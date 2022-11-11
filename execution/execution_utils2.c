@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:32:18 by zmoussam          #+#    #+#             */
 /*   Updated: 2022/11/11 10:11:03 by mel-hous         ###   ########.fr       */
@@ -15,7 +15,7 @@
 int	execute_file(char *path, char **argv, char **env, int v)
 {
 	int	pid;
-
+	
 	if (!access(path, X_OK))
 	{
 		pid = fork();
@@ -71,6 +71,7 @@ void	launch_executabl(t_parser_node *root)
 	char		**args;
 	char		**env;
 	
+	printf("");
 	env = copy_env();
 	args = (char **)malloc(sizeof(char *) * (root->ac + 1));
 	if (check_path(root->av[0]))

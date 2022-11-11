@@ -57,15 +57,20 @@ void	exit_cmd(t_parser_node *root)
 
 	printf("exit\n");
 	if (root->ac == 1)
+	{
+		node_del(&root);
 		exit(1);
+	}
 	else if ((root->ac > 1 && !check_if_all_digit(root->av[1])) \
 	|| (check_if_all_digit(root->av[1]) && ft_strlen(root->av[1]) > 19))
 	{
 		printf("minishell: exit: %s: numeric argument require\n", root->av[1]);
+		node_del(&root);
 		exit(255);
 	}
 	else if (root->ac == 2 && check_if_all_digit(root->av[1]))
 	{
+		node_del(&root);
 		result = ft_llatoi(root->av[1]);
 		if (result < 0)
 			exit(256 - ((result * -1) % 256));	

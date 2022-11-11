@@ -48,7 +48,7 @@ void	print_node_argv(t_parser_node *node)
 			printf("file = %s\n", node->rdrlst->file);
 	}
 }
-int get_c()
+int readline_hook()
 {
 	return 0;
 }
@@ -89,12 +89,11 @@ int main(int argc, char **argv, char **envp)
 	t_parser_node	*tree = NULL;
 	struct sigaction sa;
 	const	char	*prompt;
-	int		x = 0;
 
 	g_lbv.check_signal = &x;
 	sa.sa_handler = &handler;
-	sa.sa_flags = SA_RESTART;
 	rl_catch_signals = 0;
+	rl_event_hook = readline_hook;
 	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("%s\n", strerror(errno));
 	// rl_event_hook = get_c;
@@ -104,7 +103,6 @@ int main(int argc, char **argv, char **envp)
 		ft_list_remove_if(&g_lbv.list, "OLDPWD");
 		while (true)
 		{
-			// printf("%zu\n"    , ft_strspn(line, " \n\t"));
 			prompt =  get_wd(getcwd(NULL, 0));
 			line = readline(prompt);
 			free((void *)prompt);
@@ -115,15 +113,13 @@ int main(int argc, char **argv, char **envp)
 			tree = parse(line);
 			if (tree)
 			{
-				if (x == 0)
-				    execution(tree);//  print_node_argv(tree);
-				x = 0;
+				if (glb_v.check_signal == 0)
+				// printf("file == %s\n", tree->rdrlst->next->next->file);
+				    execution(tree);
+				glb_v.check_signal = 0;
 				node_del(&tree);
 			}
 			free(line);
-			// prompt = get_wd(getcwd(NULL, 0));
-			// line = readline(prompt);
-			// free((void *)prompt);
 		}
 		return (printf("exit\n"));
 	}
