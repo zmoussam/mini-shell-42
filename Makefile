@@ -53,6 +53,9 @@ SRC =	env1/create_env.c\
 		execution/builtins/pwd.c\
 		execution/builtins/unset.c\
 		redirection/redirection.c\
+		redirection/heredoc.c\
+		redirection/rdr_input.c\
+		redirection/rdr_output.c\
 		print_error.c\
 		main.c\
 

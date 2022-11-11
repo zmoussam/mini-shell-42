@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:49 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/10 17:58:38 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:04:46 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 unsigned long long	ft_llatoi(const char *str)
 {
 	unsigned long long	nombre;
-	int				signe;
-	int				i;
+	int					signe;
+	int					i;
 
 	i = 0;
 	nombre = 0;
@@ -42,7 +42,7 @@ unsigned long long	ft_llatoi(const char *str)
 
 int	check_if_all_digit(char *arg)
 {
-	while(*arg)
+	while (*arg)
 	{
 		if (!ft_isdigit(*arg) && *arg != '-')
 			return (0);
@@ -73,11 +73,9 @@ void	exit_cmd(t_parser_node *root)
 		node_del(&root);
 		result = ft_llatoi(root->av[1]);
 		if (result < 0)
-			exit(256 - ((result * -1) % 256));	
+			exit(256 - ((result * -1) % 256));
 		exit(result % 256);
 	}
 	else if (root->ac > 2 && check_if_all_digit(root->av[1]))
-	{
 		printf("minishell: exit: %s: too many arguments\n", root->av[1]);
-	}
 }

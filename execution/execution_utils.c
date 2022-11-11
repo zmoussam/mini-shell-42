@@ -6,20 +6,21 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:30:07 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/11 10:11:03 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:58:29 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void    str_tolower(char *str)
+void	str_tolower(char *str)
 {
-    int i;
+	int	i;
 
-    i = -1;
-    while (str[++i])
-        str[i] = ft_tolower(str[i]);
+	i = -1;
+	while (str[++i])
+		str[i] = ft_tolower(str[i]);
 }
+
 int	check_path(char *path)
 {
 	int	i;
@@ -36,10 +37,10 @@ int	check_path(char *path)
 
 char	**copy_env(void)
 {
+	t_env_node	*head;
 	int			i;
 	char		*temp;
 	int			size;
-	t_env_node	*head;
 	char		**env;
 	char		*shlv;
 
@@ -56,7 +57,7 @@ char	**copy_env(void)
 			env[i] = ft_strjoin(temp, shlv);
 			free(shlv);
 		}
-		else 
+		else
 			env[i] = ft_strjoin(temp, head->content);
 		free(temp);
 		head = head->next;

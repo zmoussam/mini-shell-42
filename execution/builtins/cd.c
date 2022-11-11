@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 15:26:54 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/11 10:11:03 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:02:28 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	cd(t_parser_node *root)
 	t_env_node	*tmp_env_oldpwd;
 	t_env_node	*tmp_env_pwd;
 	char		**pwd;
-	
+
 	oldpwd = NULL;
 	pwd = NULL;
 	tmp_env_oldpwd = env_find(g_lbv.list, "OLDPWD", 6);
