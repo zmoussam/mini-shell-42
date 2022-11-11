@@ -6,7 +6,7 @@
 #    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 11:32:30 by mel-hous          #+#    #+#              #
-#    Updated: 2022/11/10 18:08:06 by zmoussam         ###   ########.fr        #
+#    Updated: 2022/11/11 18:43:10 by zmoussam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,9 @@ SRC =	env1/create_env.c\
 		execution/builtins/pwd.c\
 		execution/builtins/unset.c\
 		redirection/redirection.c\
+		redirection/heredoc.c\
+		redirection/rdr_input.c\
+		redirection/rdr_output.c\
 		print_error.c\
 		main.c\
 

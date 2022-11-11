@@ -6,11 +6,11 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:16:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/06 18:19:20 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:03:01 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "builtins.h"
+#include "builtins.h"
 
 void	env_cmd(int argc)
 {

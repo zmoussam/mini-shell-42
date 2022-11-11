@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/10 22:28:23 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:52:21 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 void	execution_cmd(t_parser_node *root)
 {
 	char	*copy;
-	
+
 	copy = ft_strdup(root->av[0]);
-		str_tolower(copy);
+	str_tolower(copy);
 	if (ft_strcmp(copy, "echo") == 0)
 		echo(root);
 	else if (ft_strcmp(copy, "env") == 0)
@@ -66,6 +66,7 @@ void	execution(t_parser_node *root)
 {
 	int	pid;
 	int	fd[2];
+
 	if (root == NULL)
 		return ;
 	if (root->type == PIPE)
@@ -86,8 +87,8 @@ void	execution(t_parser_node *root)
 	else if (root->type == CMD)
 	{
 		if (root->rdrlst)
-		redirection(root);
+			redirection(root);
 		else
-		execution_cmd(root);
+			execution_cmd(root);
 	}
 }

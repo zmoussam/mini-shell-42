@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:57 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/09 20:01:25 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:07:20 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	pwd(t_parser_node *root)
 	cwd = getcwd(NULL, 0);
 	if (root->ac == 1)
 	{
-		if(cwd == NULL)
+		if (cwd == NULL)
 			printf("!!N.A.D == NO DIRECTORY\n");
-		else 
+		else
 			printf("%s\n", cwd);
 	}
 	else
