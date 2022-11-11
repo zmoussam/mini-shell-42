@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/10 17:17:32 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:11:03 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <signal.h>
 #include <sys/signal.h>
 
-t_glb_v glb_v;
+t_glb_v g_lbv;
 
 size_t	ft_strspn(const char *s, const char *accept)
 {
@@ -78,14 +78,9 @@ void	handler(int signum)
 		return ;
 	if (signum == SIGINT)
 	{
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		printf("\n");
-		rl_redisplay();
-		*glb_v.check_signal = 1;
+		*g_lbv.check_signal = 1;
 		rl_done = 1;
 	}
-
 }
 
 int main(int argc, char **argv, char **envp)
@@ -96,16 +91,17 @@ int main(int argc, char **argv, char **envp)
 	const	char	*prompt;
 	int		x = 0;
 
-	glb_v.check_signal = &x;
+	g_lbv.check_signal = &x;
 	sa.sa_handler = &handler;
 	sa.sa_flags = SA_RESTART;
 	rl_catch_signals = 0;
 	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("%s\n", strerror(errno));
+	// rl_event_hook = get_c;
 	if (argc < 2 && !argv[1])
 	{
-		glb_v.list =  create_env(envp);
-		ft_list_remove_if(&glb_v.list, "OLDPWD");
+		g_lbv.list =  create_env(envp);
+		ft_list_remove_if(&g_lbv.list, "OLDPWD");
 		while (true)
 		{
 			// printf("%zu\n"    , ft_strspn(line, " \n\t"));

@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:36:04 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/09 15:16:45 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:12:54 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	read_heredoc(char *f, char *delim, bool expand)
 	return (0);
 }
 
-static char	*get_heredoc_filename(t_token t, char *delim)
+static char	*heredoc_filename(t_token t, char *delim)
 {
 	char		*file;
 	static int	i = 0;
@@ -107,9 +107,6 @@ static char	*get_filename(t_token file)
 
 	if (file.type == WLDC)
 	{
-		puts("1\n");
-		if (!file.wildcard)
-			return (NULL);
 		if (wc_size(file.wildcard) != 1)
 		{
 			ft_putstr_fd("minishell ", 2);
@@ -128,13 +125,13 @@ static char	*get_filename(t_token file)
 t_rdr_node	*collect_rdr(t_lexer	*lexer, t_rdr_node	*rdr, t_token token)
 {
 	token = get_next_token(lexer);
-	if(token.type != WORD && token.type != WLDC && token.type != VAR)
+	if (token.type != WORD && token.type != WLDC && token.type != VAR)
 	{
 		ft_putstr_fd("minishell :syntax error near unexpected token ", 2);
-		write(2,"'",1);
-		ft_putnstr(token.pos,token.len,2);
-		write(2,"'\n",2);
-		return(MISSMATCH);
+		write(2, "'", 1);
+		ft_putnstr(token.pos, token.len, 2);
+		write(2, "'\n", 2);
+		return (MISSMATCH);
 	}
 	rdr = malloc(sizeof(t_rdr_node));
 	if (!rdr)
@@ -145,7 +142,7 @@ t_rdr_node	*collect_rdr(t_lexer	*lexer, t_rdr_node	*rdr, t_token token)
 	rdr->next = NULL;
 	rdr->type = lexer->prev_type.type;
 	if (rdr->type == HERDOC)
-		rdr->file = get_heredoc_filename(token, ft_substr(token.pos, 0, token.len));
+		rdr->file = heredoc_filename(token, ft_substr(token.pos, 0, token.len));
 	else
 		rdr->file = get_filename(token);
 	if (rdr->file)

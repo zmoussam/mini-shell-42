@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:32:18 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/10 10:37:09 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:11:03 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	launch_executabl(t_parser_node *root)
 		execute_file(root->av[0], root->av, env, 1);
 	else
 	{
-		path_node = env_find(glb_v.list, "PATH", 4);
+		path_node = env_find(g_lbv.list, "PATH", 4);
 		if (path_node)
 			searsh_in_path(path_node->content, root->av, env, args);
 		else

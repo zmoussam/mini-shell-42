@@ -6,21 +6,18 @@
 #    By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 11:32:30 by mel-hous          #+#    #+#              #
-#    Updated: 2022/11/10 17:25:22 by mel-hous         ###   ########.fr        #
+#    Updated: 2022/11/11 15:02:11 by mel-hous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-DEBUG := 0
 CC := cc
-INCLUDES := -I include -I$(HOME)/.brew/opt/readline/include 
-CFLAGS := $(INCLUDES) -Wall -Wextra -Werror -MMD $(shell [ "$(DEBUG)" = "1" ] && echo " -g") -g 
+CFLAGS := -I$(HOME)/.brew/opt/readline/include  -Wall -Wextra -Werror -MMD
 LDFLAGS := -L$(HOME)/.brew/opt/readline/lib  -lreadline 
 NAME := minishell
 SRC =	env1/create_env.c\
 		env1/env_find.c\
 		env1/env_ld.c\
 	    lexer/change_mode.c\
-		lexer/check_next_token.c\
 		lexer/ft_expand_var.c\
 		lexer/ft_expand_wldc.c\
 		lexer/get_next_token.c\
@@ -33,6 +30,7 @@ SRC =	env1/create_env.c\
 		utils/cmd_list.c\
 		utils/remove_q.c\
 		utils/wc_ld.c\
+		utils/ft_clear_av.c\
 		av_creat.c\
 		check_pipe.c\
 		cmd_components.c\
