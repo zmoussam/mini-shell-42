@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:30:07 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/10 10:36:23 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:11:03 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ char	**copy_env(void)
 	char		*shlv;
 
 	i = 0;
-	size = env_listsize(glb_v.list);
+	size = env_listsize(g_lbv.list);
 	env = (char **)malloc((size + 1) * sizeof(char *));
-	head = glb_v.list;
+	head = g_lbv.list;
 	while (head && i < size)
 	{
 		temp = ft_strjoin(head->name, "=");

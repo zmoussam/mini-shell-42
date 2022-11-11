@@ -6,16 +6,16 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:49:49 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/05 20:57:36 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:03:08 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lexer/lexer.h"
 
-char    *quote_def(char  *str)
+char	*quote_def(char	*str)
 {
-    char			*s;
-	int				mode;
+	char	*s;
+	int		mode;
 
 	s = str;
 	mode = 0;

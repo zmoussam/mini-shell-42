@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_expand_wldc.c                                   :+:      :+:    :+:   */
+/*   ft_clear_av.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/30 17:07:17 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/11 08:47:21 by mel-hous         ###   ########.fr       */
+/*   Created: 2022/11/11 11:05:54 by mel-hous          #+#    #+#             */
+/*   Updated: 2022/11/11 11:42:53 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include"util.h"
+#include <stdlib.h>
 
-t_token	lex_wildcard(t_lexer	lexer, int i)
+void	ft_clear_av(char **str)
 {
-	char			*s;
-	t_wc_node		*list;
+	int	i;
 
-	list = NULL;
-	if (lexer.prev_type.type == HERDOC)
-		return (t_init(WORD, i, lexer.str));
-	s = ft_substr(lexer.str, 0, i);
-	if (!s)
-		return (t_init(ERROR, 0, NULL));
-	list = wc_ld_create(remove_q(s));
-	free(s);
-	return (t_wc_init(WLDC, i, list, lexer.str));
+	i = 0;
+	while (str[i])
+		free (str[i++]);
+	free (str);
 }

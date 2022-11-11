@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:55 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/06 18:26:51 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:11:03 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	unset(t_parser_node *root)
 			{
 				k = 0;
 				parse_unset_variable(root->av[i], &k);
-				if (k == 0 && env_find(glb_v.list, root->av[i], -1))
-					ft_list_remove_if(&glb_v.list, root->av[i]);
+				if (k == 0 && env_find(g_lbv.list, root->av[i], -1))
+					ft_list_remove_if(&g_lbv.list, root->av[i]);
 				i++;
 			}
 		}
