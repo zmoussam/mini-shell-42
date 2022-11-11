@@ -45,9 +45,9 @@ char	**copy_env(void)
 	char		*shlv;
 
 	i = 0;
-	size = env_listsize(glb_v.list);
+	size = env_listsize(g_lbv.list);
 	env = (char **)malloc((size + 1) * sizeof(char *));
-	head = glb_v.list;
+	head = g_lbv.list;
 	while (head && i < size)
 	{
 		temp = ft_strjoin(head->name, "=");

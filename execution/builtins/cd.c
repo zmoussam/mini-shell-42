@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 15:26:54 by zmoussam          #+#    #+#             */
 /*   Updated: 2022/11/11 18:02:28 by zmoussam         ###   ########.fr       */
@@ -24,7 +24,7 @@ void	go_to_newpath(char **oldpwd, char *path, char **pwd)
 	else
 	{
 		if (oldpwd == NULL)
-			add_back(&glb_v.list, new_node(tmp_cwd, ft_strdup("OLDPWD"), 6));
+			add_back(&g_lbv.list, new_node(tmp_cwd, ft_strdup("OLDPWD"), 6));
 		else
 		{
 			free(*oldpwd);
@@ -71,7 +71,7 @@ void	go_to_home(char **oldpwd, char **pwd)
 	t_env_node	*tmp_env_home;
 
 	home = NULL;
-	tmp_env_home = env_find(glb_v.list, "HOME", 4);
+	tmp_env_home = env_find(g_lbv.list, "HOME", 4);
 	if (tmp_env_home)
 		home = tmp_env_home->content;
 	tmp_old = getcwd(NULL, 0);
@@ -81,7 +81,7 @@ void	go_to_home(char **oldpwd, char **pwd)
 			return (printf("minishell: cd: %s:%s\n", home, \
 				strerror(errno)), free(tmp_old));
 		else if (oldpwd == NULL)
-			add_back(&glb_v.list, new_node(tmp_old, ft_strdup("OLDPWD"), 6));
+			add_back(&g_lbv.list, new_node(tmp_old, ft_strdup("OLDPWD"), 6));
 		else
 		{
 			free(*oldpwd);
@@ -106,10 +106,10 @@ void	cd(t_parser_node *root)
 
 	oldpwd = NULL;
 	pwd = NULL;
-	tmp_env_oldpwd = env_find(glb_v.list, "OLDPWD", 6);
+	tmp_env_oldpwd = env_find(g_lbv.list, "OLDPWD", 6);
 	if (tmp_env_oldpwd)
 		oldpwd = &(tmp_env_oldpwd->content);
-	tmp_env_pwd = env_find(glb_v.list, "PWD", 3);
+	tmp_env_pwd = env_find(g_lbv.list, "PWD", 3);
 	if (tmp_env_pwd)
 		pwd = &(tmp_env_pwd->content);
 	if (root->ac == 1 || ft_strcmp(root->av[1], "~" ) == 0 \

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
 /*   Updated: 2022/11/11 18:06:29 by zmoussam         ###   ########.fr       */
@@ -20,7 +20,7 @@ t_env_node	get_max_variable(void)
 	max.name = "";
 	max.content = "";
 	max.len = 0;
-	head = glb_v.list;
+	head = g_lbv.list;
 	while (head)
 	{
 		if (ft_strcmp(head->name, max.name) >= 0)
@@ -39,7 +39,7 @@ t_env_node	get_min_variable(t_env_node min)
 	int			*tmp_len;
 
 	tmp_len = NULL;
-	tmp = glb_v.list;
+	tmp = g_lbv.list;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->name, min.name) <= 0 && tmp->len != -1)
@@ -57,7 +57,7 @@ void	intialise_len_variable(void)
 {
 	t_env_node	*head;
 
-	head = glb_v.list;
+	head = g_lbv.list;
 	while (head)
 	{
 		head->len = ft_strlen(head->name);
@@ -72,7 +72,7 @@ void	print_sort_list(void)
 	t_env_node	max;
 
 	max = get_max_variable();
-	tmp = glb_v.list;
+	tmp = g_lbv.list;
 	while (tmp)
 	{
 		min = get_min_variable(max);
@@ -178,11 +178,10 @@ int	parss_export_variable(t_env_node *node)
 	if (node->name[len - 1] == '+' && node->len != 1)
 	{
 		tmp_name = node->name;
-		printf("name = %s\n", node->name);
 		node->name = ft_strtrim(node->name, "+");
 		node->len = ft_strlen(node->name);
 		free(tmp_name);
-		node_name = env_find(glb_v.list, node->name, -1);
+		node_name = env_find(g_lbv.list, node->name, -1);
 		if (node_name && node->content[0] != '\0' \
 		&& ft_strcmp(node->content, "\"\""))
 		{
@@ -204,7 +203,7 @@ int	remove_old_variable(t_env_node *new_node, int *i)
 	}
 	else
 	{
-		ft_list_remove_if(&glb_v.list, new_node->name);
+		ft_list_remove_if(&g_lbv.list, new_node->name);
 	}
 	return (0);
 }
@@ -228,10 +227,10 @@ void	add_export_variable(char **argv)
 			delone_env(new_node);
 			continue ;
 		}
-		if (env_find(glb_v.list, new_node->name, ft_strlen(new_node->name)))
+		if (env_find(g_lbv.list, new_node->name, ft_strlen(new_node->name)))
 			if (remove_old_variable(new_node, &i))
 				continue ;
-		add_back(&glb_v.list, new_node);
+		add_back(&g_lbv.list, new_node);
 		i++;
 	}
 }

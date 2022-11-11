@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:35:47 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/09 14:05:06 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:08:50 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 #define NO_EXPANSION	((char *)-1)
 
-// char *exit_status(char **s)
-// {
-//     if(!ft_strncmp(*s,"$?", 2))
-//         return(NULL);
-//     return (NO_EXPANSION);
-// }
- 
+char	*exit_status(char **s)
+{
+	if (!ft_strncmp(*s, "$?", 2))
+		return (NULL);
+	return (NO_EXPANSION);
+}
+
 char	*str_add(char *full, char c, char *s)
 {
 	char	*dest;
@@ -37,8 +37,8 @@ char	*str_add(char *full, char c, char *s)
 		str[0] = c;
 		str[1] = '\0';
 		dest = ft_strjoin(full, str);
-		free(full);
-		free(str);
+		free (full);
+		free (str);
 		return (dest);
 	}
 	dest = ft_strjoin(full, s);
@@ -61,29 +61,19 @@ char	*exp_var(char **sp)
 	while (ft_isalnum(s[i]) || s[i] == '_')
 		i++;
 	*sp = s + i;
-	value = env_find2(glb_v.list, s, i);
+	value = env_find2(g_lbv.list, s, i);
 	if (!value)
 		return (ft_strdup(""));
 	return (ft_strdup(value));
 }
 
-t_token	lex_var(t_lexer lexer, int len)
+char	*lex_var2(char **str, char *full, char *s, char *expnd)
 {
-	int		mode;
-	char	*s;
-	char	**str;
-	int		i;
-	char	*expnd;
-	char	*full;
+	int	i;
+	int	mode;
 
 	i = 0;
-	if (lexer.prev_type	.type == HERDOC)
-		return (t_init(WORD, len, lexer.str));
-	full = ft_strdup("");
-	s = ft_substr(lexer.str, 0, len + 1);
-	str = ft_split(s, DEF_DOUBEL_Q);
 	mode = 0;
-	free (s);
 	while (str[i])
 	{
 		s = str[i];
@@ -97,14 +87,31 @@ t_token	lex_var(t_lexer lexer, int len)
 			if (expnd == NO_EXPANSION)
 				full = str_add(full, *s++, NULL);
 			else
-				full = str_add(full,0 , expnd);
+				full = str_add(full, 0, expnd);
 		}
 		i++;
-    }
-	i = 0;
-	while (str[i])
-		free(str[i++]);
-	free(str);
+	}
+	return (full);
+}
+
+t_token	lex_var(t_lexer lexer, int len)
+{
+	int		mode;
+	char	*s;
+	char	**str;
+	char	*expnd;
+	char	*full;
+
+	expnd = NULL;
+	if (lexer.prev_type.type == HERDOC)
+		return (t_init(WORD, len, lexer.str));
+	full = ft_strdup("");
+	s = ft_substr(lexer.str, 0, len + 1);
+	str = ft_split(s, DEF_DOUBEL_Q);
+	mode = 0;
+	free (s);
+	full = lex_var2(str, full, s, expnd);
+	ft_clear_av(str);
 	if (full)
 		return (t_init(VAR, len, full));
 	return (t_init(WORD, len, lexer.str));

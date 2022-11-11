@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 13:14:02 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/08 14:27:28 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:28:06 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include "lexer/lexer.h"
 # include "libft/libft.h"
-#include <readline/readline.h>
+# include <readline/readline.h>
+# include "utils/utils.h"
 
 # define MISSMATCH (void *)-1
 

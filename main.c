@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
 /*   Updated: 2022/11/11 21:03:35 by zmoussam         ###   ########.fr       */
@@ -18,7 +18,7 @@
 #include <signal.h>
 #include <sys/signal.h>
 
-t_glb_v glb_v;
+t_glb_v g_lbv;
 
 size_t	ft_strspn(const char *s, const char *accept)
 {
@@ -78,7 +78,7 @@ void	handler(int signum)
 		return ;
 	if (signum == SIGINT)
 	{
-		glb_v.check_signal = 1;
+		*g_lbv.check_signal = 1;
 		rl_done = 1;
 	}
 }
@@ -90,16 +90,17 @@ int main(int argc, char **argv, char **envp)
 	struct sigaction sa;
 	const	char	*prompt;
 
-	glb_v.check_signal = 0;
+	g_lbv.check_signal = &x;
 	sa.sa_handler = &handler;
 	rl_catch_signals = 0;
 	rl_event_hook = readline_hook;
 	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
-		printf("minishell: %s\n", strerror(errno));
+		printf("%s\n", strerror(errno));
+	// rl_event_hook = get_c;
 	if (argc < 2 && !argv[1])
 	{
-		glb_v.list =  create_env(envp);
-		ft_list_remove_if(&glb_v.list, "OLDPWD");
+		g_lbv.list =  create_env(envp);
+		ft_list_remove_if(&g_lbv.list, "OLDPWD");
 		while (true)
 		{
 			prompt =  get_wd(getcwd(NULL, 0));
