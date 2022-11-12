@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
+#    By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 11:32:30 by mel-hous          #+#    #+#              #
-#    Updated: 2022/11/12 17:56:07 by zmoussam         ###   ########.fr        #
+#    Updated: 2022/11/12 19:39:23 by mel-hous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := cc
-CFLAGS := -I$(HOME)/goinfre/brew/opt/readline/include  -Wall -Wextra -Werror -MMD -g
-LDFLAGS := -L$(HOME)/goinfre/brew/opt/readline/lib  -lreadline 
+CFLAGS := -I$(HOME)/.brew/opt/readline/include  -Wall -Wextra -Werror -MMD -g
+LDFLAGS := -L$(HOME)/.brew/opt/readline/lib  -lreadline 
 NAME := minishell
 SRC =	env1/create_env.c\
 		env1/env_find.c\
