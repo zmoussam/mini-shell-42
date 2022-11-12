@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:36:04 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/11 12:12:54 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:46:53 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <string.h>
 #include <errno.h>
 
-static int	write_heredoc_line(char *f, int fd, char *line, bool expand)
+static int	get_heredoc_l(char *f, int fd, char *line, bool expand)
 {
 	t_token	expanded;
 	t_lexer	*lexer;
@@ -32,20 +32,16 @@ static int	write_heredoc_line(char *f, int fd, char *line, bool expand)
 			free(line);
 			return (-1);
 		}
-		ft_putstr_fd(expanded.pos, fd);
-		ft_putchar_fd('\n', fd);
+		put_line(expanded.pos, fd);
 		free(lexer);
 		free(expanded.pos);
 	}
 	else
-	{
-		ft_putstr_fd(line, fd);
-		ft_putchar_fd('\n', fd);
-	}
+		put_line(line, fd);
 	return (0);
 }
 
-static int	read_heredoc(char *f, char *delim, bool expand)
+static int	heredoc_handler(char *f, char *delim, bool expand)
 {
 	int		fd;
 	char	*line;
@@ -64,7 +60,7 @@ static int	read_heredoc(char *f, char *delim, bool expand)
 	{
 		if (!ft_strcmp(line, delim))
 			break ;
-		if (write_heredoc_line(f, fd, line, expand))
+		if (get_heredoc_l(f, fd, line, expand))
 			return (-1);
 		free(line);
 		line = readline(">");
@@ -89,9 +85,9 @@ static char	*heredoc_filename(t_token t, char *delim)
 	if (n_file)
 		file = ft_strjoin("/tmp/minishell-heredoc-", n_file);
 	free(n_file);
-	if (!delim || !n_file || !file || read_heredoc(file, delim, exp))
+	if (!delim || !n_file || !file || heredoc_handler(file, delim, exp))
 	{
-		perror("minishell");
+		printf("minishell: %s:\n", strerror(errno));
 		free(delim);
 		free(file);
 		return (NULL);
@@ -101,7 +97,7 @@ static char	*heredoc_filename(t_token t, char *delim)
 	return (file);
 }
 
-static char	*get_filename(t_token file)
+static char	*rdr_filename(t_token file)
 {
 	char	*s;
 
@@ -144,7 +140,7 @@ t_rdr_node	*collect_rdr(t_lexer	*lexer, t_rdr_node	*rdr, t_token token)
 	if (rdr->type == HERDOC)
 		rdr->file = heredoc_filename(token, ft_substr(token.pos, 0, token.len));
 	else
-		rdr->file = get_filename(token);
+		rdr->file = rdr_filename(token);
 	if (rdr->file)
 		return (rdr);
 	free(rdr);

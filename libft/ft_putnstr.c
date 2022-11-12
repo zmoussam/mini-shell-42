@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:44:19 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/08 10:32:07 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:03:07 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putnstr(char	*s, int len, int fd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < len)

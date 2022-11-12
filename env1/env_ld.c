@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_ld.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 10:47:27 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/07 13:19:32 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/12 09:41:15 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_env_node	*lstlast(t_env_node *lst)
 		lst = lst->next;
 	return (lst);
 }
-
 
 void	add_back(t_env_node **lst, t_env_node *new)
 {
@@ -43,8 +42,8 @@ t_env_node	*new_node(char *content, char *name, int len)
 	if (s == NULL)
 		return (NULL);
 	s->content = content;
-    s->name = name;
-    s->len = len;
+	s->name = name;
+	s->len = len;
 	s->next = NULL;
 	return (s);
 }

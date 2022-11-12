@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
+#    By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 11:32:30 by mel-hous          #+#    #+#              #
-#    Updated: 2022/11/11 15:02:11 by mel-hous         ###   ########.fr        #
+#    Updated: 2022/11/12 14:10:08 by mel-hous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := cc
-CFLAGS := -I$(HOME)/.brew/opt/readline/include  -Wall -Wextra -Werror -MMD
+CFLAGS := -I$(HOME)/.brew/opt/readline/include  -Wall -Wextra -Werror -MMD -g
 LDFLAGS := -L$(HOME)/.brew/opt/readline/lib  -lreadline 
 NAME := minishell
 SRC =	env1/create_env.c\
@@ -29,6 +29,7 @@ SRC =	env1/create_env.c\
 		lexer/wc_ld_create.c\
 		utils/cmd_list.c\
 		utils/remove_q.c\
+		utils/put_line.c\
 		utils/wc_ld.c\
 		utils/ft_clear_av.c\
 		av_creat.c\

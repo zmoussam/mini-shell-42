@@ -6,10 +6,11 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:16:19 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/10/06 17:37:49 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:03:41 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
 int	ft_strchr(const char *str, char c)
 {
