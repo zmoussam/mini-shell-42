@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collect_rdr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:36:04 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 14:46:53 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:51:30 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static int	heredoc_handler(char *f, char *delim, bool expand)
 {
 	int		fd;
 	char	*line;
-
 	fd = open(f, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
@@ -58,7 +57,7 @@ static int	heredoc_handler(char *f, char *delim, bool expand)
 	line = readline(">");
 	while (line)
 	{
-		if (!ft_strcmp(line, delim))
+		if (g_lbv.check_signal == 1 || !ft_strcmp(line, delim))
 			break ;
 		if (get_heredoc_l(f, fd, line, expand))
 			return (-1);

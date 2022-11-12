@@ -60,6 +60,7 @@ typedef struct s_glb_v
 {
 	t_env_node	*list;
 	int			check_signal;
+	int			check_heredoc_signal;
 }			t_glb_v;
 
 extern t_glb_v	g_lbv;

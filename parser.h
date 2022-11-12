@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 13:14:02 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 09:50:25 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:55:22 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ void			node_ptr(t_parser_node **node, t_parser_node *left,
 					t_parser_node *right);
 void			rdr_clear(t_rdr_node **lst);
 void			print_error(t_token token);
+void			handler(int signum);
 
 #endif

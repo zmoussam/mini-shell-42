@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/12 15:03:54 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:55:11 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +81,16 @@ void	handler(int signum)
 		rl_done = 1;
 	}
 }
-
 int main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_parser_node	*tree = NULL;
-	struct sigaction sa;
 	const	char	*prompt;
 
-	// g_lbv.check_signal = &x;
-	sa.sa_handler = &handler;
 	rl_catch_signals = 0;
 	rl_event_hook = readline_hook;
-	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
-		printf("%s\n", strerror(errno));
+	if (signal(SIGINT, &handler) == SIG_ERR || signal(SIGQUIT, &handler) == SIG_ERR)
+		printf("minishell: %s\n", strerror(errno));
 	// rl_event_hook = get_c;
 	if (argc < 2 && !argv[1])
 	{
