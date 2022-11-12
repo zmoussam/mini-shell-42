@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 10:19:09 by mel-hous          #+#    #+#             */
-/*   Updated: 2021/11/15 10:20:18 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:06:53 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 int	ft_lstsize(t_list *lst)

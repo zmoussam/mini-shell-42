@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 10:21:23 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/11 15:06:57 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:33:52 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,28 @@ void	rdr_clear(t_rdr_node **lst)
 	{
 		tmp = *lst;
 		*lst = (*lst)->next;
+		if (tmp->type == HERDOC)
+			unlink (tmp->file);
 		free((tmp->file));
 		free(tmp);
 	}
 }
 
-void	rdr_addback(t_rdr_node **lst, t_rdr_node *new)
+void	rdr_addback(t_rdr_node **lst, t_rdr_node *_new)
 {
 	t_rdr_node	*p;
 
 	p = *lst;
-	if (!*lst)
+	if (!(*lst))
 	{
-		*lst = new;
+		*lst = _new;
 		return ;
 	}
 	while (p != MISSMATCH && p->next)
 		p = p->next;
-	if (p != MISSMATCH)
+	if (p == MISSMATCH)
 	{
-		p->next = new;
-		new->next = NULL;
+		p->next = _new;
+		_new->next = NULL;
 	}
 }

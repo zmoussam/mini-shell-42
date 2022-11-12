@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 11:43:44 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/11 11:12:40 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 11:46:09 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	cmd_clear(t_cmd **lst)
 		{
 			tmp = *lst;
 			*lst = (*lst)->next;
+			free(tmp->word);
 			free(tmp);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 11:53:24 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/11 14:45:55 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 13:59:56 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ void		wc_clear(t_wc_node **lst);
 void		cmd_clear(t_cmd **lst);
 char		*remove_q(char *s);
 void		ft_clear_av(char **str);
+void		put_line(char *line, int fd);
 
 #endif

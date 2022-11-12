@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 10:22:39 by mel-hous          #+#    #+#             */
-/*   Updated: 2021/11/16 17:53:48 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:06:57 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 t_list	*ft_lstlast(t_list *lst)

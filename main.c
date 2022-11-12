@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/11 21:03:35 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/12 15:03:54 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ size_t	ft_strspn(const char *s, const char *accept)
 		i++;
 	return (i);
 }
-
 
 void	print_node_argv(t_parser_node *node)
 {
@@ -78,7 +77,7 @@ void	handler(int signum)
 		return ;
 	if (signum == SIGINT)
 	{
-		*g_lbv.check_signal = 1;
+		g_lbv.check_signal = 1;
 		rl_done = 1;
 	}
 }
@@ -90,7 +89,7 @@ int main(int argc, char **argv, char **envp)
 	struct sigaction sa;
 	const	char	*prompt;
 
-	g_lbv.check_signal = &x;
+	// g_lbv.check_signal = &x;
 	sa.sa_handler = &handler;
 	rl_catch_signals = 0;
 	rl_event_hook = readline_hook;
@@ -113,10 +112,10 @@ int main(int argc, char **argv, char **envp)
 			tree = parse(line);
 			if (tree)
 			{
-				if (glb_v.check_signal == 0)
+				if (g_lbv.check_signal == 0)
 				// printf("file == %s\n", tree->rdrlst->next->next->file);
 				    execution(tree);
-				glb_v.check_signal = 0;
+				g_lbv.check_signal = 0;
 				node_del(&tree);
 			}
 			free(line);

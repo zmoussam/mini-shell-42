@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*   put_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/15 09:39:23 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 14:06:11 by mel-hous         ###   ########.fr       */
+/*   Created: 2022/11/12 13:54:59 by mel-hous          #+#    #+#             */
+/*   Updated: 2022/11/12 14:00:15 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "../libft/libft.h"
+#include "util.h"
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char *))
+void	put_line(char *line, int fd)
 {
-	size_t	i;
-
-	if (s != NULL && f != NULL)
-	{
-		i = 0;
-		while (s[i] != '\0')
-		{
-			f(i, &(s[i]));
-			i++;
-		}
-	}
+	ft_putstr_fd(line, fd);
+	ft_putchar_fd('\n', fd);
 }

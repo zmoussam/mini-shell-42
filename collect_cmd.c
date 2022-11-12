@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 14:45:13 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/11 12:09:59 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 12:42:33 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ t_parser_node	*collect_cmd(t_lexer *lexer)
 	if ((elem || rdrlst) && rdrlst != MISSMATCH)
 		node = node_create(&elem, rdrlst, CMD);
 	else
+	{
+		cmd_clear(&elem);
 		return (MISSMATCH);
+	}
 	return (node);
 }

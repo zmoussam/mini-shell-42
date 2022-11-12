@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:27:32 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/11 12:15:43 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:32:49 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ t_parser_node	*parse(char *input)
 	lexer = lex_init(quote_def(input));
 	ast = parse_input(lexer);
 	if (!ast || ast == MISSMATCH)
+	{
+		free(lexer);
 		return (NULL);
+	}
 	free(lexer);
 	return (ast);
 }
