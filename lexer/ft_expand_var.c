@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:35:47 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/11 11:08:50 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:38:17 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@
 char	*exit_status(char **s)
 {
 	if (!ft_strncmp(*s, "$?", 2))
-		return (NULL);
+	{
+		*s += 2;
+		return (ft_itoa(g_lbv.exit_status));
+	}
 	return (NO_EXPANSION);
 }
 
@@ -82,8 +85,14 @@ char	*lex_var2(char **str, char *full, char *s, char *expnd)
 			mode = change_mode2(mode, *s);
 			expnd = NO_EXPANSION;
 			if (mode != 1)
+			{
 				if (*s == '$')
-					expnd = exp_var(&s);
+				{
+					expnd = exit_status(&s);
+					if (expnd == NO_EXPANSION)
+						expnd = exp_var(&s);
+				}
+			}
 			if (expnd == NO_EXPANSION)
 				full = str_add(full, *s++, NULL);
 			else

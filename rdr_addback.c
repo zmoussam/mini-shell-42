@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 10:21:23 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 14:33:52 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:38:51 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	rdr_addback(t_rdr_node **lst, t_rdr_node *_new)
 	}
 	while (p != MISSMATCH && p->next)
 		p = p->next;
-	if (p == MISSMATCH)
+	if (p != MISSMATCH)
 	{
 		p->next = _new;
 		_new->next = NULL;
