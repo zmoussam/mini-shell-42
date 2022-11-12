@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:03 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/06 18:23:55 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:12:13 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ void	echo(t_parser_node *root)
 	}
 	if (k == 0)
 		printf("\n");
+	g_lbv.exit_status = 0;
 }

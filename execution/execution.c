@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/11 17:52:21 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:18:45 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execution_cmd(t_parser_node *root)
 	if (ft_strcmp(copy, "echo") == 0)
 		echo(root);
 	else if (ft_strcmp(copy, "env") == 0)
-		env_cmd(root->ac);
+		env_cmd(root);
 	else if (ft_strcmp(root->av[0], "cd") == 0)
 		cd(root);
 	else if (ft_strcmp(copy, "pwd") == 0)

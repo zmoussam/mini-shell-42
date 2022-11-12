@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:49 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/11 18:04:46 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:47:36 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,5 @@ void	exit_cmd(t_parser_node *root)
 	}
 	else if (root->ac > 2 && check_if_all_digit(root->av[1]))
 		printf("minishell: exit: %s: too many arguments\n", root->av[1]);
+	g_lbv.exit_status = 1;
 }

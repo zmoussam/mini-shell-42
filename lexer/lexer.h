@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:22:46 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/11 11:03:21 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:09:03 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_glb_v
 {
 	t_env_node	*list;
 	int			check_signal;
-	int			check_heredoc_signal;
+	int			exit_status;
 }			t_glb_v;
 
 extern t_glb_v	g_lbv;

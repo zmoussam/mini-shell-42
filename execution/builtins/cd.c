@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 15:26:54 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/11 18:02:28 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:29:52 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ void	go_to_newpath(char **oldpwd, char *path, char **pwd)
 
 	tmp_cwd = getcwd(NULL, 0);
 	if (chdir(path) == -1)
+	{
+		g_lbv.exit_status = 1;
 		return (printf("minishell: cd: %s:%s\n", path, \
 			strerror(errno)), free(tmp_cwd));
+	}
 	else
 	{
 		if (oldpwd == NULL)
@@ -35,6 +38,7 @@ void	go_to_newpath(char **oldpwd, char *path, char **pwd)
 			free(*pwd);
 			*pwd = getcwd(NULL, 0);
 		}
+		g_lbv.exit_status = 0;
 	}
 }
 
@@ -44,12 +48,18 @@ void	go_to_oldpath(char **oldpwd, char **pwd)
 
 	tmp_cwd = getcwd(NULL, 0);
 	if (oldpwd == NULL)
+	{
+		g_lbv.exit_status = 1;
 		return (printf("minishell: cd: OLDPWD not set\n"), free(tmp_cwd));
+	}
 	else
 	{
 		if (chdir(*oldpwd) == -1)
+		{
+			g_lbv.exit_status = 1;
 			return (printf("minishell: cd: %s:%s\n", tmp_cwd, \
 				strerror(errno)), free(tmp_cwd));
+		}
 		else
 		{
 			printf("%s\n", tmp_cwd);
@@ -61,6 +71,7 @@ void	go_to_oldpath(char **oldpwd, char **pwd)
 			free(*pwd);
 			*pwd = getcwd(NULL, 0);
 		}
+		g_lbv.exit_status = 0;
 	}
 }
 
@@ -78,8 +89,11 @@ void	go_to_home(char **oldpwd, char **pwd)
 	if (home)
 	{
 		if (chdir(home) == -1)
+		{
+			g_lbv.exit_status = 1;
 			return (printf("minishell: cd: %s:%s\n", home, \
 				strerror(errno)), free(tmp_old));
+		}
 		else if (oldpwd == NULL)
 			add_back(&g_lbv.list, new_node(tmp_old, ft_strdup("OLDPWD"), 6));
 		else
@@ -92,9 +106,13 @@ void	go_to_home(char **oldpwd, char **pwd)
 			free(*pwd);
 			*pwd = getcwd(NULL, 0);
 		}
+		g_lbv.exit_status = 0;
 	}
 	else
+	{
 		printf("minishell: cd: HOME not set\n");
+		g_lbv.exit_status = 1;
+	}
 }
 
 void	cd(t_parser_node *root)

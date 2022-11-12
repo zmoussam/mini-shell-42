@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/11 18:06:29 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:18:37 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	check_sign_plus(char *name, char *content)
 		return (0);
 }
 
-int	check_special_char(char *name, char *content, int len)
+int	check_special_char(char *name, char *content, int len, int j)
 {
 	int	i;
 
@@ -143,10 +143,11 @@ int	check_special_char(char *name, char *content, int len)
 	if (ft_isdigit(name[i]))
 		return (printf("minishell: export: `%s=%s': not a valid identifier\n", \
 		name, content));
-	if (name[i] == '-')
+	if (name[i] == '-' && j == 1)
 	{
 		printf("minishell: export: %s: invalid option \n", name);
-		return (printf("export: usage: export [name[=value]...] or export \n"));
+		printf("export: usage: export [name[=value]...] or export \n");
+		return (-1);
 	}
 	if (check_sign_plus(name, content))
 		return (printf("minishell: export: `%s': not a valid identifier\n", \
@@ -163,18 +164,23 @@ int	check_special_char(char *name, char *content, int len)
 	return (0);
 }
 
-int	parss_export_variable(t_env_node *node)
+int	parss_export_variable(t_env_node *node, int j, int *check_exit_status)
 {
 	t_env_node	*node_name;
-	int			i;
 	char		*tmp_content;
 	char		*tmp_name;
 	int			len;
+	int			check_parse;
 
 	len = ft_strlen(node->name);
-	i = 0;
-	if (check_special_char(node->name, node->content, len))
+	check_parse = check_special_char(node->name, node->content, len, j);
+	if (check_parse)
+	{
+		if (check_parse == -1)
+			return (-1);
+		*check_exit_status = 1;
 		return (1);
+	}
 	if (node->name[len - 1] == '+' && node->len != 1)
 	{
 		tmp_name = node->name;
@@ -202,9 +208,7 @@ int	remove_old_variable(t_env_node *new_node, int *i)
 		return (1);
 	}
 	else
-	{
 		ft_list_remove_if(&g_lbv.list, new_node->name);
-	}
 	return (0);
 }
 
@@ -212,8 +216,11 @@ void	add_export_variable(char **argv)
 {
 	t_env_node	*new_node;
 	int			i;
+	int			_check_parse;
+	int			check_exit_status;
 
 	i = 1;
+	check_exit_status = 0;
 	while (argv[i])
 	{
 		if (argv[i][0] == ';' || argv[i][0] == '#')
@@ -221,8 +228,14 @@ void	add_export_variable(char **argv)
 		new_node = get_new_node(argv[i]);
 		if (!new_node)
 			return ;
-		if (parss_export_variable(new_node))
+		_check_parse = parss_export_variable(new_node, i, &check_exit_status);
+		if (_check_parse)
 		{
+			if (_check_parse == -1 && i == 1)
+			{
+				g_lbv.exit_status = 2;
+				break;
+			}
 			i++;
 			delone_env(new_node);
 			continue ;
@@ -233,6 +246,7 @@ void	add_export_variable(char **argv)
 		add_back(&g_lbv.list, new_node);
 		i++;
 	}
+	g_lbv.exit_status = check_exit_status;
 }
 
 void	export(t_parser_node *root)

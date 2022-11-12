@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/12 17:55:11 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:13:24 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int main(int argc, char **argv, char **envp)
 	rl_event_hook = readline_hook;
 	if (signal(SIGINT, &handler) == SIG_ERR || signal(SIGQUIT, &handler) == SIG_ERR)
 		printf("minishell: %s\n", strerror(errno));
-	// rl_event_hook = get_c;
 	if (argc < 2 && !argv[1])
 	{
 		g_lbv.list =  create_env(envp);
