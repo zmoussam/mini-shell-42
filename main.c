@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/13 01:36:41 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 01:50:50 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,14 @@ int	main(int argc, char **argv, char **envp)
 				break ;
 			if (ft_strspn(line, " \n\t") < ft_strlen(line))
 				add_history(line);
-			if (g_lbv.check_signal == 0)
+			tree = parse(line);
+			if (tree)
 			{
-				tree = parse(line);
-				if (tree)
-				{
+				if (g_lbv.check_signal == 0)
 					execution(tree);
-					node_del(&tree);
-				}
+				g_lbv.check_signal = 0;
+				node_del(&tree);
 			}
-			g_lbv.check_signal = 0;
 			free(line);
 		}
 		return (printf("exit\n"));
