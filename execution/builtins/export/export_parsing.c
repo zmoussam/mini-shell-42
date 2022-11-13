@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 23:51:32 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/13 01:46:04 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 15:27:15 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_sign_plus(char *name, char *content)
 		return (0);
 }
 
-int	check_special_char(char *name, char *content, int len, int j)
+int	check_special_char(char *name, char *content, int len, int _option_error)
 {
 	int	i;
 
@@ -40,7 +40,7 @@ int	check_special_char(char *name, char *content, int len, int j)
 	if (ft_isdigit(name[i]))
 		return (printf("minishell: export: `%s=%s': not a valid identifier\n", \
 		name, content));
-	if (name[i] == '-' && j == 1)
+	if (name[i] == '-' && _option_error == 1)
 	{
 		printf("minishell: export: %s: invalid option \n", name);
 		printf("export: usage: export [name[=value]...] or export \n");
@@ -81,18 +81,18 @@ void	concatenat_variable(t_env_node *node)
 	}
 }
 
-int	parss_export_variable(t_env_node *node, int j, int *check_exit_status)
+int	parss_export_variable(t_env_node *node, int _op_error)
 {
 	int			len;
 	int			check_parse;
 
 	len = ft_strlen(node->name);
-	check_parse = check_special_char(node->name, node->content, len, j);
+	check_parse = check_special_char(node->name, node->content, len, _op_error);
 	if (check_parse)
 	{
 		if (check_parse == -1)
 			return (-1);
-		*check_exit_status = 256;
+		g_lbv.exit_status = 256;
 		return (1);
 	}
 	if (node->name[len - 1] == '+' && node->len != 1)

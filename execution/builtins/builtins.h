@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 17:01:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/13 00:00:01 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 15:27:25 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ t_env_node	get_min_variable(t_env_node min);
 t_env_node	get_max_variable(void);
 void		print_sort_list(void);
 int			check_sign_plus(char *name, char *content);
-int			check_special_char(char *name, char *content, int len, int j);
-int			parss_export_variable(t_env_node *node, int j, \
-		int *check_exit_status);
+int			check_special_char(char *name, char *content, int len, int _op_er);
+int			parss_export_variable(t_env_node *node, int _op_error);
 
 #endif
