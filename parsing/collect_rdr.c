@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:36:04 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/13 17:47:13 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/13 19:00:49 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ static char	*rdr_filename(t_token file)
 		}
 		s = file.wildcard->d_name;
 	}
-	else if(file.type == VAR)
+	else if (file.type == VAR)
 		s = ft_substr(file.pos, 0, ft_strlen(file.pos));
 	else
 		s = ft_substr(file.pos, 0, file.len);
