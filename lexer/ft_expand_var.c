@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:35:47 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 20:21:42 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:54:23 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,7 @@ char	*lex_var2(char **str, char *full, char *s, char *expnd)
 			if (mode != 1)
 			{
 				if (*s == '$')
-				{
-					expnd = exit_status(&s);
-					if (expnd == NO_EXPANSION)
-						expnd = exp_var(&s);
-				}
+					expnd = ft_exp(expnd, &s);
 			}
 			if (expnd == NO_EXPANSION)
 				full = str_add(full, *s++, NULL);
