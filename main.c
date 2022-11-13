@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/13 01:50:50 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 16:12:27 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,6 @@
 #include <sys/signal.h>
 
 t_glb_v	g_lbv;
-
-size_t	ft_strspn(const char *s, const char *accept)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] && !ft_strchr(accept, s[i]))
-		i++;
-	return (i);
-}
 
 int	readline_hook(void)
 {
@@ -65,6 +55,23 @@ void	handler(int signum)
 	}
 }
 
+void	minishell(t_parser_node *tree, char *line)
+{
+	if (ft_strcmp(line, "") != 0)
+		add_history(line);
+	if (g_lbv.check_signal == 0)
+	{
+		tree = parse(line);
+		if (tree)
+		{
+			execution(tree);
+			node_del(&tree);
+		}
+	}
+	g_lbv.check_signal = 0;
+	free(line);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char			*line;
@@ -88,17 +95,7 @@ int	main(int argc, char **argv, char **envp)
 			free((void *)prompt);
 			if (line == NULL)
 				break ;
-			if (ft_strspn(line, " \n\t") < ft_strlen(line))
-				add_history(line);
-			tree = parse(line);
-			if (tree)
-			{
-				if (g_lbv.check_signal == 0)
-					execution(tree);
-				g_lbv.check_signal = 0;
-				node_del(&tree);
-			}
-			free(line);
+			minishell(tree, line);
 		}
 		return (printf("exit\n"));
 	}
