@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:22:46 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 18:09:03 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:51:18 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ t_token		lex_var(t_lexer lexer, int len);
 int			is_match(char *p, char *dir_n, int mode, char	*str);
 int			change_mode2(int i, char c);
 char		*exp_var(char **sp);
+char		*exit_status(char **s);
+char		*ft_exp(char *expnd, char **s);
 
 // void    put_str(char *s, int len);
 
