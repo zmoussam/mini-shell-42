@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collect_rdr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:36:04 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 17:51:30 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 09:40:56 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	heredoc_handler(char *f, char *delim, bool expand)
 {
 	int		fd;
 	char	*line;
+
 	fd = open(f, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
