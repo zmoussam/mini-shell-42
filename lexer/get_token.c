@@ -6,11 +6,11 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 12:32:06 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/11 08:48:43 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/13 16:20:20 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser.h"
+#include "../parsing/parser.h"
 #include <stdlib.h>
 
 t_token	get_token(t_lexer	*lexer)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/13 16:12:27 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 17:19:33 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "parsing/parser.h"
 #include "./execution/execution.h"
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -64,7 +64,8 @@ void	minishell(t_parser_node *tree, char *line)
 		tree = parse(line);
 		if (tree)
 		{
-			execution(tree);
+			if (g_lbv.check_signal == 0)
+				execution(tree);
 			node_del(&tree);
 		}
 	}
@@ -72,7 +73,7 @@ void	minishell(t_parser_node *tree, char *line)
 	free(line);
 }
 
-int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **env)
 {
 	char			*line;
 	t_parser_node	*tree;
@@ -86,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("minishell: %s\n", strerror(errno));
 	if (argc < 2 && !argv[1])
 	{
-		g_lbv.list = create_env(envp);
+		g_lbv.list = create_env(env);
 		ft_list_remove_if(&g_lbv.list, "OLDPWD");
 		while (true)
 		{

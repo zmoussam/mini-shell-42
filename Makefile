@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
+#    By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 11:32:30 by mel-hous          #+#    #+#              #
-#    Updated: 2022/11/13 15:50:37 by zmoussam         ###   ########.fr        #
+#    Updated: 2022/11/13 16:22:42 by mel-hous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := cc
-CFLAGS := -I$(HOME)/goinfre/brew/opt/readline/include  -Wall -Wextra -Werror -MMD -g
-LDFLAGS := -L$(HOME)/goinfre/brew/opt/readline/lib  -lreadline 
+CFLAGS := -I$(HOME)/.brew/opt/readline/include  -Wall -Wextra -Werror -MMD -g
+LDFLAGS := -L$(HOME)/.brew/opt/readline/lib  -lreadline 
 NAME := minishell
 SRC =	env1/create_env.c\
 		env1/env_find.c\
@@ -33,17 +33,18 @@ SRC =	env1/create_env.c\
 		utils/put_line.c\
 		utils/wc_ld.c\
 		utils/ft_clear_av.c\
-		av_creat.c\
-		check_pipe.c\
-		cmd_components.c\
-		collect_cmd.c\
-		collect_rdr.c\
-		ft_pipe_line.c\
-		node_creat.c\
-		node_del.c\
-		parse_input.c\
-		parser_start.c\
-		rdr_addback.c\
+		parsing/av_creat.c\
+		parsing/check_pipe.c\
+		parsing/cmd_components.c\
+		parsing/collect_cmd.c\
+		parsing/collect_rdr.c\
+		parsing/ft_pipe_line.c\
+		parsing/node_creat.c\
+		parsing/node_del.c\
+		parsing/parse_input.c\
+		parsing/parser_start.c\
+		parsing/rdr_addback.c\
+		parsing/print_error.c\
 		execution/execution_utils.c\
 		execution/execution_utils2.c\
 		execution/execution.c\
@@ -61,7 +62,6 @@ SRC =	env1/create_env.c\
 		redirection/heredoc.c\
 		redirection/rdr_input.c\
 		redirection/rdr_output.c\
-		print_error.c\
 		main.c\
 
 OBJ := $(SRC:.c=.o)

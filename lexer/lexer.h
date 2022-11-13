@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:22:46 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/13 12:51:18 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/13 17:08:58 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef enum token_type
 	CMD,
 	VAR,
 	WLDC,
-	TRUE,
 	RD_IN,
 	RD_OUT,
 	HERDOC,

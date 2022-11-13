@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 17:01:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/13 15:27:25 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 16:21:25 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include<string.h>
 # include<errno.h>
 # include "../../env1/env.h"
-# include "../../parser.h"
+# include "../../parsing/parser.h"
 # include "../../lexer/lexer.h"
 
 void		echo(t_parser_node *root);

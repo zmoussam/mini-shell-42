@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:50:12 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/11 23:25:40 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 16:22:22 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include<string.h>
 # include<errno.h>
-# include "../parser.h"
+# include "../parsing/parser.h"
 # include "../execution/execution.h"
 # include <fcntl.h>
 

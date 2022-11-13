@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 13:14:02 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 17:55:22 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 16:22:12 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "lexer/lexer.h"
-# include "libft/libft.h"
+# include "../lexer/lexer.h"
+# include "../libft/libft.h"
 # include <readline/readline.h>
-# include "utils/utils.h"
+# include "../utils/utils.h"
 
 # define MISSMATCH (void *)-1
 
