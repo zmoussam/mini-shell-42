@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+         #
+#    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 11:32:30 by mel-hous          #+#    #+#              #
-#    Updated: 2022/11/12 19:39:23 by mel-hous         ###   ########.fr        #
+#    Updated: 2022/11/12 23:54:40 by zmoussam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := cc
-CFLAGS := -I$(HOME)/.brew/opt/readline/include  -Wall -Wextra -Werror -MMD -g
-LDFLAGS := -L$(HOME)/.brew/opt/readline/lib  -lreadline 
+CFLAGS := -I$(HOME)/goinfre/brew/opt/readline/include  -Wall -Wextra -Werror -MMD -g
+LDFLAGS := -L$(HOME)/goinfre/brew/opt/readline/lib  -lreadline 
 NAME := minishell
 SRC =	env1/create_env.c\
 		env1/env_find.c\
@@ -46,11 +46,14 @@ SRC =	env1/create_env.c\
 		execution/execution_utils.c\
 		execution/execution_utils2.c\
 		execution/execution.c\
-		execution/builtins/cd.c\
+		execution/builtins/cd/cd.c\
+		execution/builtins/cd/cd_utils.c\
 		execution/builtins/echo.c\
 		execution/builtins/env.c\
 		execution/builtins/exit.c\
-		execution/builtins/export.c\
+		execution/builtins/export/export.c\
+		execution/builtins/export/export_utils.c\
+		execution/builtins/export/export_parsing.c\
 		execution/builtins/pwd.c\
 		execution/builtins/unset.c\
 		redirection/redirection.c\

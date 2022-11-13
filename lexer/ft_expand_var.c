@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:35:47 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 19:38:17 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 20:21:42 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*exit_status(char **s)
 	if (!ft_strncmp(*s, "$?", 2))
 	{
 		*s += 2;
-		return (ft_itoa(g_lbv.exit_status));
+		return (ft_itoa(g_lbv.exit_status / 256));
 	}
 	return (NO_EXPANSION);
 }

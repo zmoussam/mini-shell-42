@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:30:07 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/11 17:58:29 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/12 21:41:02 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,35 +35,31 @@ int	check_path(char *path)
 	return (0);
 }
 
-char	**copy_env(void)
+char	**copy_env(int size, int index)
 {
 	t_env_node	*head;
-	int			i;
 	char		*temp;
-	int			size;
 	char		**env;
 	char		*shlv;
 
-	i = 0;
-	size = env_listsize(g_lbv.list);
 	env = (char **)malloc((size + 1) * sizeof(char *));
 	head = g_lbv.list;
-	while (head && i < size)
+	while (head && index < size)
 	{
 		temp = ft_strjoin(head->name, "=");
 		if (ft_strcmp(head->name, "SHLVL") == 0)
 		{
 			shlv = ft_itoa((ft_atoi(head->content) + 1));
-			env[i] = ft_strjoin(temp, shlv);
+			env[index] = ft_strjoin(temp, shlv);
 			free(shlv);
 		}
 		else
-			env[i] = ft_strjoin(temp, head->content);
+			env[index] = ft_strjoin(temp, head->content);
 		free(temp);
 		head = head->next;
-		i++;
+		index++;
 	}
-	env[i] = NULL;
+	env[index] = NULL;
 	return (env);
 }
 

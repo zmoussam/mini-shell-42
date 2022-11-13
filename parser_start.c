@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_start.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:27:32 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 19:44:06 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/12 20:21:27 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_parser_node	*parse(char *input)
 	ast = parse_input(lexer);
 	if (!ast || ast == MISSMATCH)
 	{
-		g_lbv.exit_status = 258;
+		g_lbv.exit_status = 258 * 256;
 		free(lexer);
 		return (NULL);
 	}

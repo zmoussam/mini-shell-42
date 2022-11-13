@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:16:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/12 18:21:37 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/12 23:30:35 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ void	env_cmd(t_parser_node *root)
 		{
 			printf("env: illegall option %s\n", root->av[1]);
 			printf("usage: env whit no option or argument\n");
-			g_lbv.exit_status = 1;
+			g_lbv.exit_status = 256;
 			return ;
 		}
-		else 
+		else
 			printf("env: %s: No such file or directory\n", root->av[1]);
-		g_lbv.exit_status = 127;
+		g_lbv.exit_status = 127 * 256;
 	}
 	else
+	{
 		print_list();
-	g_lbv.exit_status = 0;
+		g_lbv.exit_status = 0;
+	}
 }

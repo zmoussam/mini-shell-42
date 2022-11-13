@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:57 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/12 18:32:55 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/12 20:30:09 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	pwd(t_parser_node *root)
 	}
 	else
 	{
-		g_lbv.exit_status = 1;
+		g_lbv.exit_status = 256;
 		printf("minishel v0.1: pwd: %s: illegal option\n", root->av[1]);
 		printf("Usage: pwd []\n");
 	}
