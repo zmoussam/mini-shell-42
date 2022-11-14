@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:35:47 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/13 19:01:21 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/14 08:07:36 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ t_token	lex_var(t_lexer lexer, int len)
 	if (lexer.prev_type.type == HERDOC)
 		return (t_init(WORD, len, lexer.str));
 	full = ft_strdup("");
-	s = ft_substr(lexer.str, 0, len + 1);
+	s = ft_substr(lexer.str, 0, len);
 	str = ft_split(s, DEF_DOUBEL_Q);
 	mode = 0;
 	free (s);

@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:22:46 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/13 17:08:58 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/14 07:59:46 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,5 @@ int			change_mode2(int i, char c);
 char		*exp_var(char **sp);
 char		*exit_status(char **s);
 char		*ft_exp(char *expnd, char **s);
-
-// void    put_str(char *s, int len);
 
 #endif
