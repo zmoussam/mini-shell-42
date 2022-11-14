@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 13:27:05 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/11 11:03:24 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/14 08:07:32 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ t_token	expand_all(t_lexer	*lexer, int var, int len)
 			return (token);
 		}
 	}
-	if (var == 1 || var == 3)
+	if (var == 1)
 	{
-		token = lex_var(*lexer, len - 1);
+		token = lex_var(*lexer, len);
 		if (token.type == VAR)
 		{
 			token.len = len;
@@ -49,11 +49,7 @@ t_token	word_collect(t_lexer *lexer, int var, int len)
 	{
 		mode = change_mode2(mode, s[len]);
 		if (s[len] == '$' && mode != 1)
-		{
-			if (var == 2)
-				var = 3;
 			var = 1;
-		}
 		if (s[len] == '*' && var == 0 && mode == 0)
 			var = 2;
 		len++;

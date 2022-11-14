@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
+#    By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 11:32:30 by mel-hous          #+#    #+#              #
-#    Updated: 2022/11/14 01:51:32 by zmoussam         ###   ########.fr        #
+#    Updated: 2022/11/14 13:20:26 by mel-hous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := cc
-CFLAGS := -I$(HOME)/goinfre/brew/opt/readline/include  -Wall -Wextra -Werror -MMD -g
-LDFLAGS := -L$(HOME)/goinfre/brew/opt/readline/lib  -lreadline 
+CFLAGS := -I$(HOME)/.brew/opt/readline/include  -Wall -Wextra -Werror -MMD -g
+LDFLAGS := -L$(HOME)/.brew/opt/readline/lib  -lreadline 
 NAME := minishell
 SRC =	env1/create_env.c\
 		env1/env_find.c\
@@ -78,16 +78,14 @@ clean:
 
 fclean:
 	$(MAKE) -C libft fclean
-	rm -f libft.a
 	rm -rf $(NAME) $(OBJ) $(DEP)
 
 re: fclean all
 
 libft.a:
 	$(MAKE) -C libft
-	mv libft/libft.a .
 
 $(NAME): libft.a $(OBJ)
-	$(CC) -o $(NAME) $(OBJ) libft.a $(LDFLAGS)
+	$(CC) -o $(NAME) $(OBJ) libft/libft.a $(LDFLAGS)
 
 -include $(DEP)
