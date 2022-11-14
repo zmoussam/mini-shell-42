@@ -6,16 +6,16 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:16:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/14 00:44:57 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 02:07:06 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	check__()
+void	check__(void)
 {
-	t_env_node *head;
-	
+	t_env_node	*head;
+
 	head = g_lbv.list;
 	while (head)
 	{

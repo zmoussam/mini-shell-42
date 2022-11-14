@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:42:24 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/14 02:01:05 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 02:08:11 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	_shell_level(t_env_node **lst)
 	t_env_node	*head;
 	char		*shlvl;
 
-	head = *lst; 
+	head = *lst;
 	while (head)
 	{
 		if (ft_strcmp(head->name, "SHLVL") == 0)
@@ -65,10 +65,10 @@ void	_shell_level(t_env_node **lst)
 	add_back(lst, new_node(ft_strdup("1"), ft_strdup("SHLVL"), 5));
 }
 
-void _set_pwd(t_env_node **lst)
+void	_set_pwd(t_env_node **lst)
 {
-	t_env_node *head;
-	
+	t_env_node	*head;
+
 	head = *lst;
 	while (head)
 	{
@@ -77,7 +77,6 @@ void _set_pwd(t_env_node **lst)
 		head = head->next;
 	}
 	add_back(lst, new_node(getcwd(NULL, 0), ft_strdup("PWD"), 3));
-		
 }
 
 t_env_node	*create_env(char *env[])
