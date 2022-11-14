@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 11:53:24 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/14 13:14:22 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:40:30 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		ft_clear_av(char **str);
 void		put_line(char *line, int fd);
 int			readline_hook(void);
 void		intialize_signal(void);
+void		check_sigquit_(void);
 void		free_env_list(void);
 const char	*get_wd(char *path);
 

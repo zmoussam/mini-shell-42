@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:29:06 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/14 12:51:20 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:36:03 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	readline_hook(void)
 void	handler(int signum)
 {
 	if (signum == SIGQUIT)
+	{
+		g_lbv.check_sigquit = 1;
 		return ;
+	}
 	if (signum == SIGINT)
 	{
 		g_lbv.exit_status = 256;
@@ -33,6 +36,7 @@ void	handler(int signum)
 
 void	intialize_signal(void)
 {
+	g_lbv.check_sigquit = 0;
 	rl_catch_signals = 0;
 	rl_event_hook = readline_hook;
 	if (signal(SIGINT, &handler) == SIG_ERR \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:32:18 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/14 14:25:26 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:41:05 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	execute_file(char *path, char **argv, char **env, int v)
 				printf("minishell: %s\n", strerror(errno));
 		}
 		waitpid(pid, &g_lbv.exit_status, 0);
-		if (WIFSIGNALED(g_lbv.exit_status))
-			g_lbv.exit_status = 130 * 256;
+		check_sigquit_();
 		if (v == 2)
 			free(path);
 		return (1);

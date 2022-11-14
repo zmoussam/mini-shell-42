@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:22:46 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/14 07:59:46 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:34:18 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_glb_v
 	t_env_node	*list;
 	int			check_signal;
 	int			exit_status;
+	int			check_sigquit;
 }			t_glb_v;
 
 extern t_glb_v	g_lbv;

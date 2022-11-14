@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/14 12:50:21 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:40:17 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@
 #include <sys/signal.h>
 
 t_glb_v	g_lbv;
+
+void	check_sigquit_(void)
+{
+	if (WIFSIGNALED(g_lbv.exit_status))
+	{
+		if (g_lbv.check_sigquit == 0)
+			g_lbv.exit_status = 130 * 256;
+		else if (g_lbv.check_sigquit == 1)
+			g_lbv.exit_status = 131 * 256;
+	}
+}
 
 void	minishell(t_parser_node *tree, char *line)
 {
