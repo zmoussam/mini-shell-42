@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 11:53:24 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/14 01:30:35 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 01:57:02 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,5 @@ int			readline_hook(void);
 void		intialize_signal(void);
 void		free_env_list(void);
 const char	*get_wd(char *path);
-void		_shell_level(void);
-void		_set_pwd(void);
-// void		_set__();
 
 #endif

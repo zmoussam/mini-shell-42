@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/14 01:31:16 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 02:02:27 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int	main(int argc, char **argv, char **env)
 	if (argc < 2 && !argv[1])
 	{
 		g_lbv.list = create_env(env);
-		_shell_level();
-		_set_pwd();
 		ft_list_remove_if(&g_lbv.list, "OLDPWD");
 		while (true)
 		{

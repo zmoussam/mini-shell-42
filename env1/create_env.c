@@ -6,11 +6,12 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:42:24 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/13 21:41:42 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 02:01:05 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+#include "../lexer/lexer.h"
 
 void	*manu(t_env_node *var, char *s)
 {
@@ -41,6 +42,44 @@ void	*manu(t_env_node *var, char *s)
 	return (var);
 }
 
+void	_shell_level(t_env_node **lst)
+{
+	t_env_node	*head;
+	char		*shlvl;
+
+	head = *lst; 
+	while (head)
+	{
+		if (ft_strcmp(head->name, "SHLVL") == 0)
+		{
+			shlvl = ft_itoa((ft_atoi(head->content) + 1));
+			if (!shlvl)
+				return (printf("minishell: memory was not allocated!\n"), \
+				(void)0);
+			free(head->content);
+				head->content = shlvl;
+			return ;
+		}
+		head = head->next;
+	}
+	add_back(lst, new_node(ft_strdup("1"), ft_strdup("SHLVL"), 5));
+}
+
+void _set_pwd(t_env_node **lst)
+{
+	t_env_node *head;
+	
+	head = *lst;
+	while (head)
+	{
+		if (ft_strcmp(head->name, "PWD") == 0)
+			return ;
+		head = head->next;
+	}
+	add_back(lst, new_node(getcwd(NULL, 0), ft_strdup("PWD"), 3));
+		
+}
+
 t_env_node	*create_env(char *env[])
 {
 	t_env_node	*var;
@@ -55,5 +94,7 @@ t_env_node	*create_env(char *env[])
 			return (NULL);
 		i++;
 	}
+	_set_pwd(&var);
+	_shell_level(&var);
 	return (var);
 }

@@ -6,7 +6,7 @@
 #    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 11:32:30 by mel-hous          #+#    #+#              #
-#    Updated: 2022/11/14 00:37:38 by zmoussam         ###   ########.fr        #
+#    Updated: 2022/11/14 01:51:32 by zmoussam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,6 @@ SRC =	env1/create_env.c\
 		utils/put_line.c\
 		utils/wc_ld.c\
 		utils/ft_clear_av.c\
-		utils/set_unset_v.c\
 		parsing/av_creat.c\
 		parsing/check_pipe.c\
 		parsing/cmd_components.c\

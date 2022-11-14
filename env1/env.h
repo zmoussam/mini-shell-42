@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:53:03 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 09:45:02 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/14 01:59:21 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ void		ft_list_remove_if(t_env_node **begin_list, void *data_ref);
 void		delone_env(t_env_node *node);
 int			env_listsize(t_env_node *env);
 void		print_list(void);
+void		_shell_level(t_env_node **lst);
+void		_set_pwd(t_env_node **lst);
 
 #endif
