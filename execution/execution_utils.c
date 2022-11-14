@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:30:07 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/12 21:41:02 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 00:11:49 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,21 @@ char	**copy_env(int size, int index)
 	t_env_node	*head;
 	char		*temp;
 	char		**env;
-	char		*shlv;
 
 	env = (char **)malloc((size + 1) * sizeof(char *));
+	if (!env)
+		return (printf("minishell: memory was not allocated!!\n"), NULL);
 	head = g_lbv.list;
 	while (head && index < size)
 	{
 		temp = ft_strjoin(head->name, "=");
-		if (ft_strcmp(head->name, "SHLVL") == 0)
-		{
-			shlv = ft_itoa((ft_atoi(head->content) + 1));
-			env[index] = ft_strjoin(temp, shlv);
-			free(shlv);
-		}
-		else
-			env[index] = ft_strjoin(temp, head->content);
+		if (!temp)
+			return (printf("minishell: memory was not allocated!!\n"), \
+				free_env(env, index), NULL);
+		env[index] = ft_strjoin(temp, head->content);
+		if (!env[index])
+			return (printf("minishell: memory was not allocated!!\n"), \
+				free_env(env, index), free(temp), NULL);
 		free(temp);
 		head = head->next;
 		index++;
@@ -63,15 +63,23 @@ char	**copy_env(int size, int index)
 	return (env);
 }
 
-void	free_env(char **env)
+void	free_env(char **env, int index)
 {
 	int	i;
 
 	i = 0;
-	while (env[i])
+	while (i < index)
 	{
 		free(env[i]);
 		i++;
+	}
+	if (index == -1)
+	{
+		while (env[i])
+		{
+			free(env[i]);
+			i++;
+		}
 	}
 	free(env);
 }

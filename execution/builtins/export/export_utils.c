@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 23:45:05 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/13 01:35:50 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 20:46:14 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ t_env_node	*get_new_node(char *variable_with_content)
 		content = ft_strdup(&variable_with_content[i] + 1);
 		len2 = len - ft_strlen(&variable_with_content[i]);
 	}
+	if (!content)
+		return (NULL);
 	return (new_node(content, \
 	ft_substr(variable_with_content, 0, len2), len2));
 }

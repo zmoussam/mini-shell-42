@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 23:51:32 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/13 15:27:15 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 20:36:46 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,24 +61,29 @@ int	check_special_char(char *name, char *content, int len, int _option_error)
 	return (0);
 }
 
-void	concatenat_variable(t_env_node *node)
+void	*concatenat_variable(t_env_node *node)
 {
 	t_env_node	*node_name;
 	char		*tmp_name;
 	char		*tmp_content;
 
-	tmp_name = node->name;
-	node->name = ft_strtrim(node->name, "+");
+	tmp_name = ft_strtrim(node->name, "+");
+	if (!tmp_name)
+		return (printf("minishell: memory was not allocated!!\n"), NULL);
+	free(node->name);
+	node->name = tmp_name;
 	node->len = ft_strlen(node->name);
-	free(tmp_name);
 	node_name = env_find(g_lbv.list, node->name, -1);
 	if (node_name && node->content[0] != '\0' \
 	&& ft_strcmp(node->content, "\"\""))
 	{
-		tmp_content = node->content;
-		node->content = ft_strjoin(node_name->content, node->content);
-		free(tmp_content);
+		tmp_content = ft_strjoin(node_name->content, node->content);
+		if (!tmp_content)
+			return (printf("minishell: memory was not allocated!!\n"), NULL);
+		free(node->content);
+		node->content = tmp_content;
 	}
+	return (NULL);
 }
 
 int	parss_export_variable(t_env_node *node, int _op_error)

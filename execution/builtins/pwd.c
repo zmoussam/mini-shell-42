@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:57 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/12 20:30:09 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/13 22:47:51 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 void	pwd(t_parser_node *root)
 {
 	char	*cwd;
+	char	buffer[4096];
 
-	cwd = getcwd(NULL, 0);
+	cwd = getcwd(buffer, 4096);
 	if (root->ac == 1)
 	{
 		if (cwd == NULL)
-			printf("!!N.A.D == NO DIRECTORY\n");
+			printf("%s\n", buffer);
 		else
 			printf("%s\n", cwd);
 		g_lbv.exit_status = 0;
@@ -34,5 +35,4 @@ void	pwd(t_parser_node *root)
 		printf("minishel v0.1: pwd: %s: illegal option\n", root->av[1]);
 		printf("Usage: pwd []\n");
 	}
-	free(cwd);
 }
