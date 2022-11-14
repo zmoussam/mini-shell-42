@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:38:13 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/12 09:40:12 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/13 19:01:44 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,17 @@ t_env_node	*env_find(t_env_node *env, char	*s, int len)
 
 char	*env_find2(t_env_node *env, char *s, int len)
 {
+	t_env_node	*node;
+
+	if (len == -1)
+		len = ft_strlen(s);
 	while (env)
 	{
-		if (!ft_strncmp(s, env->name, len))
-			return (env->content);
+		if (len == env->len && !ft_strncmp(env->name, s, len))
+		{
+			node = env;
+			return (node->content);
+		}
 		env = env->next;
 	}
 	return (NULL);

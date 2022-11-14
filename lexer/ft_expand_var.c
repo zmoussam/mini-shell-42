@@ -6,7 +6,7 @@
 /*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:35:47 by mel-hous          #+#    #+#             */
-/*   Updated: 2022/11/13 12:54:23 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/13 19:01:21 by mel-hous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*str_add(char *full, char c, char *s)
 		if (c == DEF_SINGEL_Q)
 			return (full);
 		str = malloc(sizeof(char) * 2);
+		if (!str)
+			return (NULL);
 		str[0] = c;
 		str[1] = '\0';
 		dest = ft_strjoin(full, str);
@@ -53,7 +55,7 @@ char	*str_add(char *full, char c, char *s)
 char	*exp_var(char **sp)
 {
 	char	*s;
-	size_t	i;
+	int		i;
 	char	*value;
 
 	s = *sp;
