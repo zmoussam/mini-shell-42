@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 23:45:05 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/13 20:46:14 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:25:00 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,29 +87,27 @@ void	print_sort_list(void)
 	intialise_len_variable();
 }
 
-t_env_node	*get_new_node(char *variable_with_content)
+t_env_node	*get_new_node(char *variable_with_content, int index)
 {
-	int		i;
 	int		len;
 	int		len2;
 	char	*content;
 
 	len = ft_strlen(variable_with_content);
 	len2 = len;
-	i = 0;
-	while (variable_with_content[i] != '=' && variable_with_content[i])
-		i++;
-	if (variable_with_content[i] == '\0')
+	while (variable_with_content[index] != '=' && variable_with_content[index])
+		index++;
+	if (variable_with_content[index] == '\0')
 		content = ft_strdup("");
-	else if (variable_with_content[i + 1] == '\0')
+	else if (variable_with_content[index + 1] == '\0')
 	{
 		content = ft_strdup("\"\"");
 		len2 = len - 1;
 	}
 	else
 	{
-		content = ft_strdup(&variable_with_content[i] + 1);
-		len2 = len - ft_strlen(&variable_with_content[i]);
+		content = ft_strdup(&variable_with_content[index] + 1);
+		len2 = len - ft_strlen(&variable_with_content[index]);
 	}
 	if (!content)
 		return (NULL);

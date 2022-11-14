@@ -6,19 +6,20 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:30:07 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/14 00:11:49 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:01:24 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	str_tolower(char *str)
+void	free_path_content(char **split_content)
 {
 	int	i;
 
-	i = -1;
-	while (str[++i])
-		str[i] = ft_tolower(str[i]);
+	i = 0;
+	while (split_content[i])
+		free(split_content[i++]);
+	free(split_content);
 }
 
 int	check_path(char *path)

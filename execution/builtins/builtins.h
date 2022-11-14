@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-hous <mel-hous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 17:01:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/13 16:21:25 by mel-hous         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:25:16 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		pwd(t_parser_node *root);
 void		unset(t_parser_node *root, int index);
 void		exit_cmd(t_parser_node *root);
 void		export(t_parser_node *root);
-t_env_node	*get_new_node(char *variable_with_content);
+t_env_node	*get_new_node(char *variable_with_content, int index);
 void		intialise_len_variable(void);
 t_env_node	get_min_variable(t_env_node min);
 t_env_node	get_max_variable(void);

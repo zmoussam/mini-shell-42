@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 18:41:53 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/14 01:29:08 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:25:44 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	add_export_variable(char **argv, int index)
 	{
 		if (argv[index][0] == ';' || argv[index][0] == '#')
 			break ;
-		new = get_new_node(argv[index]);
+		new = get_new_node(argv[index], 0);
 		if (!new)
 			return ;
 		_check_parse = parss_export_variable(new, index);

@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:11:40 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/14 01:13:38 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:41:08 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	execution_cmd(t_parser_node *root)
 	else if (ft_strcmp(root->av[0], "export") == 0)
 		export(root);
 	else
-		launch_executabl(root);
+		launch_executabl(root, env_listsize(g_lbv.list));
 	free(copy);
 }
 

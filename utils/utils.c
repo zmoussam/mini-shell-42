@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:29:06 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/13 23:02:11 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:51:20 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	handler(int signum)
 		return ;
 	if (signum == SIGINT)
 	{
+		g_lbv.exit_status = 256;
 		g_lbv.check_signal = 1;
 		rl_done = 1;
 	}

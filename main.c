@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 03:49:02 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/14 02:02:27 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:50:21 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	main(int argc, char **argv, char **env)
 				break ;
 			minishell(tree, line);
 		}
-		return (free_env_list(), printf("exit\n"));
+		printf("exit\n");
+		return (free_env_list(), 0);
 	}
 }
