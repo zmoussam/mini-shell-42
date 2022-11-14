@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:32:18 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/11/14 14:01:57 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:25:26 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ int	execute_file(char *path, char **argv, char **env, int v)
 		{
 			if (execve(path, argv, env) == -1)
 				printf("minishell: %s\n", strerror(errno));
-			exit(130);
 		}
 		waitpid(pid, &g_lbv.exit_status, 0);
+		if (WIFSIGNALED(g_lbv.exit_status))
+			g_lbv.exit_status = 130 * 256;
 		if (v == 2)
 			free(path);
 		return (1);
